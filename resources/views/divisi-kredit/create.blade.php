@@ -108,7 +108,7 @@
 
             var divisiId = $("select[name=divisi_id] option:selected").val();
             var jenisTransaksiId = $(this).children("option:selected").val();
-            var url = "{!! route('check-biaya-kredit.get', ['divisi' => '']) !!}"+"/"+divisiId;
+            var url = "{!! route('check-biaya-kredit.get', ['divisi' => '__DIVISI__']) !!}".replace('__DIVISI__', encodeURIComponent(divisiId));
             $.ajax({
                 url: url,
                 type: 'GET',
