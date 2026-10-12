@@ -33,7 +33,11 @@
             <p class="text-muted m-b-30 font-13">
                 Silahkan Lakukan Pengisian Transaksi Secara Lengkap
             </p>
-            {!! Form::model($transaksiHarian, ['route' => ['simpanan-kredit.update', $transaksiHarian->transaksi_harian_id], 'method'=>'put', 'class' => 'form-horizontal', 'id' => 'basic-form']) !!}
+            @php($formModel = $transaksiHarian)
+<form method="post" action="{{ route('simpanan-kredit.update', $transaksiHarian->transaksi_harian_id) }}" class="form-horizontal" id="basic-form">
+@csrf
+@method('PUT')
+
                 @csrf
                 @include('simpanan-kredit._form')
             </form>

@@ -3,7 +3,7 @@
 <div class="form-group row">
     <label class="col-4 col-form-label" for="example-input-normal">Tanggal Awal Periode</label>
     <div class="col-8">
-        {!! Form::text('open_date', null, ['class' => $errors->has('open_date') ? 'form-control datepicker is-invalid' : 'form-control datepicker', 'placeholder' => 'Tanggal Awal Periode', 'autocomplete' => 'off' ]) !!}
+        <input type="text" name="open_date" value="{{ old('open_date', data_get($formModel ?? null, 'open_date')) }}" class="{{ $errors->has('open_date') ? 'form-control datepicker is-invalid' : 'form-control datepicker' }}" placeholder="Tanggal Awal Periode" autocomplete="off">
         @error('open_date')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -14,7 +14,7 @@
 <div class="form-group row">
     <label class="col-4 col-form-label" for="example-input-normal">Tanggal Akhir Periode</label>
     <div class="col-8">
-        {!! Form::text('close_date', null, ['class' => $errors->has('close_date') ? 'form-control datepicker is-invalid' : 'form-control datepicker', 'placeholder' => 'Tanggal Akhir Periode', 'autocomplete' => 'off' ]) !!}
+        <input type="text" name="close_date" value="{{ old('close_date', data_get($formModel ?? null, 'close_date')) }}" class="{{ $errors->has('close_date') ? 'form-control datepicker is-invalid' : 'form-control datepicker' }}" placeholder="Tanggal Akhir Periode" autocomplete="off">
         @error('close_date')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -25,7 +25,7 @@
 <div class="form-group row">
     <label class="col-4 col-form-label" for="example-input-normal">Nama Periode</label>
     <div class="col-8">
-        {!! Form::text('name', null, ['class' => $errors->has('name') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Nama Periode']) !!}
+        <input type="text" name="name" value="{{ old('name', data_get($formModel ?? null, 'name')) }}" class="{{ $errors->has('name') ? 'form-control is-invalid' : 'form-control' }}" placeholder="Nama Periode">
         @error('name')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -36,7 +36,12 @@
 <div class="form-group row">
     <label class="col-4 col-form-label" for="example-input-normal">Status</label>
     <div class="col-8">
-        {!! Form::select('status', ['1' => 'Aktif', '0' => 'None Aktif'], null, ['class'=>$errors->has('status') ? 'form-control is-invalid' : 'form-control','placeholder'=>'Select Status']) !!}
+        <select name="status" class="{{ $errors->has('status') ? 'form-control is-invalid' : 'form-control' }}">
+<option value="">{{ 'Select Status' }}</option>
+@foreach((['1' => 'Aktif', '0' => 'None Aktif']) as $optionValue => $optionLabel)
+<option value="{{ $optionValue }}" @selected((string) old('status', data_get($formModel ?? null, 'status', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
+@endforeach
+</select>
         @error('status')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>

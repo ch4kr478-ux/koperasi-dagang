@@ -28,9 +28,13 @@
         <div class="card-box">
             <h4 class="m-t-0 header-title">FORM UBAH ANGGOTA</h4>
             <div class="p-20">
-                {!! Form::model($anggota, ['route' => ['anggota.update', $anggota->id], 'method' => 'put', 'class' => 'form-horizontal'] ) !!}
+                @php($formModel = $anggota)
+<form method="post" action="{{ route('anggota.update', $anggota->id) }}" class="form-horizontal">
+@csrf
+@method('PUT')
+
                     @include('anggota._form')
-                {!! Form::close() !!}
+                </form>
             </div>
         </div> <!-- end card-box -->
     </div> <!-- end col -->

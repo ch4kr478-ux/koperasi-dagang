@@ -26,9 +26,13 @@
             <h4 class="m-t-0 header-title">FORM UBAH DIVISI</h4>
 
             <div class="p-20">
-                {!! Form::model($divisi, ['route' => ['divisi.update', $divisi->id], 'method'=>'put', 'class' => 'form-horizontal']) !!}
+                @php($formModel = $divisi)
+<form method="post" action="{{ route('divisi.update', $divisi->id) }}" class="form-horizontal">
+@csrf
+@method('PUT')
+
                     @include('divisi.form')
-                {!! Form::close() !!}
+                </form>
             </div>
         </div> <!-- end card-box -->
     </div> <!-- end col -->

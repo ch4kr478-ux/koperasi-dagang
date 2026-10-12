@@ -58,7 +58,11 @@
                 Reset Password
             </h4>
             <div class="p-20">
-                {!! Form::model($user, ['route' => ['user.edit-password', $user->id], 'method'=>'put', 'class' => 'form-horizontal', 'id' => 'basic-form']) !!}
+                @php($formModel = $user)
+<form method="post" action="{{ route('user.edit-password', $user->id) }}" class="form-horizontal" id="basic-form">
+@csrf
+@method('PUT')
+
                     <div class="form-group row">
                         <label class="col-4 col-form-label" for="example-input-normal">Password Lama</label>
                         <div class="col-8">
@@ -93,7 +97,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>                
-                {!! Form::close() !!}
+                </form>
             </div>
         </div>
     </div>

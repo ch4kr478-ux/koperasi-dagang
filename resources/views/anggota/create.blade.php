@@ -28,9 +28,12 @@
         <div class="card-box">
             <h4 class="m-t-0 header-title">FORM TAMBAH ANGGOTA</h4>
             <div class="p-20">
-                {!! Form::open(['url' => route('anggota.store'), 'class' => 'form-horizontal'])!!}
+                @php($formModel = null)
+<form method="post" action="{{ route('anggota.store') }}" class="form-horizontal">
+@csrf
+
                     @include('anggota._form')
-                {!! Form::close() !!}
+                </form>
             </div>
         </div> <!-- end card-box -->
     </div> <!-- end col -->

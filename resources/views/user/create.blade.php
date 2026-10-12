@@ -29,9 +29,12 @@
         <div class="card-box">
             <h4 class="m-t-0 header-title">FORM TAMBAH PENGGUNA</h4>
             <div class="p-20">
-                {!! Form::open(['url' => route('user.store'), 'class' => 'form-horizontal']) !!}
+                @php($formModel = null)
+<form method="post" action="{{ route('user.store') }}" class="form-horizontal">
+@csrf
+
                     @include('user._form')
-                {!! Form::close() !!}
+                </form>
             </div>
         </div> <!-- end card-box -->
     </div> <!-- end col -->

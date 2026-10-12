@@ -2,7 +2,7 @@
 <div class="form-group row">
     <label class="col-4 col-form-label" for="example-input-normal">Nama</label>
     <div class="col-8">
-        {!! Form::text('name', null, ['class' => $errors->has('name') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Nama']) !!}
+        <input type="text" name="name" value="{{ old('name', data_get($formModel ?? null, 'name')) }}" class="{{ $errors->has('name') ? 'form-control is-invalid' : 'form-control' }}" placeholder="Nama">
         @error('name')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -13,7 +13,7 @@
 <div class="form-group row">
     <label class="col-4 col-form-label" for="example-input-normal">Display Name</label>
     <div class="col-8">
-        {!! Form::text('display_name', null, ['class' => $errors->has('display_name') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Display Name']) !!}
+        <input type="text" name="display_name" value="{{ old('display_name', data_get($formModel ?? null, 'display_name')) }}" class="{{ $errors->has('display_name') ? 'form-control is-invalid' : 'form-control' }}" placeholder="Display Name">
         @error('display_name')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -24,7 +24,7 @@
 <div class="form-group row">
     <label class="col-4 col-form-label" for="example-input-normal">Deskripsi</label>
     <div class="col-8">
-        {!! Form::text('description', null, ['class' => $errors->has('description') ? 'form-control is-invalid' :  'form-control', 'placeholder' => 'Deskripsi', 'autocomplete' => 'off' ]) !!}
+        <input type="text" name="description" value="{{ old('description', data_get($formModel ?? null, 'description')) }}" class="{{ $errors->has('description') ? 'form-control is-invalid' :  'form-control' }}" placeholder="Deskripsi" autocomplete="off">
         @error('description')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>

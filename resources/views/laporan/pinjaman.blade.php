@@ -42,7 +42,11 @@
                 @permission('filter-pinjaman-anggota')
                 <div class="form-group clearfix">
                     <label class="control-label " for="confirm">No Anggota *</label>
-                    {!! Form::select('anggota_id', [''=>'Pilih Anggota']+App\Anggota::pluck('nama','id')->all(), null, ['class' => 'form-control select2']) !!}
+                    <select name="anggota_id" class="form-control select2">
+@foreach(([''=>'Pilih Anggota']+App\Anggota::pluck('nama','id')->all()) as $optionValue => $optionLabel)
+<option value="{{ $optionValue }}" @selected((string) old('anggota_id', data_get($formModel ?? null, 'anggota_id', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
+@endforeach
+</select>
                 </div>
                 @endpermission
                 @permission('search-pinjaman-anggota')

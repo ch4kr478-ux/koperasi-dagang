@@ -39,23 +39,29 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-8">
-                                        {!! Form::model($option, ['url' => route('option.upload'), 'enctype' => 'multipart/form-data']) !!}
+                                        @php($formModel = $option)
+<form method="post" action="{{ route('option.upload') }}" enctype="multipart/form-data">
+@csrf
+
                                             <input type="hidden"  name="option_id">
                                             <div class="form-group xs-pt-10 {{ $errors->has('logo') ? ' has-error' : '' }}">
-                                                {!! Form::file('logo', null, ['class' => 'form-control', 'placeholder' => 'Masukan Logo', 'required' => 'required'] ) !!}
+                                                <input type="file" name="logo">
                                                 {!! $errors->first('logo', '<p class="text-danger">:message</p>') !!}
                                             </div>
                                             <button type="submit" class="btn btn-primary">Simpan</button>
-                                        {!! Form::close() !!}
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         {{-- </div> --}}
                     </div>
                 </div>
-                {{-- {!! Form::open(['url' => route('option.store'), 'class' => 'form-horizontal']) !!}
+                {{-- @php($formModel = null)
+<form method="post" action="{{ route('option.store') }}" class="form-horizontal">
+@csrf
+
                     @include('option._form')
-                {!! Form::close() !!} --}}
+                </form> --}}
             </div>
         </div> <!-- end card-box -->
     </div> <!-- end col -->

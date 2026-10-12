@@ -33,9 +33,13 @@
             <p class="text-muted m-b-30 font-13">
                 Silahkan Lakukan Pengisian Transaksi Secara Lengkap
             </p>
-            {!! Form::model($transaksiHarian, ['route' => ['divisi-debet.update', $transaksiHarian->transaksi_harian_id], 'method'=>'put', 'class' => 'form-horizontal', 'id' => 'basic-form']) !!}
+            @php($formModel = $transaksiHarian)
+<form method="post" action="{{ route('divisi-debet.update', $transaksiHarian->transaksi_harian_id) }}" class="form-horizontal" id="basic-form">
+@csrf
+@method('PUT')
+
                 @include('divisi-debet._form')
-            {!! Form::close() !!}
+            </form>
         </div>
     </div>
 </div>

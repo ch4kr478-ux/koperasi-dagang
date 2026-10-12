@@ -3,7 +3,11 @@
             <div class="form-group clearfix">
                 <label class="control-label " for="from-periode">From Periode</label>
                 <div class="">
-                    {!! Form::select('from_periode_id', [''=>'']+App\Periode::pluck('name','id')->all(), null, ['class' => $errors->has('from_periode_id') ? 'form-control is-invalid' : 'form-control']) !!}
+                    <select name="from_periode_id" class="{{ $errors->has('from_periode_id') ? 'form-control is-invalid' : 'form-control' }}">
+@foreach(([''=>'']+App\Periode::pluck('name','id')->all()) as $optionValue => $optionLabel)
+<option value="{{ $optionValue }}" @selected((string) old('from_periode_id', data_get($formModel ?? null, 'from_periode_id', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
+@endforeach
+</select>
                         @error('from_periode_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -14,7 +18,11 @@
             <div class="form-group clearfix">
                 <label class="control-label " for="to-periode">To Periode</label>
                 <div class="">
-                    {!! Form::select('to_periode_id', [''=>'']+App\Periode::pluck('name','id')->all(), null, ['class' => $errors->has('to_periode_id') ? 'form-control is-invalid' : 'form-control']) !!}
+                    <select name="to_periode_id" class="{{ $errors->has('to_periode_id') ? 'form-control is-invalid' : 'form-control' }}">
+@foreach(([''=>'']+App\Periode::pluck('name','id')->all()) as $optionValue => $optionLabel)
+<option value="{{ $optionValue }}" @selected((string) old('to_periode_id', data_get($formModel ?? null, 'to_periode_id', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
+@endforeach
+</select>
                     @error('to_periode_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -25,7 +33,11 @@
             <div class="form-group clearfix">
                 <label class="control-label " for="divisi">Divisi</label>
                 <div class="">
-                    {!! Form::select('divisi_id', [''=>'']+App\Divisi::pluck('name','id')->all(), null, ['class' => $errors->has('divisi_id') ? 'form-control is-invalid' : 'form-control']) !!}
+                    <select name="divisi_id" class="{{ $errors->has('divisi_id') ? 'form-control is-invalid' : 'form-control' }}">
+@foreach(([''=>'']+App\Divisi::pluck('name','id')->all()) as $optionValue => $optionLabel)
+<option value="{{ $optionValue }}" @selected((string) old('divisi_id', data_get($formModel ?? null, 'divisi_id', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
+@endforeach
+</select>
                     @error('divisi_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>

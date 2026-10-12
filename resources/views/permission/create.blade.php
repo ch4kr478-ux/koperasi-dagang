@@ -25,11 +25,14 @@
         <div class="card-box">
             <h4 class="m-t-0 header-title">FORM TAMBAH PERMISSION</h4>
             <div class="p-20">
-                {!! Form::open(['url' => route('permission.store'), 'class' => 'form-horizontal']) !!}
+                @php($formModel = null)
+<form method="post" action="{{ route('permission.store') }}" class="form-horizontal">
+@csrf
+
                     <div class="form-group row">
                         <label class="col-4 col-form-label" for="example-input-normal">Nama Permission</label>
                         <div class="col-8">
-                            {!! Form::text('name', null, ['class' => $errors->has('name') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Nama Permission'])!!}
+                            <input type="text" name="name" value="{{ old('name', data_get($formModel ?? null, 'name')) }}" class="{{ $errors->has('name') ? 'form-control is-invalid' : 'form-control' }}" placeholder="Nama Permission">
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -38,7 +41,7 @@
                         </div>
                     </div>
                     @include('permission.form')
-                {!! Form::close() !!}
+                </form>
             </div>
         </div> <!-- end card-box -->
     </div> <!-- end col -->

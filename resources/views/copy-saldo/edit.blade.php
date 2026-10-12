@@ -28,9 +28,13 @@
         <div class="card-box">
             <h4 class="m-t-0 header-title">FORM UBAH COPY SALDO</h4>
             <div class="p-20">
-                {!! Form::model($copy_saldo, ['route' => ['copy-saldo.update', $copy_saldo->id], 'method'=>'put', 'class' => 'form-horizontal']) !!}
+                @php($formModel = $copy_saldo)
+<form method="post" action="{{ route('copy-saldo.update', $copy_saldo->id) }}" class="form-horizontal">
+@csrf
+@method('PUT')
+
                     @include('copy-saldo._form')
-                {!! Form::close() !!}
+                </form>
             </div>
         </div> <!-- end card-box -->
     </div> <!-- end col -->

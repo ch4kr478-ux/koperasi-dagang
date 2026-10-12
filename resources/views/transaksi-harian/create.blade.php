@@ -51,12 +51,20 @@
                         <div class="form-group clearfix">
                             <label class="control-label " for="confirm">Divisi *</label>
                             <div class="">
-                                {!! Form::select('divisi_id', [''=>'']+App\Divisi::pluck('name','id')->all(), null, ['class' => 'form-control']) !!}
+                                <select name="divisi_id" class="form-control">
+@foreach(([''=>'']+App\Divisi::pluck('name','id')->all()) as $optionValue => $optionLabel)
+<option value="{{ $optionValue }}" @selected((string) old('divisi_id', data_get($formModel ?? null, 'divisi_id', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
+@endforeach
+</select>
                             </div>
                         </div>
                         <div class="form-group clearfix anggota" style="display: none;">
                             <label class="control-label " for="confirm">No Anggota *</label>
-                            {!! Form::select('anggota_id', [''=>'Pilih Anggota']+App\Anggota::pluck('nama','id')->all(), null, ['class' => 'form-control select2']) !!}
+                            <select name="anggota_id" class="form-control select2">
+@foreach(([''=>'Pilih Anggota']+App\Anggota::pluck('nama','id')->all()) as $optionValue => $optionLabel)
+<option value="{{ $optionValue }}" @selected((string) old('anggota_id', data_get($formModel ?? null, 'anggota_id', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
+@endforeach
+</select>
                         </div>
                         <div class="form-group clearfix anggota col-8" style="display: none;">
                             <table class="table">

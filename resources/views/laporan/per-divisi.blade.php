@@ -39,7 +39,11 @@
                 </div>
                 <div class="form-group clearfix">
                     <label class="control-label " for="confirm">Nama Divisi *</label>
-                    {!! Form::select('divisi_id', [''=>'Pilih Divisi']+App\Divisi::pluck('name','id')->all(), null, ['class' => 'form-control select2']) !!}
+                    <select name="divisi_id" class="form-control select2">
+@foreach(([''=>'Pilih Divisi']+App\Divisi::pluck('name','id')->all()) as $optionValue => $optionLabel)
+<option value="{{ $optionValue }}" @selected((string) old('divisi_id', data_get($formModel ?? null, 'divisi_id', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
+@endforeach
+</select>
                 </div>
                 @permission('search-laporan-divisi')
                 <input type="submit" value="Cari" class="btn btn-primary" name="search">

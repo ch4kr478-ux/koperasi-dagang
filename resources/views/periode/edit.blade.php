@@ -27,9 +27,13 @@
             <h4 class="m-t-0 header-title">FORM UBAH PERIODE</h4>
 
             <div class="p-20">
-                {!! Form::model($periode, ['route' => ['periode.update', $periode->id], 'method'=>'put', 'class' => 'form-horizontal']) !!}
+                @php($formModel = $periode)
+<form method="post" action="{{ route('periode.update', $periode->id) }}" class="form-horizontal">
+@csrf
+@method('PUT')
+
                     @include('periode._form')
-                {!! Form::close() !!}
+                </form>
             </div>
         </div> <!-- end card-box -->
     </div> <!-- end col -->

@@ -26,9 +26,13 @@
             <h4 class="m-t-0 header-title">FORM UBAH OPTION</h4>
 
             <div class="p-20">
-                {!! Form::model($option, ['route' => ['option.update', $option->id], 'method'=>'put', 'class' => 'form-horizontal']) !!}
+                @php($formModel = $option)
+<form method="post" action="{{ route('option.update', $option->id) }}" class="form-horizontal">
+@csrf
+@method('PUT')
+
                     @include('option._form')
-                {!! Form::close() !!}
+                </form>
             </div>
         </div> <!-- end card-box -->
     </div> <!-- end col -->

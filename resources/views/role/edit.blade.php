@@ -25,9 +25,13 @@
         <div class="card-box">
             <h4 class="m-t-0 header-title">FORM UBAH ROLE</h4>
             <div class="p-20">
-                {!! Form::model($role, ['route' => ['role.update', $role->id], 'method'=>'put', 'class' => 'form-horizontal']) !!}
+                @php($formModel = $role)
+<form method="post" action="{{ route('role.update', $role->id) }}" class="form-horizontal">
+@csrf
+@method('PUT')
+
                     @include('role._form')
-                {!! Form::close() !!}
+                </form>
             </div>
         </div> <!-- end card-box -->
     </div> <!-- end col -->

@@ -31,7 +31,7 @@
                     <div class="form-group row">
                         <label class="col-4 col-form-label" for="example-input-normal">Nama Biaya</label>
                         <div class="col-8">
-                            {!! Form::text('name', null, ['class' => $errors->has('name') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Nama Biaya'])!!}
+                            <input type="text" name="name" value="{{ old('name', data_get($formModel ?? null, 'name')) }}" class="{{ $errors->has('name') ? 'form-control is-invalid' : 'form-control' }}" placeholder="Nama Biaya">
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -42,7 +42,12 @@
                     <div class="form-group row">
                         <label class="col-4 col-form-label" for="example-input-normal">Jenis Biaya</label>
                         <div class="col-8">
-                            {!! Form::select('jenis_biaya', ['1' => 'Debet', '2' => 'Kredit'], null, ['class' => $errors->has('jenis_biaya') ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Pilih Jenis Biaya']) !!}
+                            <select name="jenis_biaya" class="{{ $errors->has('jenis_biaya') ? 'form-control is-invalid' : 'form-control' }}">
+<option value="">{{ 'Pilih Jenis Biaya' }}</option>
+@foreach((['1' => 'Debet', '2' => 'Kredit']) as $optionValue => $optionLabel)
+<option value="{{ $optionValue }}" @selected((string) old('jenis_biaya', data_get($formModel ?? null, 'jenis_biaya', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
+@endforeach
+</select>
                             @error('jenis_biaya')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -53,7 +58,11 @@
                     <div class="form-group row">
                         <label class="col-4 col-form-label" for="example-input-normal">Divisi Biaya</label>
                         <div class="col-8">
-                            {!! Form::select('divisi_id', [''=>'']+App\Divisi::pluck('name','id')->all(), null, ['class' => $errors->has('divisi_id') ? 'form-control is-invalid' : 'form-control']) !!}
+                            <select name="divisi_id" class="{{ $errors->has('divisi_id') ? 'form-control is-invalid' : 'form-control' }}">
+@foreach(([''=>'']+App\Divisi::pluck('name','id')->all()) as $optionValue => $optionLabel)
+<option value="{{ $optionValue }}" @selected((string) old('divisi_id', data_get($formModel ?? null, 'divisi_id', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
+@endforeach
+</select>
                             @error('divisi_id')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

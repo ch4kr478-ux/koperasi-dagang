@@ -5,24 +5,37 @@
         <div class="form-group clearfix">
             <label class="control-label " for="userName">Tanggal Transaksi</label>
             <div class="">
-                {!! Form::text('tgl', null, ['class' => 'form-control required datepicker', 'autocomplete' => 'off'])!!}
+                <input type="text" name="tgl" value="{{ old('tgl', data_get($formModel ?? null, 'tgl')) }}" class="form-control required datepicker" autocomplete="off">
             </div>
         </div>
         <div class="form-group clearfix">
             <label class="control-label " for="password"> Jenis Pembayaran *</label>
             <div class="">
-                {!! Form::select('jenis_pembayaran', ['1' => 'Cash', '2' => 'Bank'], null, ['placeholder' => '<---Jenis Transaksi -->', 'class' => 'form-control']) !!}
+                <select name="jenis_pembayaran" class="form-control">
+<option value="">{{ '<---Jenis Transaksi -->' }}</option>
+@foreach((['1' => 'Cash', '2' => 'Bank']) as $optionValue => $optionLabel)
+<option value="{{ $optionValue }}" @selected((string) old('jenis_pembayaran', data_get($formModel ?? null, 'jenis_pembayaran', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
+@endforeach
+</select>
             </div>
         </div>
         <div class="form-group clearfix">
             <label class="control-label " for="confirm">Divisi *</label>
             <div class="">
-                {!! Form::select('divisi_id', [''=>'']+App\Divisi::where('id', '2')->pluck('name','id')->all(), null, ['class' => 'form-control']) !!}
+                <select name="divisi_id" class="form-control">
+@foreach(([''=>'']+App\Divisi::where('id', '2')->pluck('name','id')->all()) as $optionValue => $optionLabel)
+<option value="{{ $optionValue }}" @selected((string) old('divisi_id', data_get($formModel ?? null, 'divisi_id', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
+@endforeach
+</select>
             </div>
         </div>
         <div class="form-group clearfix anggota">
             <label class="control-label " for="confirm">No Anggota *</label>
-            {!! Form::select('anggota_id', [''=>'Pilih Anggota']+App\Anggota::pluck('nama','id')->all(), null, ['class' => 'form-control select2']) !!}
+            <select name="anggota_id" class="form-control select2">
+@foreach(([''=>'Pilih Anggota']+App\Anggota::pluck('nama','id')->all()) as $optionValue => $optionLabel)
+<option value="{{ $optionValue }}" @selected((string) old('anggota_id', data_get($formModel ?? null, 'anggota_id', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
+@endforeach
+</select>
         </div>
         <div class="form-group clearfix anggota col-8">
             <table class="table">
@@ -56,7 +69,12 @@
         <div class="form-group clearfix">
             <label class="control-label" for="name"> Transaksi</label>
             <div class="">
-                {!! Form::select('jenis_transaksi', ['2' => 'Kredit'], null, ['placeholder' => '<---Jenis Transaksi -->', 'class' => 'form-control']) !!}
+                <select name="jenis_transaksi" class="form-control">
+<option value="">{{ '<---Jenis Transaksi -->' }}</option>
+@foreach((['2' => 'Kredit']) as $optionValue => $optionLabel)
+<option value="{{ $optionValue }}" @selected((string) old('jenis_transaksi', data_get($formModel ?? null, 'jenis_transaksi', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
+@endforeach
+</select>
             </div>
         </div>
         <div id="pinjam-kredit">
@@ -64,13 +82,13 @@
                 <label for="Pokok" class="control-label">Nominal</label>
                 <div class="">
                     <input type="hidden" class="form-control" name="biaya_id" value="8">
-                    {!! Form::text('nominal', null, ['class' => 'form-control biaya', 'autocomplete' => 'off'])!!}
+                    <input type="text" name="nominal" value="{{ old('nominal', data_get($formModel ?? null, 'nominal')) }}" class="form-control biaya" autocomplete="off">
                 </div>
             </div>
             <div class="form-group clearfix">
                 <label for="Pokok" class="control-label">Lama Kredit</label>
                 <div class="">
-                    {!! Form::number('lama_cicilan', null, ['class' => 'form-control biaya', 'autocomplete' => 'off'])!!}
+                    <input type="number" name="lama_cicilan" value="{{ old('lama_cicilan', data_get($formModel ?? null, 'lama_cicilan')) }}" class="form-control biaya" autocomplete="off">
                 </div>
             </div>
         </div>
@@ -82,7 +100,7 @@
         <div class="form-group clearfix">
             <label class="control-label " for="surname"> Keterangan </label>
             <div class="">
-                {!! Form::textarea('keterangan', null, ['class' => 'form-control required', 'autocomplete' => 'off'])!!}
+                <textarea name="keterangan" class="form-control required" autocomplete="off">{{ old('keterangan', data_get($formModel ?? null, 'keterangan')) }}</textarea>
             </div>
         </div>
     </section>

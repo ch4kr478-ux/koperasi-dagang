@@ -26,15 +26,19 @@
             <h4 class="m-t-0 header-title">FORM UBAH PERMISSION</h4>
 
             <div class="p-20">
-                {!! Form::model($permission, ['route' => ['permission.update', $permission->id], 'method'=>'put', 'class' => 'form-horizontal']) !!}
+                @php($formModel = $permission)
+<form method="post" action="{{ route('permission.update', $permission->id) }}" class="form-horizontal">
+@csrf
+@method('PUT')
+
                     <div class="form-group row">
                         <label class="col-4 col-form-label" for="example-input-normal">Nama Permission</label>
                         <div class="col-8">
-                            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nama Permission', 'disabled'=>'disabled'])!!}
+                            <input type="text" name="name" value="{{ old('name', data_get($formModel ?? null, 'name')) }}" class="form-control" placeholder="Nama Permission" disabled="disabled">
                         </div>
                     </div>
                     @include('permission.form')
-                {!! Form::close() !!}
+                </form>
             </div>
         </div> <!-- end card-box -->
     </div> <!-- end col -->

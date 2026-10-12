@@ -29,27 +29,35 @@
         <div class="card-box">
             <h4 class="m-t-0 header-title">FORM UBAH PENGGUNA</h4>
             <div class="p-20">
-                {!! Form::model($user, ['route' => ['user.update', $user->id], 'method'=>'put', 'class' => 'form-horizontal', 'id' => 'basic-form']) !!}
+                @php($formModel = $user)
+<form method="post" action="{{ route('user.update', $user->id) }}" class="form-horizontal" id="basic-form">
+@csrf
+@method('PUT')
+
                     <div class="form-group row">
                         <label class="col-4 col-form-label" for="example-input-normal">Nama</label>
                         <div class="col-8">
-                            {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Nama Pengguna'])!!}
+                            <input type="text" name="name" value="{{ old('name', data_get($formModel ?? null, 'name')) }}" class="form-control" placeholder="Nama Pengguna">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-4 col-form-label" for="example-input-normal">Email Pengguna</label>
                         <div class="col-8">
-                            {!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Email'])!!}
+                            <input type="text" name="email" value="{{ old('email', data_get($formModel ?? null, 'email')) }}" class="form-control" placeholder="Email">
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-4 col-form-label" for="example-input-normal">Hak Akses</label>
                         <div class="col-8">
-                                {!! Form::select('role_id', [''=>'Hak Akses']+App\Role::whereNotIn('name', ['member'])->pluck('name','id')->all(), null, ['class' => 'form-control select2']) !!}
+                                <select name="role_id" class="form-control select2">
+@foreach(([''=>'Hak Akses']+App\Role::whereNotIn('name', ['member'])->pluck('name','id')->all()) as $optionValue => $optionLabel)
+<option value="{{ $optionValue }}" @selected((string) old('role_id', data_get($formModel ?? null, 'role_id', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
+@endforeach
+</select>
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                {!! Form::close() !!}
+                </form>
             </div>
         </div> <!-- end card-box -->
     </div> <!-- end col -->

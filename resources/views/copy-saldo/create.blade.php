@@ -28,9 +28,12 @@
         <div class="card-box">
             <h4 class="m-t-0 header-title">FORM TAMBAH COPY SALDO</h4>
             <div class="p-20">
-                {!! Form::open(['url' => route('copy-saldo.store'), 'class' => 'form-horizontal'])!!}
+                @php($formModel = null)
+<form method="post" action="{{ route('copy-saldo.store') }}" class="form-horizontal">
+@csrf
+
                     @include('copy-saldo._form')
-                {!! Form::close() !!}
+                </form>
             </div>
         </div> <!-- end card-box -->
     </div> <!-- end col -->

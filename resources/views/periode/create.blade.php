@@ -28,9 +28,12 @@
         <div class="card-box">
             <h4 class="m-t-0 header-title">FORM TAMBAH PERIODE</h4>
             <div class="p-20">
-                {!! Form::open(['url' => route('periode.store'), 'class' => 'form-horizontal'])!!}
+                @php($formModel = null)
+<form method="post" action="{{ route('periode.store') }}" class="form-horizontal">
+@csrf
+
                     @include('periode._form')
-                {!! Form::close() !!}
+                </form>
             </div>
         </div> <!-- end card-box -->
     </div> <!-- end col -->

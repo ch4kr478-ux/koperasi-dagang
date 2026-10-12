@@ -18,11 +18,15 @@
         <div class="card-box">
             <h4 class="m-t-0 header-title">FORM RESET PASSWORD PENGGUNA</h4>
             <div class="p-20">
-                    {!! Form::model($user, ['route' => ['user.reset-pass', $user->id], 'method'=>'put', 'class' => 'form-horizontal']) !!}                    
+                    @php($formModel = $user)
+<form method="post" action="{{ route('user.reset-pass', $user->id) }}" class="form-horizontal">
+@csrf
+@method('PUT')
+
                     <div class="form-group row m-b-20">
                         <label class="col-4 col-form-label" for="example-input-normal">Password</label>
                         <div class="col-8">
-                            {{ Form::password('password', ['class' => ($errors->has('password')) ? 'form-control is-invalid' : 'form-control']) }}
+                            <input type="password" name="password" class="{{ ($errors->has('password')) ? 'form-control is-invalid' : 'form-control' }}">
                             @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -33,7 +37,7 @@
                     <div class="form-group row">
                         <label class="col-4 col-form-label" for="example-input-normal">Konfirmasi Password</label>
                         <div class="col-8">
-                            {!! Form::password('password_confirmation', ['class' => ($errors->has('password')) ? 'form-control is-invalid' : 'form-control', 'placeholder' => 'Konfirmasi Password'])!!}
+                            <input type="password" name="password_confirmation" class="{{ ($errors->has('password')) ? 'form-control is-invalid' : 'form-control' }}" placeholder="Konfirmasi Password">
                             @error('password_confirmation')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -42,7 +46,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">Simpan</button>
-                {!! Form::close() !!}
+                </form>
             </div>
         </div> <!-- end card-box -->
     </div> <!-- end col -->

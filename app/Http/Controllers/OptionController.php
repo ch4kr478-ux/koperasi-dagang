@@ -164,12 +164,12 @@ class OptionController extends Controller
             );
 
             $arrEnv = [
-                'MAIL_DRIVER' => $request->mail_driver,
+                'MAIL_MAILER' => $request->mail_driver,
                 'MAIL_HOST' => $request->mail_host,
                 'MAIL_PORT' => $request->mail_port,
                 'MAIL_USERNAME' => $request->mail_username,
                 'MAIL_PASSWORD' => $request->mail_password,
-                'MAIL_ENCRYPTION' => $request->mail_encryption,
+                'MAIL_SCHEME' => $request->mail_encryption,
                 'MAIL_FROM_NAME' => $request->mail_from_name,
                 'MAIL_FROM_ADDRESS' => $request->mail_from_address,
             ];
