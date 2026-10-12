@@ -28,11 +28,10 @@
         <div class="card-box">
             <h4 class="m-t-0 header-title">FORM TAMBAH Role</h4>
             <div class="p-20">
-                @php($formModel = null)
 <form method="post" action="{{ route('role.store') }}" class="form-horizontal">
 @csrf
 
-                    @include('role._form')
+                    @include('role._form', ['formModel' => null])
                 </form>
             </div>
         </div> <!-- end card-box -->
