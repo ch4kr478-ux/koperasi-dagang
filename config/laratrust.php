@@ -33,7 +33,10 @@ return [
     |           This method doesn't support cache yet.
     |
      */
-    'checker' => 'default',
+    'checkers' => [
+        'user' => 'default',
+        'role' => 'default',
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -67,29 +70,10 @@ return [
         'expiration_time' => 3600,
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Use teams feature in the package
-    |--------------------------------------------------------------------------
-    |
-    | Defines if Laratrust will use the teams feature.
-    | Please check the docs to see what you need to do in case you have the package already configured.
-    |
-    */
-    'use_teams' => false,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Strict check for roles/permissions inside teams
-    |--------------------------------------------------------------------------
-    |
-    | Determines if a strict check should be done when checking if a role or permission
-    | is attached inside a team.
-    | If it's false, when checking a role/permission without specifying the team,
-    | it will check only if the user has attached that role/permission ignoring the team.
-    |
-    */
-    'teams_strict_check' => false,
+    'teams' => [
+        'enabled' => false,
+        'strict_check' => false,
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -264,5 +248,6 @@ return [
     | Available: camel_case|snake_case|kebab_case
     |
     */
+    'permissions_as_gates' => true,
     'magic_can_method_case' => 'kebab_case',
 ];

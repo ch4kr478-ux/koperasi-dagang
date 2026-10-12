@@ -3,13 +3,13 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Laratrust\Traits\LaratrustUserTrait;
+use Laratrust\Contracts\LaratrustUser;
+use Laratrust\Traits\HasRolesAndPermissions;
 
-class User extends Authenticatable
+class User extends Authenticatable implements LaratrustUser
 {
-    use LaratrustUserTrait;
+    use HasRolesAndPermissions;
     use Notifiable;
 
     /**
@@ -42,11 +42,6 @@ class User extends Authenticatable
     public function user_anggota()
     {
         return $this->hasOne('App\UserAnggota');
-    }
-
-    public function roles()
-	{
-		return $this->belongsToMany('App\Role');
     }
 
     public function getRoleListAttribute()

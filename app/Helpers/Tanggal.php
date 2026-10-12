@@ -8,10 +8,7 @@ class Tanggal {
 
     public static function tanggal_id($tgl)
     {
-        $dt = new Carbon($tgl);
-        setlocale(LC_TIME, 'IND');
-        setlocale(LC_TIME, 'id_ID');
-        return $dt->formatLocalized('%d %B %Y');
+        return (new Carbon($tgl))->locale('id')->translatedFormat('d F Y');
     }
 
     public static function convert_tanggal($tgl)

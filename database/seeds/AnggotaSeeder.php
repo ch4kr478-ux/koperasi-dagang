@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Anggota;
 use App\User;
 use App\UserAnggota;
-use Laratrust\Models\LaratrustRole as Role;
+use App\Role;
 
 class AnggotaSeeder extends Seeder
 {
@@ -36,7 +36,7 @@ class AnggotaSeeder extends Seeder
         $user_anggota->user_id = $user->id;
         $user_anggota->save();
         $roleUser = Role::where('name', 'member')->first();
-        $user->attachRole($roleUser);
+        $user->addRole($roleUser);
 
         $anggota = new Anggota();
         $anggota->nik = '320209050501002';
@@ -58,7 +58,7 @@ class AnggotaSeeder extends Seeder
         $user_anggota->user_id = $user->id;
         $user_anggota->save();
 
-        $user->attachRole($roleUser);
+        $user->addRole($roleUser);
 
         $anggota = new Anggota();
         $anggota->nik = '320209060601003';
@@ -80,7 +80,7 @@ class AnggotaSeeder extends Seeder
         $user_anggota->user_id = $user->id;
         $user_anggota->save();
 
-        $user->attachRole($roleUser);
+        $user->addRole($roleUser);
 
         $anggota = new Anggota();
         $anggota->nik = '320209070701004';
@@ -102,7 +102,7 @@ class AnggotaSeeder extends Seeder
         $user_anggota->user_id = $user->id;
         $user_anggota->save();
 
-        $user->attachRole($roleUser);
+        $user->addRole($roleUser);
 
         $anggota = new Anggota();
         $anggota->nik = '320209080801005';
@@ -124,7 +124,7 @@ class AnggotaSeeder extends Seeder
         $user_anggota->user_id = $user->id;
         $user_anggota->save();
 
-        $user->attachRole($roleUser);
+        $user->addRole($roleUser);
 
         $anggota = new Anggota();
         $anggota->nik = '320209080801006';
@@ -146,7 +146,7 @@ class AnggotaSeeder extends Seeder
         $user_anggota->user_id = $user->id;
         $user_anggota->save();
 
-        $user->attachRole($roleUser);
+        $user->addRole($roleUser);
 
         $anggota = new Anggota();
         $anggota->nik = '320209080801007';
@@ -168,7 +168,7 @@ class AnggotaSeeder extends Seeder
         $user_anggota->user_id = $user->id;
         $user_anggota->save();
 
-        $user->attachRole($roleUser);
+        $user->addRole($roleUser);
 
         $anggota = new Anggota();
         $anggota->nik = '320209080801008';
@@ -190,7 +190,7 @@ class AnggotaSeeder extends Seeder
         $user_anggota->user_id = $user->id;
         $user_anggota->save();
 
-        $user->attachRole($roleUser);
+        $user->addRole($roleUser);
 
         $anggota = new Anggota();
         $anggota->nik = '320209080801009';
@@ -207,7 +207,7 @@ class AnggotaSeeder extends Seeder
             'password' => bcrypt('Kopkar2019')
         ]);
 
-        $user->attachRole($roleUser);
+        $user->addRole($roleUser);
 
         $user_anggota = new UserAnggota();
         $user_anggota->anggota_id = $anggota->id;
@@ -229,7 +229,7 @@ class AnggotaSeeder extends Seeder
             'password' => bcrypt('Kopkar2019')
         ]);
 
-        $user->attachRole($roleUser);
+        $user->addRole($roleUser);
 
         $user_anggota = new UserAnggota();
         $user_anggota->anggota_id = $anggota->id;

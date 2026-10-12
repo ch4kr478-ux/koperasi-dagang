@@ -2,10 +2,10 @@
 
 use App\Module;
 use Illuminate\Database\Seeder;
-use Laratrust\Models\LaratrustRole as Role;
 use App\User;
+use App\Role;
+use App\Permission;
 use App\RoleUser;
-use Laratrust\Models\LaratrustPermission as Permission;
 
 class UsersSeeder extends Seeder
 {
@@ -860,10 +860,10 @@ class UsersSeeder extends Seeder
 
         foreach ($adminPermission as $ap) {
             $permission = Permission::where('name', $ap)->first();
-            $adminRole->attachPermission($permission->id);
+            $adminRole->givePermission($permission->id);
         }
 
-        $userAdmin->attachRole($adminRole);
+        $userAdmin->addRole($adminRole);
 
         //Member Rules
         Role::create([
@@ -891,9 +891,9 @@ class UsersSeeder extends Seeder
 
         foreach ($memberPermission as $ap) {
             $permission = Permission::where('name', $ap)->first();
-            $memberRole->attachPermission($permission->id);
+            $memberRole->givePermission($permission->id);
         }
 
-        $memberUser->attachRole($memberRole);
+        $memberUser->addRole($memberRole);
     }
 }

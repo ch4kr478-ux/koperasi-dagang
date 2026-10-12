@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Periode;
+use App\CopySaldo;
 use Illuminate\Http\Request;
 use DataTables;
 use Tanggal;
@@ -240,10 +241,33 @@ class PeriodeController extends Controller
      */
     public function destroy($id)
     {
-        //
         if (\Auth::user()->can('delete-periode')) {
-            # code...
-            Periode::find($id)->delete();
+            $periode = Periode::findOrFail($id);
+
+            if ($periode->status == 1) {
+                Session::flash("flash_notification", [
+                    "level" => "warning",
+                    "message" => "Periode aktif tidak dapat dihapus. Aktifkan periode lain terlebih dahulu."
+                ]);
+
+                return redirect()->route('periode.index');
+            }
+
+            $hasCopySaldo = CopySaldo::where('from_periode_id', $periode->id)
+                ->orWhere('to_periode_id', $periode->id)
+                ->exists();
+            $hasTransactions = TransaksiHarian::where('periode_id', $periode->id)->exists();
+
+            if ($hasCopySaldo || $hasTransactions) {
+                Session::flash("flash_notification", [
+                    "level" => "warning",
+                    "message" => "Periode tidak dapat dihapus karena masih digunakan oleh data transaksi atau copy saldo."
+                ]);
+
+                return redirect()->route('periode.index');
+            }
+
+            $periode->delete();
             Session::flash("flash_notification",[
                 "level" => "success",
                 "message" => "Berhasil Menghapus Periode"

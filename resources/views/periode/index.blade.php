@@ -28,7 +28,7 @@
 @if (session()->has('flash_notification.message'))
 <div class="row">
     <div class="col-12">
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-{{ session()->get('flash_notification.level', 'success') }} alert-dismissible fade show" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">×</span>
             </button>

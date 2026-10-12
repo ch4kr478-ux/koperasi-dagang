@@ -159,13 +159,13 @@ class PermissionController extends Controller
     public function attachPermission(Request $request, $role_id)
     {
         $role = Role::find($role_id);
-        $role->attachPermission($request->permission);
+        $role->givePermission($request->permission);
     }
 
     public function detachPermission(Request $request, $role_id)
     {
 
         $role = Role::find($role_id);
-        $role->detachPermission($request->permission);
+        $role->removePermission($request->permission);
     }
 }

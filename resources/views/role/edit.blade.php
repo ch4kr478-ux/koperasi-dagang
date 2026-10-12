@@ -36,23 +36,20 @@
         </div> <!-- end card-box -->
     </div> <!-- end col -->
     <div class="col-lg-6">
-        @php
-            $accordion = 0;
-        @endphp
             <div id="accordion" role="tablist" aria-multiselectable="true">
-                @foreach ($module as $item)
+                <?php foreach ($module as $moduleIndex => $item): ?>
                     <div class="card">
                         <div class="card-header" role="tab" id="heading{{$item->id}}">
                             <h6 class="mb-0 mt-0">
                                 <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{$item->id}}" class="text-dark collapsed"
-                                    aria-expanded="{{ ($accordion == 0) ? 'true' : 'false'}}" aria-controls="collapse{{$item->id}}">
+                                    aria-expanded="{{ $moduleIndex === 0 ? 'true' : 'false' }}" aria-controls="collapse{{$item->id}}">
                                     {{ $item->name }}
                                 </a>
                             </h6>
                         </div>
-                        <div id="collapse{{$item->id}}" class="collapse {{ ($accordion == 0) ? 'show' : ''}}" role="tabpanel" aria-labelledby="heading{{$item->id}}" style="">
+                        <div id="collapse{{$item->id}}" class="collapse {{ $moduleIndex === 0 ? 'show' : '' }}" role="tabpanel" aria-labelledby="heading{{$item->id}}" style="">
                             <div class="card-body">
-                                @foreach ($item->permission as $row)
+                                <?php foreach ($item->permission as $row): ?>
                                     <div class="checkbox checkbox-success form-check-inline">
                                         @php
                                             $permission_with_role = $row->permission_with_role($row->id, $role->id);
@@ -69,14 +66,11 @@
                                             @endif
                                         </div>
                                     </div>
-                                @endforeach
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>
-                    @php
-                        $accordion++;
-                    @endphp
-                @endforeach
+                <?php endforeach; ?>
             </div>
     </div>
 </div>

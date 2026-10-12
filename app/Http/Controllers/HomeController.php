@@ -39,6 +39,12 @@ class HomeController extends Controller
         $status_anggota = [$anggota_aktif, $anggota_disable];
         if($user->roles->pluck( 'name' )->contains( 'admin' ) || $user->roles->pluck( 'name' )->contains( 'ketua') || $user->roles->pluck( 'name' )->contains( 'operator' ))
         {
+            if (!$periode) {
+                return redirect()->route('periode.index')->with('flash_notification', [
+                    'level' => 'warning',
+                    'message' => 'Belum ada periode aktif. Silakan buat periode atau aktifkan periode yang tersedia sebelum membuka dashboard.'
+                ]);
+            }
 
             $transaksi_harian = TransaksiHarian::with(['sumKreditAll', 'sumDebitAll'])
                 ->select(['id', 'tgl', 'keterangan', 'jenis_transaksi'])
