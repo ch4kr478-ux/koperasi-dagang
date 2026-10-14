@@ -109,7 +109,8 @@
                     @permission('upload-kredit-simpanan')<a href="{{ route('simpanan-kredit.upload') }}" class="btn btn-warning waves-light waves-effect w-md"><i class="mdi mdi-cloud-upload"></i> Upload</a>@endpermission
                     @if(!$isMember && Pembukuan::closeBook('1', '2', ['4']) == '1')
                         <a href="{{ route('simpanan-kredit.close-book') }}" class="btn btn-danger waves-light waves-effect w-md"><i class="fa fa-book"></i> Tutup Buku</a>
-                    @endif@endunless`);
+                    @endif
+                    @endunless`);
 
     });
 </script>
