@@ -132,11 +132,7 @@ class PengajuanPinjamanKreditController extends Controller
             $application = PengajuanPinjamanKredit::whereKey($pengajuanPinjaman->id)
                 ->lockForUpdate()
                 ->firstOrFail();
-            if ($application->status !== $stage['next_status'] && $application->status !== 'menunggu_ketua') {
-                // The application may have advanced since the details page was opened.
-                abort(409, 'Pengajuan sudah diproses oleh tahap lain.');
-            }
-            if (!Auth::user()->can($stage['permission']) || $application->status !== $pengajuanPinjaman->status) {
+            if ($application->status !== $pengajuanPinjaman->status) {
                 abort(409, 'Tahap persetujuan pengajuan sudah berubah.');
             }
 

@@ -111,6 +111,13 @@
                             </a>
                         </li>
                         @endif
+                        @permission('view-pengajuan-pinjaman-kredit')
+                        <li class="{{ set_active(['pengajuan-pinjaman.index', 'pengajuan-pinjaman.create', 'pengajuan-pinjaman.show'])}}">
+                            <a href="{{ route('pengajuan-pinjaman.index') }}" class="{{ set_active(['pengajuan-pinjaman.index', 'pengajuan-pinjaman.create', 'pengajuan-pinjaman.show'])}}">
+                                Pengajuan Kredit
+                            </a>
+                        </li>
+                        @endpermission
                     </ul>
                 </li>
                 @endif

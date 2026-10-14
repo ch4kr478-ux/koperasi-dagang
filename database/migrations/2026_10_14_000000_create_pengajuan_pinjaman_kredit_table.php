@@ -17,13 +17,13 @@ class CreatePengajuanPinjamanKreditTable extends Migration
             $table->unsignedInteger('lama_cicilan');
             $table->text('keterangan')->nullable();
             $table->string('status', 32)->default('menunggu_admin');
-            $table->unsignedInteger('admin_user_id')->nullable();
+            $table->unsignedBigInteger('admin_user_id')->nullable();
             $table->text('admin_catatan')->nullable();
             $table->timestamp('admin_diproses_pada')->nullable();
-            $table->unsignedInteger('bendahara_user_id')->nullable();
+            $table->unsignedBigInteger('bendahara_user_id')->nullable();
             $table->text('bendahara_catatan')->nullable();
             $table->timestamp('bendahara_diproses_pada')->nullable();
-            $table->unsignedInteger('ketua_user_id')->nullable();
+            $table->unsignedBigInteger('ketua_user_id')->nullable();
             $table->text('ketua_catatan')->nullable();
             $table->timestamp('ketua_diproses_pada')->nullable();
             $table->unsignedInteger('jenis_pembayaran')->nullable();
