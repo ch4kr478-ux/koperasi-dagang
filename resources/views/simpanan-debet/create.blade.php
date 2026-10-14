@@ -82,11 +82,23 @@
                 },
                 success: function(data)
                 {
-                    console.log(data)
                     $('#nama-anggota').text(data.nama)
                     $('#nama-inisial').text(data.inisial)
                     $('#status-anggota').text(data.status)
                     $('#tanggal-daftar').text(data.tgl_daftar)
+                },
+                error: function(xhr)
+                {
+                    console.error('Gagal memuat data anggota.', xhr.responseText)
+                    $.toast({
+                        heading: 'Error !',
+                        text: 'Data anggota tidak dapat dimuat.',
+                        position: 'top-right',
+                        loaderBg: '#bf441d',
+                        icon: 'error',
+                        hideAfter: 3000,
+                        stack: 1
+                    });
                 }
             });
         });

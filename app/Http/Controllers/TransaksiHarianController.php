@@ -6,7 +6,6 @@ use App\TransaksiHarian;
 use Illuminate\Http\Request;
 use DataTables;
 use Tanggal;
-use Illuminate\Support\Facades\Input;
 use App\Anggota;
 use App\TransaksiHarianAnggota;
 use App\TransaksiHarianBiaya;
@@ -212,8 +211,7 @@ class TransaksiHarianController extends Controller
     {
         if($request->ajax())
         {
-            $anggota_id = Input::get('anggota_id');
-            $anggota = Anggota::find($anggota_id);
+            $anggota = Anggota::findOrFail($request->input('anggota_id'));
             if($anggota->status == '1')
             {
                 $anggota->status = 'Aktif';
