@@ -4,76 +4,28 @@
     <div class="col-12">
         <div class="page-title-box">
             <div class="float-left">
-                <h4 class="page-title">Biaya </h4>
-                <small class="text-danger">Periode : {{ periode()->name }}</small>
+                <h4 class="page-title">Tambah Biaya</h4>
+                <small>Tambahkan jenis biaya dan divisi yang terkait.</small>
             </div>
             <div class="float-right">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Master Data</a></li>
-                <li class="breadcrumb-item active"><a href="{{route('biaya.index')}}">Biaya</a></li>
-                    <li class="breadcrumb-item active">Tambah Biaya</li>
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('biaya.index') }}">Biaya</a></li>
+                    <li class="breadcrumb-item active">Tambah</li>
                 </ol>
-                <small class="text-danger">Tahun Buku : {{ periode()->open_date }} - {{ periode()->close_date }}</small>
             </div>
-            <div class="clearfix"></div>
         </div>
     </div>
 </div>
-<!-- end row -->
 <div class="row">
-    <div class="col-6">
+    <div class="col-lg-8">
         <div class="card-box">
-            <h4 class="m-t-0 header-title">FORM TAMBAH BIAYA</h4>
-
-            <div class="p-20">
-                <form role="form" class="form-horizontal" method="post" action="{{ route('biaya.store') }}">
-                    @csrf
-                    <div class="form-group row">
-                        <label class="col-4 col-form-label" for="example-input-normal">Nama Biaya</label>
-                        <div class="col-8">
-                            <input type="text" name="name" value="{{ old('name', data_get($formModel ?? null, 'name')) }}" class="{{ $errors->has('name') ? 'form-control is-invalid' : 'form-control' }}" placeholder="Nama Biaya">
-                            @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-4 col-form-label" for="example-input-normal">Jenis Biaya</label>
-                        <div class="col-8">
-                            <select name="jenis_biaya" class="{{ $errors->has('jenis_biaya') ? 'form-control is-invalid' : 'form-control' }}">
-<option value="">{{ 'Pilih Jenis Biaya' }}</option>
-@foreach((['1' => 'Debet', '2' => 'Kredit']) as $optionValue => $optionLabel)
-<option value="{{ $optionValue }}" @selected((string) old('jenis_biaya', data_get($formModel ?? null, 'jenis_biaya', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
-@endforeach
-</select>
-                            @error('jenis_biaya')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-4 col-form-label" for="example-input-normal">Divisi Biaya</label>
-                        <div class="col-8">
-                            <select name="divisi_id" class="{{ $errors->has('divisi_id') ? 'form-control is-invalid' : 'form-control' }}">
-@foreach(([''=>'']+App\Divisi::pluck('name','id')->all()) as $optionValue => $optionLabel)
-<option value="{{ $optionValue }}" @selected((string) old('divisi_id', data_get($formModel ?? null, 'divisi_id', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
-@endforeach
-</select>
-                            @error('divisi_id')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                </form>
-            </div>
-        </div> <!-- end card-box -->
-    </div> <!-- end col -->
+            <h4 class="header-title mb-3">Informasi Biaya</h4>
+            <form method="post" action="{{ route('biaya.store') }}">
+                @csrf
+                @include('biaya._form')
+            </form>
+        </div>
+    </div>
 </div>
 @endsection

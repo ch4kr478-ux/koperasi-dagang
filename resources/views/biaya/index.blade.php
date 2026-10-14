@@ -39,6 +39,7 @@
                         <th>Nama Biaya</th>
                         <th>Jenis Biaya</th>
                         <th>Divisi</th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -64,24 +65,48 @@
 <script src="{{ asset('plugins/datatables/buttons.html5.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables/buttons.print.min.js') }}"></script>
 <script>
-    $(document).ready(function(){
-        var oTable = $('#datatable-buttons').DataTable({
-                        processing: true,
-                        serverSide: true,
-                        ajax: "{{ route('biaya.index') }}",
-                        columns: [
-                            { data: 'id', name: 'id' },
-                            { data: 'name', name: 'name' },
-                            { data: 'jenis_biaya', name: 'jenis_biaya' },
-                            { data: 'divisi.name', name: 'divisi.name' }
-                        ],
-                        order: [[ 0, "desc" ]],
-                        dom: '<"toolbar">frtip',
-                    });
-                    @permission('create-biaya')
-                    $("div.toolbar").html('<a href="{{ route('biaya.create') }}" class="btn btn-gradient btn-rounded waves-light waves-effect w-md">Tambah Biaya</a>');
-                    @endpermission
+    $(document).ready(function () {
+        $('#datatable-buttons').DataTable({
+            processing: true,
+            serverSide: true,
+            responsive: true,
+            ajax: "{{ route('biaya.index') }}",
+            columns: [
+                { data: 'id', name: 'id' },
+                { data: 'name', name: 'name' },
+                { data: 'jenis_biaya', name: 'jenis_biaya' },
+                { data: 'divisi.name', name: 'divisi.name' },
+                { data: 'action', name: 'action', searchable: false, orderable: false }
+            ],
+            order: [[0, 'desc']],
+            pageLength: 10,
+            dom: '<"toolbar">frtip',
+            language: {
+                search: '',
+                searchPlaceholder: 'Cari nama biaya',
+                lengthMenu: 'Tampilkan _MENU_ biaya',
+                info: 'Menampilkan _START_–_END_ dari _TOTAL_ biaya',
+                infoEmpty: 'Belum ada data biaya',
+                infoFiltered: '(disaring dari _MAX_ biaya)',
+                zeroRecords: 'Biaya yang dicari tidak ditemukan',
+                emptyTable: 'Belum ada data biaya.',
+                paginate: {
+                    previous: 'Sebelumnya',
+                    next: 'Berikutnya'
+                }
+            }
+        });
 
+        var actions = [];
+        @permission('create-biaya')
+        actions.push('<a href="{{ route('biaya.create') }}" class="btn btn-primary"><i class="mdi mdi-plus mr-1"></i> Tambah Biaya</a>');
+        @endpermission
+        @permission('manage-biaya')
+        actions.push('<a href="{{ route('biaya.template') }}" class="btn btn-success"><i class="mdi mdi-file-excel-outline mr-1"></i> Unduh Template Excel</a>');
+        @endpermission
+        if (actions.length) {
+            $('div.toolbar').html(actions.join(''));
+        }
     });
 </script>
 @endsection

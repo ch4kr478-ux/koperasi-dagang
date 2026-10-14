@@ -40,6 +40,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/home', 'HomeController@index')->name('home');
         Route::resource('anggota', 'AnggotaController');
         Route::get('/anggota-export', 'AnggotaController@export')->name('anggota.export');
+        Route::get('/biaya-template', 'BiayaController@downloadTemplate')->name('biaya.template');
         Route::resource('divisi', 'DivisiController');
         Route::resource('produk-pinjaman', 'ProdukPinjamanController')->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
         Route::resource('transaksi-harian', 'TransaksiHarianController');
