@@ -1,91 +1,178 @@
 @extends('layouts.master')
 @section('style')
 <style>
+    .admin-dashboard {
+        padding-bottom: 24px;
+        color: #465166;
+    }
+
     .admin-dashboard .dashboard-heading {
-        padding: 22px 26px;
-        border-radius: 8px;
-        color: #fff;
-        background: linear-gradient(120deg, #263b80, #4263eb);
-        box-shadow: 0 8px 24px rgba(38, 59, 128, .14);
+        position: relative;
+        overflow: hidden;
+        padding: 26px 30px;
+        border: 1px solid #e5eaf3;
+        border-radius: 12px;
+        color: #344054;
+        background: linear-gradient(115deg, #fff 0%, #f5f7fc 66%, #eef2fa 100%);
+        box-shadow: 0 8px 24px rgba(35, 47, 74, .055);
+    }
+
+    .admin-dashboard .dashboard-heading:after {
+        position: absolute;
+        top: -80px;
+        right: 16%;
+        width: 230px;
+        height: 230px;
+        border: 1px solid rgba(106, 127, 177, .11);
+        border-radius: 50%;
+        box-shadow: 0 0 0 24px rgba(106, 127, 177, .035), 0 0 0 50px rgba(106, 127, 177, .025);
+        content: "";
+        pointer-events: none;
     }
 
     .admin-dashboard .dashboard-heading h4,
     .admin-dashboard .dashboard-heading .breadcrumb-item,
     .admin-dashboard .dashboard-heading .breadcrumb-item a {
-        color: #fff;
+        color: #465166;
+    }
+
+    .admin-dashboard .dashboard-heading h4 {
+        margin-bottom: 5px;
+        font-size: 21px;
+        font-weight: 700;
+    }
+
+    .admin-dashboard .dashboard-heading .float-left,
+    .admin-dashboard .dashboard-heading .float-right {
+        position: relative;
+        z-index: 1;
     }
 
     .admin-dashboard .dashboard-heading .breadcrumb {
         background: transparent;
-        margin-bottom: 4px;
+        margin-bottom: 7px;
         padding: 0;
     }
 
+    .admin-dashboard .period-caption {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 11px;
+        border: 1px solid #e5e9f1;
+        border-radius: 20px;
+        color: #68748a;
+        background: rgba(255, 255, 255, .72);
+        font-size: 11px;
+    }
+
     .admin-dashboard .dashboard-subtitle {
-        color: rgba(255, 255, 255, .78);
+        color: #7d8798;
     }
 
     .admin-dashboard .dashboard-card,
     .admin-dashboard .dashboard-panel {
-        height: 100%;
-        border: 1px solid #edf0f5;
-        border-radius: 8px;
-        box-shadow: 0 4px 16px rgba(28, 39, 60, .04);
+        height: calc(100% - 22px);
+        border: 1px solid #e9edf3;
+        border-radius: 11px;
+        box-shadow: 0 4px 14px rgba(35, 47, 74, .04);
+        transition: box-shadow .2s ease, transform .2s ease;
+    }
+
+    .admin-dashboard .dashboard-card:hover,
+    .admin-dashboard .dashboard-panel:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 9px 22px rgba(35, 47, 74, .075);
     }
 
     .admin-dashboard .dashboard-card {
         position: relative;
         overflow: hidden;
-        padding: 22px;
+        min-height: 178px;
+        padding: 21px 22px;
         background: #fff;
+    }
+
+    .admin-dashboard .dashboard-card:before {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #a7b5d4, #e5eaf4);
+        content: "";
+    }
+
+    .admin-dashboard .dashboard-card.credit-card:before {
+        background: linear-gradient(90deg, #d5b2b6, #f1e5e7);
+    }
+
+    .admin-dashboard .dashboard-section-title {
+        display: flex;
+        align-items: center;
+        margin: 2px 0 14px;
+        color: #667085;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: .06em;
+        text-transform: uppercase;
+    }
+
+    .admin-dashboard .dashboard-section-title:after {
+        flex: 1;
+        height: 1px;
+        margin-left: 12px;
+        background: #e9edf3;
+        content: "";
     }
 
     .admin-dashboard .dashboard-card-icon {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 42px;
-        height: 42px;
-        margin-bottom: 16px;
-        border-radius: 10px;
-        font-size: 20px;
+        width: 39px;
+        height: 39px;
+        margin-bottom: 13px;
+        border: 1px solid rgba(84, 131, 106, .06);
+        border-radius: 12px;
+        font-size: 17px;
     }
 
     .admin-dashboard .dashboard-card-icon.debit {
-        color: #2f9e44;
-        background: #ebfbee;
+        color: #54836a;
+        background: #edf5f0;
     }
 
     .admin-dashboard .dashboard-card-icon.credit {
-        color: #e03131;
-        background: #fff5f5;
+        color: #aa6c70;
+        background: #f9eff0;
     }
 
     .admin-dashboard .dashboard-card-label {
         margin-bottom: 7px;
-        color: #868e96;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: .05em;
+        color: #7b8494;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: .055em;
         text-transform: uppercase;
     }
 
     .admin-dashboard .dashboard-card-value {
         margin-bottom: 4px;
-        color: #343a40;
-        font-size: 21px;
+        color: #344054;
+        font-size: 19px;
         font-weight: 700;
         overflow-wrap: anywhere;
     }
 
     .admin-dashboard .dashboard-card-note {
         margin: 0;
-        color: #868e96;
+        color: #929aaa;
         font-size: 12px;
     }
 
     .admin-dashboard .dashboard-panel {
-        padding: 22px;
+        margin-bottom: 20px;
+        padding: 23px 25px;
         background: #fff;
     }
 
@@ -94,26 +181,28 @@
         align-items: flex-start;
         justify-content: space-between;
         margin-bottom: 18px;
+        padding-bottom: 15px;
+        border-bottom: 1px solid #f0f2f6;
     }
 
     .admin-dashboard .dashboard-panel-heading h5 {
         margin-bottom: 4px;
-        color: #343a40;
-        font-size: 16px;
-        font-weight: 700;
+        color: #394458;
+        font-size: 15px;
+        font-weight: 650;
     }
 
     .admin-dashboard .dashboard-panel-heading p {
         margin: 0;
-        color: #868e96;
+        color: #8a93a2;
         font-size: 12px;
     }
 
     .admin-dashboard .activity-table th {
         border-top: 0;
-        color: #868e96;
-        font-size: 11px;
-        font-weight: 700;
+        color: #858e9d;
+        font-size: 10px;
+        font-weight: 600;
         letter-spacing: .04em;
         text-transform: uppercase;
         white-space: nowrap;
@@ -121,14 +210,20 @@
 
     .admin-dashboard .activity-table td {
         vertical-align: middle;
-        color: #495057;
+        color: #596477;
+        font-size: 12px;
+    }
+
+    .admin-dashboard .activity-table tbody tr:hover,
+    .admin-dashboard .flow-table tbody tr:hover {
+        background-color: #f8f9fc;
     }
 
     .admin-dashboard .flow-table th {
         border-top: 0;
-        color: #868e96;
-        font-size: 11px;
-        font-weight: 700;
+        color: #858e9d;
+        font-size: 10px;
+        font-weight: 600;
         letter-spacing: .04em;
         text-transform: uppercase;
         white-space: nowrap;
@@ -136,30 +231,146 @@
 
     .admin-dashboard .flow-table td {
         vertical-align: middle;
+        color: #596477;
+        font-size: 12px;
     }
 
     .admin-dashboard .activity-badge {
         display: inline-block;
-        min-width: 66px;
-        padding: 5px 9px;
-        border-radius: 20px;
+        min-width: 62px;
+        padding: 4px 9px;
+        border-radius: 16px;
         text-align: center;
         font-size: 11px;
-        font-weight: 700;
+        font-weight: 600;
     }
 
     .admin-dashboard .activity-badge.debit {
-        color: #2b8a3e;
-        background: #ebfbee;
+        color: #54836a;
+        background: #edf5f0;
     }
 
     .admin-dashboard .activity-badge.credit {
-        color: #c92a2a;
-        background: #fff5f5;
+        color: #aa6c70;
+        background: #f9eff0;
     }
 
     .admin-dashboard .dashboard-chart {
-        height: 320px;
+        height: 300px;
+        padding: 8px 4px 0;
+    }
+
+    .admin-dashboard .chart-total {
+        margin-top: 2px;
+        padding: 12px 14px;
+        border: 1px solid #eff1f5;
+        border-radius: 9px;
+        background: #fafbfc;
+    }
+
+    .admin-dashboard .chart-total-label {
+        display: block;
+        margin-bottom: 4px;
+        color: #8992a1;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: .05em;
+        text-transform: uppercase;
+    }
+
+    .admin-dashboard .chart-total-value {
+        color: #455168;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .admin-dashboard .chart-total.debit .chart-total-value {
+        color: #54836a;
+    }
+
+    .admin-dashboard .chart-total.credit .chart-total-value {
+        color: #aa6c70;
+    }
+
+    .admin-dashboard .activity-table,
+    .admin-dashboard .flow-table {
+        margin-bottom: 0;
+    }
+
+    .admin-dashboard .activity-table thead th,
+    .admin-dashboard .flow-table thead th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        background: #fafbfc;
+    }
+
+    .admin-dashboard .activity-table tbody td,
+    .admin-dashboard .flow-table tbody td {
+        padding-top: 13px;
+        padding-bottom: 13px;
+    }
+
+    .admin-dashboard .activity-person {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .admin-dashboard .activity-person:last-child {
+        margin-bottom: 0;
+    }
+
+    .admin-dashboard .activity-initial {
+        display: inline-flex;
+        flex: 0 0 36px;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        margin-right: 11px;
+        border-radius: 50%;
+        color: #687ba8;
+        background: #eef1f8;
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .admin-dashboard .activity-person-name {
+        margin-bottom: 2px;
+        color: #4b566b;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .admin-dashboard .activity-person-description {
+        margin-bottom: 0;
+        color: #8992a1;
+        font-size: 11px;
+    }
+
+    .admin-dashboard .activity-person-time {
+        margin-left: auto;
+        padding-left: 10px;
+        color: #9aa2af;
+        font-size: 11px;
+        white-space: nowrap;
+    }
+
+    .admin-dashboard .badge-light {
+        border: 1px solid #e8ebf1;
+        border-radius: 14px;
+        color: #7b8494;
+        background: #f7f8fb;
+        font-size: 10px;
+        font-weight: 600;
+    }
+
+    .admin-dashboard .text-success {
+        color: #54836a !important;
+    }
+
+    .admin-dashboard .text-danger {
+        color: #aa6c70 !important;
     }
 
     @media (max-width: 767.98px) {
@@ -169,8 +380,25 @@
             padding: 18px;
         }
 
+        .admin-dashboard .dashboard-heading:after {
+            right: -120px;
+        }
+
+        .admin-dashboard .dashboard-heading .float-left,
+        .admin-dashboard .dashboard-heading .float-right {
+            float: none !important;
+        }
+
+        .admin-dashboard .dashboard-heading .float-right {
+            margin-top: 14px;
+        }
+
         .admin-dashboard .dashboard-chart {
             height: 260px;
+        }
+
+        .admin-dashboard .activity-person-time {
+            font-size: 10px;
         }
     }
 </style>
@@ -181,7 +409,7 @@
     <div class="col-12">
         <div class="page-title-box dashboard-heading mb-4">
             <div class="float-left">
-                <h4 class="page-title">Dashboard Admin</h4>
+                <h4 class="page-title">Dashboard Administrator</h4>
                 <small class="dashboard-subtitle">Ringkasan koperasi dan aktivitas transaksi</small>
             </div>
             <div class="float-right">
@@ -189,16 +417,20 @@
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Kopkar</a></li>
                     <li class="breadcrumb-item active">Dashboard</li>
                 </ol>
-                <small class="dashboard-subtitle">{{ $periode->name }} &middot; {{ date('d-m-Y', strtotime($periode->open_date)) }} - {{ date('d-m-Y', strtotime($periode->close_date)) }}</small>
+                <span class="period-caption">
+                    <i class="mdi mdi-calendar-blank mr-1"></i>
+                    {{ $periode->name }} &middot; {{ date('d-m-Y', strtotime($periode->open_date)) }} - {{ date('d-m-Y', strtotime($periode->close_date)) }}
+                </span>
             </div>
             <div class="clearfix"></div>
         </div>
     </div>
 </div>
 <!-- end row -->
+<div class="dashboard-section-title">Simpanan · Periode Aktif</div>
 <div class="row">
     <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-        <div class="dashboard-card">
+        <div class="dashboard-card credit-card">
             <span class="dashboard-card-icon debit"><i class="fi-layers"></i></span>
             <h6 class="dashboard-card-label">Saldo Pokok</h6>
             <div class="dashboard-card-value">{{ Money::stringToRupiah($sum_pokok) }}</div>
@@ -240,16 +472,16 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6">
-                    <div class="text-center mt-3">
-                        <h6 class="font-normal text-muted font-14">Total Kredit</h6>
-                        <h6 class="font-18"><i class="mdi mdi-arrow-down-bold-hexagon-outline text-danger"></i> <span class="text-dark">{{ Money::stringToRupiah($saldo_kredit) }}</span> </h6>
+                <div class="col-sm-6 mb-2">
+                    <div class="chart-total credit">
+                        <span class="chart-total-label"><i class="mdi mdi-arrow-down mr-1"></i>Total Kredit</span>
+                        <span class="chart-total-value">{{ Money::stringToRupiah($saldo_kredit) }}</span>
                     </div>
                 </div>
-                <div class="col-sm-6">
-                    <div class="text-center mt-3">
-                        <h6 class="font-normal text-muted font-14">Total Debit</h6>
-                        <h6 class="font-18"><i class="mdi mdi-arrow-up-bold-hexagon-outline text-success"></i> <span class="text-dark">{{ Money::stringToRupiah($saldo_debit) }}</span> </h6>
+                <div class="col-sm-6 mb-2">
+                    <div class="chart-total debit">
+                        <span class="chart-total-label"><i class="mdi mdi-arrow-up mr-1"></i>Total Debet</span>
+                        <span class="chart-total-value">{{ Money::stringToRupiah($saldo_debit) }}</span>
                     </div>
                 </div>
             </div>
@@ -270,9 +502,10 @@
 </div>
 <!-- end row -->
 <!-- end row -->
+<div class="dashboard-section-title">Pinjaman · Periode Aktif</div>
 <div class="row">
     <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-        <div class="dashboard-card">
+        <div class="dashboard-card credit-card">
             <span class="dashboard-card-icon credit"><i class="fi-layers"></i></span>
             <h6 class="dashboard-card-label">Kredit Pinjaman</h6>
             <div class="dashboard-card-value">{{ Money::stringToRupiah($kredit_pinjaman) }}</div>
@@ -296,6 +529,7 @@
         </div>
     </div>
 </div>
+<div class="dashboard-section-title">Ringkasan Keseluruhan</div>
 <div class="row mb-4">
     <div class="col-12">
         <div class="dashboard-panel">
@@ -308,7 +542,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-6 col-xl-3 mb-3 mb-xl-0">
-                    <div class="dashboard-card">
+                    <div class="dashboard-card credit-card">
                         <span class="dashboard-card-icon debit"><i class="dripicons-arrow-up"></i></span>
                         <h6 class="dashboard-card-label">Arus Debet</h6>
                         <div class="dashboard-card-value">{{ Money::stringToRupiah($total_debet_semua) }}</div>
@@ -316,7 +550,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6 col-xl-3 mb-3 mb-xl-0">
-                    <div class="dashboard-card">
+                    <div class="dashboard-card credit-card">
                         <span class="dashboard-card-icon credit"><i class="dripicons-arrow-down"></i></span>
                         <h6 class="dashboard-card-label">Arus Kredit</h6>
                         <div class="dashboard-card-value">{{ Money::stringToRupiah($total_kredit_semua) }}</div>
