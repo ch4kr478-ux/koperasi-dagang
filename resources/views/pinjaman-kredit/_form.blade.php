@@ -119,11 +119,11 @@
             <small class="form-text text-muted mt-1">Catatan ini akan tercatat dalam buku transaksi keuangan koperasi.</small>
         </div>
 
-        <div class="alert alert-info mt-3" style="border-radius: 10px;">
-            <i class="mdi mdi-information-outline" style="font-size: 20px;"></i>
+        <div class="alert alert-info transaction-note mt-3">
+            <i class="mdi mdi-information-outline" aria-hidden="true" style="font-size: 20px;"></i>
             <div>
                 <strong>Konfirmasi Pencatatan Transaksi</strong>
-                <p class="mb-0" style="font-size: 12.5px;">Pastikan data peminjam, produk, nominal cicilan, serta tenor pinjaman telah sesuai dengan persetujuan pengurus sebelum menyelesaikan transaksi.</p>
+                <p class="mb-0 mt-1">Pastikan data peminjam, produk, nominal cicilan, serta tenor pinjaman telah sesuai dengan persetujuan pengurus sebelum menyimpan transaksi.</p>
             </div>
         </div>
     </section>

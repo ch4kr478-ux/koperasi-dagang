@@ -1,78 +1,216 @@
 @extends('layouts.master')
+
 @section('style')
-<!--Form Wizard-->
 <link rel="stylesheet" type="text/css" href="{{ asset('plugins/jquery.steps/css/jquery.steps.css') }}" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.css">
 <link href="{{ asset('plugins/bootstrap-select/css/bootstrap-select.min.css') }}" rel="stylesheet" />
 <link href="{{ asset('plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
+<style>
+    .create-savings-page .page-title-box {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        overflow: hidden;
+        min-height: 96px;
+        margin-bottom: 24px;
+        padding: 22px 28px;
+        border: 1px solid var(--k-border);
+        border-left: 5px solid var(--k-primary);
+        border-radius: var(--k-radius-lg);
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 55%, #f0fdfa 100%);
+        box-shadow: var(--k-shadow-sm);
+    }
+
+    .create-savings-page .page-title-box:after {
+        position: absolute;
+        top: -90px;
+        right: 10%;
+        width: 220px;
+        height: 220px;
+        border: 1px solid rgba(15, 118, 110, 0.08);
+        border-radius: 50%;
+        box-shadow: 0 0 0 24px rgba(15, 118, 110, 0.02), 0 0 0 52px rgba(15, 118, 110, 0.015);
+        content: "";
+        pointer-events: none;
+    }
+
+    .create-savings-page .page-title-box > .float-left,
+    .create-savings-page .page-title-box > .float-right {
+        position: relative;
+        z-index: 1;
+        float: none !important;
+    }
+
+    .create-savings-page .page-title-box h4.page-title {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0 0 4px;
+        color: var(--k-text-main);
+        font-size: 21px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+
+    .create-savings-page .page-title-sub {
+        color: var(--k-text-muted);
+        font-size: 12.5px;
+    }
+
+    .create-savings-page .breadcrumb {
+        justify-content: flex-end;
+        margin: 0 0 6px;
+        padding: 0;
+        background: transparent;
+    }
+
+    .create-savings-page .breadcrumb-item,
+    .create-savings-page .breadcrumb-item a {
+        color: var(--k-text-muted);
+        font-size: 11.5px;
+    }
+
+    .create-savings-card {
+        margin-bottom: 24px;
+        padding: 28px;
+        border: 1px solid var(--k-border);
+        border-radius: var(--k-radius-lg);
+        background: #ffffff;
+        box-shadow: var(--k-shadow-xs);
+    }
+
+    .create-savings-header {
+        margin-bottom: 24px;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--k-border-subtle);
+    }
+
+    .create-savings-header h4 {
+        margin: 0 0 4px;
+        color: var(--k-text-main);
+        font-size: 17px;
+        font-weight: 750;
+    }
+
+    .create-savings-header p {
+        margin: 0;
+        color: var(--k-text-muted);
+        font-size: 13px;
+    }
+
+    .transaction-note {
+        padding: 16px;
+        border: 1px solid var(--k-info-border);
+        border-radius: var(--k-radius-md);
+        color: var(--k-info-text);
+        background: var(--k-info-bg);
+    }
+
+    @media (max-width: 767.98px) {
+        .create-savings-page .page-title-box {
+            align-items: flex-start;
+            flex-direction: column;
+            padding: 18px 20px;
+        }
+
+        .create-savings-page .page-title-box .float-right {
+            align-self: flex-start;
+            margin-top: 12px;
+        }
+
+        .create-savings-page .breadcrumb {
+            justify-content: flex-start;
+        }
+
+        .create-savings-card {
+            padding: 18px;
+        }
+    }
+</style>
 @endsection
+
 @section('content')
-<div class="row">
-    <div class="col-12">
-        <div class="page-title-box">
-            <div class="float-left">
-                <h4 class="page-title">Simpanan Debet </h4>
-                <small class="text-danger">Periode : {{ periode()->name }}</small>
+<div class="create-savings-page">
+    <div class="row">
+        <div class="col-12">
+            <div class="page-title-box">
+                <div class="float-left">
+                    <h4 class="page-title">
+                        <i class="mdi mdi-bank-transfer-in text-teal mr-1" aria-hidden="true"></i> Setoran Simpanan
+                    </h4>
+                    <div class="page-title-sub">Pencatatan transaksi debet simpanan anggota koperasi</div>
+                </div>
+                <div class="float-right">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('simpanan-debet.index') }}">Simpanan Debet</a></li>
+                        <li class="breadcrumb-item active">Tambah Transaksi</li>
+                    </ol>
+                    <span class="badge badge-soft-primary">
+                        <i class="mdi mdi-calendar mr-1" aria-hidden="true"></i>
+                        Periode: {{ periode()->name }}
+                        ({{ date('d-m-Y', strtotime(periode()->open_date)) }} s/d {{ date('d-m-Y', strtotime(periode()->close_date)) }})
+                    </span>
+                </div>
+                <div class="clearfix"></div>
             </div>
-            <div class="float-right">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Transaksi</a></li>
-                <li class="breadcrumb-item active"><a href="{{route('simpanan-debet.index')}}">Simpanan Debet</a></li>
-                    <li class="breadcrumb-item active">Tambah</li>
-                </ol>
-                <small class="text-danger">Tahun Buku : {{ periode()->open_date }} - {{ periode()->close_date }}</small>
-            </div>
-            <div class="clearfix"></div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="card-box">
-            <h4 class="m-t-0 header-title"><b>Menambah Transaksi Baru</b></h4>
-            <p class="text-muted m-b-30 font-13">
-                Silahkan Lakukan Pengisian Transaksi Secara Lengkap
-            </p>
-            <form id="basic-form" action="{{ route('simpanan-debet.store') }}" method="POST">
-                @csrf
-                @include('simpanan-debet._form')
-            </form>
 
+    <div class="row">
+        <div class="col-12">
+            <div class="create-savings-card">
+                <div class="create-savings-header">
+                    <h4>Formulir Transaksi Simpanan Debet</h4>
+                    <p>Lengkapi informasi anggota, setoran simpanan, dan keterangan transaksi.</p>
+                </div>
+
+                <form id="basic-form" action="{{ route('simpanan-debet.store') }}" method="POST">
+                    @csrf
+                    @include('simpanan-debet._form')
+                </form>
+            </div>
         </div>
     </div>
 </div>
 @endsection
-@section('script')
-<!--Form Wizard-->
-<script src="{{ asset('plugins/jquery.steps/js/jquery.steps.min.js') }}" type="text/javascript"></script>
 
-<!--wizard initialization-->
+@section('script')
+<script src="{{ asset('plugins/jquery.steps/js/jquery.steps.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('pages/jquery.wizard-init.js') }}" type="text/javascript"></script>
 <script src="{{ asset('js/bootstrap-datepicker.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('js/jquery.maskMoney.js')}}" type="text/javascript"></script>
+<script src="{{ asset('js/jquery.maskMoney.js') }}" type="text/javascript"></script>
 <script src="{{ asset('plugins/select2/js/select2.min.js') }}" type="text/javascript"></script>
 <script src="{{ asset('plugins/bootstrap-select/js/bootstrap-select.js') }}" type="text/javascript"></script>
 <script>
-    $(function(){
-        $(".select2").select2();
+    $(function () {
+        $(".select2").select2({
+            width: '100%',
+            placeholder: 'Pilih opsi...'
+        });
 
         $('.biaya').maskMoney({prefix: 'Rp. ', thousands: '.', decimal: ',', precision: 0});
 
-        $('select[name=divisi_id]').on('change', function(){
-            var divisiId = $(this). children("option:selected"). val();
-            if(divisiId === '1' || divisiId === '2')
-            {
+        $('select[name=divisi_id]').on('change', function () {
+            var divisiId = $(this).children("option:selected").val();
+            if (divisiId === '1' || divisiId === '2') {
                 $('.anggota').css('display', '');
-            }else {
+            } else {
                 $('.anggota').css('display', 'none');
                 $(".anggota option:selected").prop("selected", false);
             }
         });
 
-        $('select[name=anggota_id]').on('change', function(){
-            var anggotaId = $(this). children("option:selected"). val();
+        $('select[name=anggota_id]').on('change', function () {
+            var anggotaId = $(this).children("option:selected").val();
+            if (!anggotaId) {
+                $('#nama-anggota, #nama-jabatan, #status-anggota, #tanggal-daftar').text('-');
+                return;
+            }
+
             $.ajax({
-                url: '{{ route('transaksi-harian.chek-anggota')}}',
+                url: '{{ route('transaksi-harian.chek-anggota') }}',
                 type: 'GET',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -80,16 +218,14 @@
                 data: {
                     anggota_id: anggotaId
                 },
-                success: function(data)
-                {
-                    $('#nama-anggota').text(data.nama)
-                    $('#nama-jabatan').text(data.jabatan)
-                    $('#status-anggota').text(data.status)
-                    $('#tanggal-daftar').text(data.tgl_daftar)
+                success: function (data) {
+                    $('#nama-anggota').text(data.nama || '-');
+                    $('#nama-jabatan').text(data.jabatan || '-');
+                    $('#status-anggota').text(data.status || '-');
+                    $('#tanggal-daftar').text(data.tgl_daftar || '-');
                 },
-                error: function(xhr)
-                {
-                    console.error('Gagal memuat data anggota.', xhr.responseText)
+                error: function (xhr) {
+                    console.error('Gagal memuat data anggota.', xhr.responseText);
                     $.toast({
                         heading: 'Error !',
                         text: 'Data anggota tidak dapat dimuat.',
@@ -111,39 +247,24 @@
             autoclose: true,
             todayHighlight: true,
             startDate: start,
-            endDate   : end,
+            endDate: end,
             orientation: 'bottom'
         });
 
-        $('select[name=jenis_transaksi]').on('change', function(){
-
+        $('select[name=jenis_transaksi]').on('change', function () {
             var divisiId = $("select[name=divisi_id] option:selected").val();
-            var jenisTransaksiId = $(this). children("option:selected"). val();
-            if(divisiId === '1')
-            {
+            var jenisTransaksiId = $(this).children("option:selected").val();
 
-                if(jenisTransaksiId === '1')
-                {
-                    $('#transaksi-debet').css('display', '');
-                    $('#transaksi-kredit').css('display', 'none');
-                }else {
-                    $('#transaksi-debet').css('display', 'none');
-                    $('#transaksi-kredit').css('display', '');
-                }
+            if (divisiId === '1') {
+                $('#transaksi-debet').toggle(jenisTransaksiId === '1');
+                $('#transaksi-kredit').toggle(jenisTransaksiId !== '1');
             }
 
-            if(divisiId === '2')
-            {
-                if(jenisTransaksiId === '1')
-                {
-                    $('#pinjam-debet').css('display', '');
-                    $('#pinjam-kredit').css('display', 'none');
-                }else {
-                    $('#pinjam-debet').css('display', 'none');
-                    $('#pinjam-kredit').css('display', '');
-                }
+            if (divisiId === '2') {
+                $('#pinjam-debet').toggle(jenisTransaksiId === '1');
+                $('#pinjam-kredit').toggle(jenisTransaksiId !== '1');
             }
         });
-    })
+    });
 </script>
 @endsection
