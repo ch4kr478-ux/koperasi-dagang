@@ -41,6 +41,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::resource('anggota', 'AnggotaController');
         Route::get('/anggota-export', 'AnggotaController@export')->name('anggota.export');
         Route::resource('divisi', 'DivisiController');
+        Route::resource('produk-pinjaman', 'ProdukPinjamanController')->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
         Route::resource('transaksi-harian', 'TransaksiHarianController');
         Route::resource('periode', 'PeriodeController');
         Route::resource('role', 'RoleController');
@@ -67,6 +68,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('/simpanan-kredit/doupload', 'SimpananKreditController@doUpload')->name('simpanan-kredit.doupload');
         Route::get('/pinjaman-kredit/upload', 'PinjamanKreditController@upload')->name('pinjaman-kredit.upload');
         Route::post('/pinjaman-kredit/doupload', 'PinjamanKreditController@doUpload')->name('pinjaman-kredit.doupload');
+        Route::get('/pinjaman-kredit/template', 'PinjamanKreditController@downloadTemplate')->name('pinjaman-kredit.template');
         Route::get('/pinjaman-debet/upload', 'PinjamanDebetController@upload')->name('pinjaman-debet.upload');
         Route::post('/pinjaman-debet/doupload', 'PinjamanDebetController@doUpload')->name('pinjaman-debet.doupload');
         Route::get('/simpanan-debet/close-book', 'SimpananDebetController@closeBook')->name('simpanan-debet.close-book');

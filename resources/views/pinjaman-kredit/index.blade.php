@@ -39,6 +39,18 @@
     </div>
 </div>
 @endif
+@if (session()->has('error'))
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    </div>
+</div>
+@endif
 <div class="row">
     <div class="col-12">
         <div class="card-box table-responsive">
@@ -52,6 +64,8 @@
                         <th>Divisi</th>
                         <th>Transaksi</th>
                         <th>Pinjaman</th>
+                        <th>Produk / Tenor</th>
+                        <th>Angsuran per Bulan</th>
                         <th>Keterangan</th>
                         <th>Status Buku</th>
                         @unless($isMember)
@@ -95,6 +109,8 @@
                             { data: 'divisi.name', name: 'divisi.name' },
                             { data: 'jenis_transaksi', name: 'jenis_transaksi' },
                             { data: 'sumKreditPinjaman', name: 'sumKreditPinjaman', orderable: false, searchable: false },
+                            { data: 'produk_tenor', name: 'produk_tenor', orderable: false, searchable: false },
+                            { data: 'angsuran_per_bulan', name: 'angsuran_per_bulan', orderable: false, searchable: false },
                             { data: 'keterangan', name: 'keterangan' },
                             { data: 'is_close', name: 'is_close' },
                             @unless($isMember)
@@ -106,7 +122,7 @@
                         scrollX: true
                     });
                     $("div.toolbar").html(`@unless($isMember)@permission('create-kredit-pinjaman')<a href="{{ route('pinjaman-kredit.create') }}" class="btn btn-gradient waves-light waves-effect w-md"><i class="fa fa-plus"></i> Tambah</a>@endpermission
-                    @permission('download-kredit-pinjaman')<a href="https://docs.google.com/spreadsheets/d/1D3nG6RPUnYhrW3NdonvSDiQVd7IJewGU/export?format=xlsx" class="btn btn-success waves-light waves-effect w-md"><i class="mdi mdi-file-excel"></i>Download Template</a>@endpermission
+                    @permission('download-kredit-pinjaman')<a href="{{ route('pinjaman-kredit.template') }}" class="btn btn-success waves-light waves-effect w-md"><i class="mdi mdi-file-excel"></i>Download Template</a>@endpermission
                     @permission('upload-kredit-pinjaman')<a href="{{ route('pinjaman-kredit.upload') }}" class="btn btn-warning waves-light waves-effect w-md"><i class="mdi mdi-cloud-upload"></i> Upload</a>@endpermission
                     @if(!$isMember && Pembukuan::closeBook('2', '2', ['8']) == '1')
                         <a href="{{ route('pinjaman-kredit.close-book') }}" class="btn btn-danger waves-light waves-effect w-md"><i class="fa fa-book"></i> Tutup Buku</a>

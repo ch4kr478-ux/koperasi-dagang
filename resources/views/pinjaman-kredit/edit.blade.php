@@ -96,4 +96,5 @@
         });
     })
 </script>
+@include('pinjaman-kredit._product-tenor-script')
 @endsection

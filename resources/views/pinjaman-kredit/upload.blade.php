@@ -17,7 +17,7 @@
         <div class="card-box">
             <h4 class="m-t-0 header-title"><b>Upload Transaksi</b></h4>
             <p class="text-muted m-b-30 font-13">
-                Silahkan Upload File Excell Yang Telah Di Download Dari File Template
+                Upload file Excel dengan kolom Produk Pinjaman pada kolom terakhir. Nama produk dan tenor harus aktif. Nominal pada file harus sama dengan nominal tetap produk.
             </p>
             <form id="basic-form" action="{{ route('pinjaman-kredit.doupload') }}" method="POST" enctype="multipart/form-data">
                 @csrf

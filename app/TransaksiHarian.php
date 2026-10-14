@@ -59,6 +59,11 @@ class TransaksiHarian extends Model
         return $this->hasOne('App\TransaksiHarianAnggota');
     }
 
+    public function cicilanPinjaman()
+    {
+        return $this->hasOne(TransaksiPinjamanCicilan::class, 'transaksi_harian_id');
+    }
+
     public function sumPokok()
     {
         return $this->hasMany('App\TransaksiHarianBiaya')->with('biaya')

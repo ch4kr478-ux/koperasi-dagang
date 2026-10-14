@@ -12,7 +12,9 @@ use App\Anggota;
 use App\TransaksiHarianBiaya;
 use Maatwebsite\Excel\Concerns\WithStartRow;
 use App\TransaksiPinjaman;
+use App\ProdukPinjaman;
 use Maatwebsite\Excel\Concerns\WithValidation;
+use Illuminate\Validation\Rule;
 
 
 class PinjamanKredit implements ToCollection, WithStartRow, WithValidation
@@ -39,6 +41,10 @@ class PinjamanKredit implements ToCollection, WithStartRow, WithValidation
     {
         foreach ($rows as $row)
         {
+            $produkPinjaman = ProdukPinjaman::where('name', $row[7])
+                ->where('is_active', true)
+                ->where('nominal', '>', 0)
+                ->firstOrFail();
             $transaksiHarian = TransaksiHarian::create([
                 'divisi_id' => '2',
                 'tgl' => Tanggal::transformDate($row[1]),
@@ -55,14 +61,44 @@ class PinjamanKredit implements ToCollection, WithStartRow, WithValidation
             $transaksi_biaya = TransaksiHarianBiaya::create([
                 'transaksi_harian_id' => $transaksiHarian->id,
                 'biaya_id' => '8',
-                'nominal' => $row[5]
+                'nominal' => $produkPinjaman->nominal
             ]);
 
             TransaksiPinjaman::create([
                 'transaksi_harian_biaya_id' => $transaksi_biaya->id,
-                'lama_cicilan' => $row[6]
+                'lama_cicilan' => $row[6],
+                'produk_pinjaman_id' => $produkPinjaman->id,
+                'produk_pinjaman_nama' => $produkPinjaman->name,
+                'bunga_persen' => 1,
+                'tabungan_persen' => 0.5,
             ]);
         }
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            foreach ($validator->getData() as $index => $row) {
+                $product = ProdukPinjaman::where('name', $row[7] ?? null)
+                    ->where('is_active', true)
+                    ->first();
+
+                if ($product) {
+                    if (!$product->nominal || $product->nominal <= 0) {
+                        $validator->errors()->add($index . '.7', 'Nominal produk pinjaman belum diatur.');
+                    } elseif ((int) preg_replace('/\D/', '', (string) ($row[5] ?? '')) !== (int) $product->nominal) {
+                        $validator->errors()->add($index . '.5', 'Nominal pada baris ini harus sama dengan nominal produk pinjaman.');
+                    }
+
+                    if (!$product->tenors()
+                        ->where('lama_cicilan', $row[6] ?? null)
+                        ->where('is_active', true)
+                        ->exists()) {
+                        $validator->errors()->add($index . '.6', 'Tenor tidak tersedia untuk produk pinjaman pada baris ini.');
+                    }
+                }
+            }
+        });
     }
 
     public function rules(): array
@@ -99,7 +135,12 @@ class PinjamanKredit implements ToCollection, WithStartRow, WithValidation
             '6' => 'required',
 
             // Above is alias for as it always validates in batches
-            '*.6' => 'required'
+            '*.6' => 'required|integer|min:1|max:600',
+
+            '7' => ['required', Rule::exists('produk_pinjaman', 'name')->where('is_active', true)],
+
+            // Above is alias for as it always validates in batches
+            '*.7' => ['required', Rule::exists('produk_pinjaman', 'name')->where('is_active', true)],
         ];
     }
 }

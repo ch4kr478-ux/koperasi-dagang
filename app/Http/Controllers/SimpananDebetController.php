@@ -9,6 +9,7 @@ use Tanggal;
 use App\Periode;
 use App\TransaksiHarianAnggota;
 use App\TransaksiHarianBiaya;
+use App\TransaksiPinjamanCicilan;
 use Money;
 use Maatwebsite\Excel\Facades\Excel;
 use File;
@@ -207,6 +208,10 @@ class SimpananDebetController extends Controller
     public function edit($id)
     {
         abort_unless(!\Auth::user()->hasMemberRole(), 403);
+        if (TransaksiPinjamanCicilan::where('simpanan_transaksi_harian_id', $id)->exists()) {
+            return redirect()->route('simpanan-debet.index')
+                ->with('error', 'Simpanan wajib ini berasal dari pembayaran cicilan pinjaman dan hanya dapat diubah melalui Pinjaman Debet.');
+        }
         //
         if (\Auth::user()->can('edit-debet-simpanan')) {
             # code...
@@ -250,6 +255,10 @@ class SimpananDebetController extends Controller
     public function update(Request $request, $id)
     {
         abort_unless(!\Auth::user()->hasMemberRole(), 403);
+        if (TransaksiPinjamanCicilan::where('simpanan_transaksi_harian_id', $id)->exists()) {
+            return redirect()->route('simpanan-debet.index')
+                ->with('error', 'Simpanan wajib ini berasal dari pembayaran cicilan pinjaman dan hanya dapat diubah melalui Pinjaman Debet.');
+        }
         //
         if (\Auth::user()->can('edit-debet-simpanan')) {
             # code...
@@ -309,6 +318,10 @@ class SimpananDebetController extends Controller
         //
         if(\Auth::user()->can('delete-debet-simpanan'))
         {
+            if (TransaksiPinjamanCicilan::where('simpanan_transaksi_harian_id', $id)->exists()) {
+                return redirect()->route('simpanan-debet.index')
+                    ->with('error', 'Simpanan wajib ini terkait pembayaran cicilan pinjaman dan tidak dapat dihapus langsung.');
+            }
             TransaksiHarianAnggota::where('transaksi_harian_id', $id)->delete();
             TransaksiHarianBiaya::where('transaksi_harian_id', $id)->delete();
             TransaksiHarian::find($id)->delete();

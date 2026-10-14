@@ -161,19 +161,7 @@
                         <!-- End Show If Divisi ID == 2 AND JENIS TRANSAKSI == 1 -->
                         <!-- Show If Divisi ID == 2 AND JENIS TRANSAKSI == 2 -->
                         <div id="pinjam-kredit" style="display: none;">
-                            <div class="form-group clearfix">
-                                <label for="Pokok" class="control-label">Nominal</label>
-                                <div class="">
-                                    <input type="hidden" class="form-control" name="pinjaman[0][biaya_id]" value="7">
-                                    <input type="text" class="form-control biaya" name="pinjaman[0][nominal]">
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="Pokok" class="control-label">Lama Kredit</label>
-                                <div class="">
-                                    <input type="number" class="form-control" name="lama_kredit">
-                                </div>
-                            </div>
+                            @include('pinjaman-kredit._product-tenor-fields')
                         </div>
                         <!-- End Show If Divisi ID == 2 AND JENIS TRANSAKSI == 1 -->
                         <!-- Show If ALl Divisi Not Equeal -->
@@ -294,4 +282,5 @@
         });
     })
 </script>
+@include('pinjaman-kredit._product-tenor-script')
 @endsection

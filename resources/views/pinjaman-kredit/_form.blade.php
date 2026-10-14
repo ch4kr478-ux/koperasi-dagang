@@ -78,19 +78,7 @@
             </div>
         </div>
         <div id="pinjam-kredit">
-            <div class="form-group clearfix">
-                <label for="Pokok" class="control-label">Nominal</label>
-                <div class="">
-                    <input type="hidden" class="form-control" name="biaya_id" value="8">
-                    <input type="text" name="nominal" value="{{ old('nominal', data_get($formModel ?? null, 'nominal')) }}" class="form-control biaya" autocomplete="off">
-                </div>
-            </div>
-            <div class="form-group clearfix">
-                <label for="Pokok" class="control-label">Lama Kredit</label>
-                <div class="">
-                    <input type="number" name="lama_cicilan" value="{{ old('lama_cicilan', data_get($formModel ?? null, 'lama_cicilan')) }}" class="form-control biaya" autocomplete="off">
-                </div>
-            </div>
+            @include('pinjaman-kredit._product-tenor-fields')
         </div>
     </section>
     <!-- end Section Page 2 -->

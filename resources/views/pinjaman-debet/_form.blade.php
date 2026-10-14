@@ -31,11 +31,16 @@
         </div>
         <div class="form-group clearfix anggota">
             <label class="control-label " for="confirm">No Anggota *</label>
+            @if(!empty($installmentPayment))
+                <input type="hidden" name="anggota_id" value="{{ $transaksiHarian->anggota_id }}">
+                <input type="text" class="form-control" value="{{ $transaksiHarian->nama_anggota }}" readonly>
+            @else
             <select name="anggota_id" class="form-control select2">
 @foreach(([''=>'Pilih Anggota']+App\Anggota::pluck('nama','id')->all()) as $optionValue => $optionLabel)
 <option value="{{ $optionValue }}" @selected((string) old('anggota_id', data_get($formModel ?? null, 'anggota_id', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
 @endforeach
 </select>
+            @endif
         </div>
         <div class="form-group clearfix anggota col-8">
             <table class="table">
@@ -80,18 +85,54 @@
         <!-- End Show Jenis Transaksi == 1 -->
         <!-- Show If Divisi ID == 2 AND JENIS TRANSAKSI == 1 -->
         <div id="pinjam-debet">
+            @if(isset($cicilanTersedia))
+                <div class="form-group">
+                    <label for="transaksi_pinjaman_id">Cicilan Pinjaman Kredit (opsional)</label>
+                    <select id="transaksi_pinjaman_id" name="transaksi_pinjaman_id" class="form-control">
+                        <option value="">Pembayaran biasa / tanpa tautan cicilan</option>
+                        @foreach($cicilanTersedia as $installment)
+                            <option value="{{ $installment['transaksi_pinjaman_id'] }}"
+                                data-anggota="{{ $installment['anggota_id'] }}"
+                                data-angsuran="{{ $installment['bulan'] }}"
+                                data-jatuh-tempo="{{ $installment['jatuh_tempo']->format('d-m-Y') }}"
+                                data-pokok="{{ $installment['pokok'] }}"
+                                data-bunga="{{ $installment['bunga'] }}"
+                                data-tabungan="{{ $installment['tabungan'] }}"
+                                data-total="{{ $installment['total'] }}"
+                                @selected((string) old('transaksi_pinjaman_id') === (string) $installment['transaksi_pinjaman_id'])>
+                                {{ $installment['anggota_nama'] }} - {{ $installment['produk'] }}
+                                Rp. {{ number_format($installment['nominal_pinjaman'], 0, ',', '.') }} (pinjaman {{ $installment['tgl_pinjaman'] }})
+                                - Angsuran ke-{{ $installment['bulan'] }} (jatuh tempo {{ $installment['jatuh_tempo']->format('d-m-Y') }})
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('transaksi_pinjaman_id') <small class="text-danger">{{ $message }}</small> @enderror
+                    @error('angsuran_ke') <small class="text-danger">{{ $message }}</small> @enderror
+                    <input type="hidden" name="angsuran_ke" id="angsuran_ke" value="{{ old('angsuran_ke') }}">
+                    <small class="form-text text-muted">Jika dipilih, nilai cicilan harus dibayar penuh. Simpanan wajib 0,5% dicatat otomatis.</small>
+                </div>
+                <div id="cicilan-kredit-summary" class="alert alert-info" style="display: none;"></div>
+            @elseif(!empty($installmentPayment))
+                <div class="alert alert-info">
+                    Pembayaran angsuran ke-{{ $installmentPayment->angsuran_ke }},
+                    jatuh tempo {{ $installmentPayment->jatuh_tempo->format('d-m-Y') }}.
+                    Tabungan wajib yang tercatat: Rp. {{ number_format($installmentPayment->tabungan, 0, ',', '.') }}.
+                </div>
+                <input type="hidden" name="transaksi_pinjaman_id" value="{{ $installmentPayment->transaksi_pinjaman_id }}">
+                <input type="hidden" name="angsuran_ke" value="{{ $installmentPayment->angsuran_ke }}">
+            @endif
             <div class="form-group clearfix">
                 <label for="Pokok" class="control-label">Nominal</label>
                 <div class="">
                     <input type="hidden" class="form-control" name="id_biaya_pinjaman" value="6">
-                    <input type="text" class="form-control biaya" name="nominal_pinjaman" value="{{ old('nominal_pinjaman', $nominal_pinjaman ?? null) }}">
+                    <input type="text" class="form-control biaya" name="nominal_pinjaman" value="{{ old('nominal_pinjaman', !empty($installmentPayment) ? 'Rp. ' . number_format($installmentPayment->pokok, 0, ',', '.') : ($nominal_pinjaman ?? null)) }}" @readonly(!empty($installmentPayment))>
                 </div>
             </div>
             <div class="form-group clearfix">
                 <label for="Pokok" class="control-label">Bunga</label>
                 <div class="">
                     <input type="hidden" class="form-control" name="id_biaya_bunga_pinjaman" value="7">
-                    <input type="text" class="form-control biaya" name="nominal_bunga" value="{{ old('nominal_bunga', $nominal_bunga ?? null) }}">
+                    <input type="text" class="form-control biaya" name="nominal_bunga" value="{{ old('nominal_bunga', !empty($installmentPayment) ? 'Rp. ' . number_format($installmentPayment->bunga, 0, ',', '.') : ($nominal_bunga ?? null)) }}" @readonly(!empty($installmentPayment))>
                 </div>
             </div>
         </div>

@@ -12,6 +12,8 @@ use App\TransaksiHarianBiaya;
 use App\Periode;
 use Money;
 use App\TransaksiPinjaman;
+use App\ProdukPinjaman;
+use Illuminate\Validation\ValidationException;
 
 class TransaksiHarianController extends Controller
 {
@@ -66,7 +68,11 @@ class TransaksiHarianController extends Controller
     public function create()
     {
         //
-        return view('transaksi-harian.create');
+        $produkPinjaman = ProdukPinjaman::with(['tenors' => function ($query) {
+            $query->where('is_active', true)->orderBy('lama_cicilan');
+        }])->where('is_active', true)->where('nominal', '>', 0)->orderBy('name')->get();
+
+        return view('transaksi-harian.create', compact('produkPinjaman'));
     }
 
     /**
@@ -83,6 +89,34 @@ class TransaksiHarianController extends Controller
             'divisi_id' => 'required',
             'jenis_transaksi' => 'required'
         ]);
+
+        $produkPinjaman = null;
+        if ($request->divisi_id == '2' && $request->jenis_transaksi == '2') {
+            $this->validate($request, [
+                'anggota_id' => 'required|exists:anggotas,id',
+                'nominal' => 'required|string',
+                'produk_pinjaman_id' => 'required|integer|exists:produk_pinjaman,id',
+                'lama_cicilan' => 'required|integer|min:1|max:600',
+            ]);
+
+            $produkPinjaman = ProdukPinjaman::with('tenors')
+                ->where('is_active', true)
+                ->findOrFail($request->produk_pinjaman_id);
+
+            if (!$produkPinjaman->nominal || $produkPinjaman->nominal <= 0) {
+                throw ValidationException::withMessages([
+                    'produk_pinjaman_id' => 'Nominal produk belum diatur. Lengkapi nominal produk sebelum transaksi.',
+                ]);
+            }
+
+            if (!$produkPinjaman->tenors->contains(function ($tenor) use ($request) {
+                return $tenor->is_active && (int) $tenor->lama_cicilan === (int) $request->lama_cicilan;
+            })) {
+                throw ValidationException::withMessages([
+                    'lama_cicilan' => 'Tenor tersebut tidak tersedia untuk produk pinjaman yang dipilih.',
+                ]);
+            }
+        }
         $periode = Periode::where('status', '1')->first();
         $transaksiHarian = new TransaksiHarian();
         $transaksiHarian->tgl = Tanggal::convert_tanggal($request->tgl);
@@ -127,18 +161,19 @@ class TransaksiHarianController extends Controller
         }else if($request->divisi_id == '2'){
             if($request->jenis_transaksi == '2')
             {
-                $pinjaman = $request->pinjaman;
-                foreach($pinjaman as $row)
-                {
-                    $transaksi_biaya = new TransaksiHarianBiaya();
-                    $transaksi_biaya->biaya_id = '7';
-                    $transaksi_biaya->transaksi_harian_id = $transaksiHarian->id;
-                    $transaksi_biaya->nominal = Money::rupiahToString($request->nominal);
-                    $transaksi_biaya->save();
-                }
+                $transaksi_biaya = new TransaksiHarianBiaya();
+                $transaksi_biaya->biaya_id = '8';
+                $transaksi_biaya->transaksi_harian_id = $transaksiHarian->id;
+                $transaksi_biaya->nominal = $produkPinjaman->nominal;
+                $transaksi_biaya->save();
+
                 $transaksiPinjaman = new TransaksiPinjaman();
                 $transaksiPinjaman->transaksi_harian_biaya_id = $transaksi_biaya->id;
-                $transaksiPinjaman->lama_cicilan = $request->lama_kredit;
+                $transaksiPinjaman->lama_cicilan = $request->lama_cicilan;
+                $transaksiPinjaman->produk_pinjaman_id = $produkPinjaman->id;
+                $transaksiPinjaman->produk_pinjaman_nama = $produkPinjaman->name;
+                $transaksiPinjaman->bunga_persen = 1;
+                $transaksiPinjaman->tabungan_persen = 0.5;
                 $transaksiPinjaman->save();
             }else {
                 $cicilan = $request->cicilan;

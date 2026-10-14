@@ -9,13 +9,17 @@ use Tanggal;
 use App\Periode;
 use App\TransaksiHarianAnggota;
 use App\TransaksiHarianBiaya;
+use App\TransaksiPinjaman;
+use App\TransaksiPinjamanCicilan;
 use Money;
 use App\Imports\PinjamanDebet;
+use App\Support\PinjamanCalculator;
 use Session;
 use Illuminate\Support\Facades\DB;
 use Excel;
 use File;
 use App\Anggota;
+use Illuminate\Validation\ValidationException;
 
 
 class PinjamanDebetController extends Controller
@@ -36,7 +40,7 @@ class PinjamanDebetController extends Controller
                 $transaksiHarian = TransaksiHarian::with([
                     'divisi', 'nama_anggota' => function ($sql) {
                         $sql->with('anggota');
-                    }, 'sumBunga', 'sumCicilan'
+                    }, 'sumBunga', 'sumCicilan', 'cicilanPinjaman'
                 ])
                     ->withDisplayNumber(2, 1)
                     ->where('divisi_id', '2')
@@ -79,6 +83,16 @@ class PinjamanDebetController extends Controller
                     ->editColumn('sumCicilan', function ($transaksiHarian) {
                         return Money::stringToRupiah($transaksiHarian->sumCicilan->sum('nominal'));
                     })
+                    ->addColumn('angsuran_kredit', function ($transaksiHarian) {
+                        return $transaksiHarian->cicilanPinjaman
+                            ? 'Angsuran ke-' . $transaksiHarian->cicilanPinjaman->angsuran_ke
+                            : '-';
+                    })
+                    ->addColumn('tabungan_cicilan', function ($transaksiHarian) {
+                        return $transaksiHarian->cicilanPinjaman
+                            ? Money::stringToRupiah($transaksiHarian->cicilanPinjaman->tabungan)
+                            : '-';
+                    })
                     ->editColumn('is_close', function ($transaksiHarian) {
                         if ($transaksiHarian->is_close == '0') {
                             return '<p class="text-primary">Aktif</p>';
@@ -107,7 +121,8 @@ class PinjamanDebetController extends Controller
         //
         if (\Auth::user()->can('create-debet-pinjaman')) {
             # code...
-            return view('pinjaman-debet.create');
+            $cicilanTersedia = $this->availableInstallments();
+            return view('pinjaman-debet.create', compact('cicilanTersedia'));
         } else {
             # code...
             return redirect()->back()->with('error', __('Permission denied.'));
@@ -125,41 +140,105 @@ class PinjamanDebetController extends Controller
         abort_unless(!\Auth::user()->hasMemberRole(), 403);
         //
         if (\Auth::user()->can('create-debet-pinjaman')) {
-            # code...
-            $this->validate($request, [
+            $validated = $this->validate($request, [
                 'tgl' => 'required',
-                'divisi_id' => 'required',
-                'jenis_transaksi' => 'required'
+                'jenis_pembayaran' => 'required|in:1,2',
+                'anggota_id' => 'required|exists:anggotas,id',
+                'keterangan' => 'nullable|string',
+                'transaksi_pinjaman_id' => 'nullable|integer|exists:transaksi_pinjamen,id',
+                'angsuran_ke' => 'nullable|integer|min:1',
             ]);
 
-            //Save Transaction Kopkar
-            $periode = Periode::where('status', '1')->first();
-            $transaksiHarian = new TransaksiHarian();
-            $transaksiHarian->tgl = Tanggal::convert_tanggal($request->tgl);
-            $transaksiHarian->divisi_id = $request->divisi_id;
-            $transaksiHarian->jenis_pembayaran = $request->jenis_pembayaran;
-            $transaksiHarian->jenis_transaksi = $request->jenis_transaksi;
-            $transaksiHarian->keterangan = $request->keterangan;
-            $transaksiHarian->periode_id = $periode->id;
-            $transaksiHarian->save();
+            $isInstallmentPayment = !empty($validated['transaksi_pinjaman_id']);
+            if (!$isInstallmentPayment) {
+                $this->validate($request, [
+                    'nominal_pinjaman' => 'required|string',
+                    'nominal_bunga' => 'required|string',
+                ]);
+            }
 
-            //Save Transation Member Kopkar
-            $transaksi_harian_anggota = new TransaksiHarianAnggota();
-            $transaksi_harian_anggota->transaksi_harian_id = $transaksiHarian->id;
-            $transaksi_harian_anggota->anggota_id = $request->anggota_id;
-            $transaksi_harian_anggota->save();
+            DB::transaction(function () use ($request, $validated, $isInstallmentPayment) {
+                $installment = $isInstallmentPayment
+                    ? $this->resolveNextInstallment(
+                        $validated['transaksi_pinjaman_id'],
+                        $validated['anggota_id'],
+                        true
+                    )
+                    : null;
 
-            $transaksi_biaya = new TransaksiHarianBiaya();
-            $transaksi_biaya->biaya_id = $request->id_biaya_pinjaman;
-            $transaksi_biaya->transaksi_harian_id = $transaksiHarian->id;
-            $transaksi_biaya->nominal = Money::rupiahToString($request->nominal_pinjaman);
-            $transaksi_biaya->save();
+                if ($installment && isset($validated['angsuran_ke'])
+                    && (int) $installment['bulan'] !== (int) $validated['angsuran_ke']) {
+                    throw ValidationException::withMessages([
+                        'angsuran_ke' => 'Cicilan ini sudah dibayar atau bukan cicilan berikutnya.',
+                    ]);
+                }
 
-            $transaksi_biaya = new TransaksiHarianBiaya();
-            $transaksi_biaya->biaya_id = $request->id_biaya_bunga_pinjaman;
-            $transaksi_biaya->transaksi_harian_id = $transaksiHarian->id;
-            $transaksi_biaya->nominal = Money::rupiahToString($request->nominal_bunga);
-            $transaksi_biaya->save();
+                $periode = Periode::where('status', '1')->firstOrFail();
+                $tgl = Tanggal::convert_tanggal($request->tgl);
+                $transaksiHarian = TransaksiHarian::create([
+                    'tgl' => $tgl,
+                    'divisi_id' => '2',
+                    'jenis_pembayaran' => $validated['jenis_pembayaran'],
+                    'jenis_transaksi' => '1',
+                    'keterangan' => $request->keterangan ?: ($installment
+                        ? 'Pembayaran angsuran pinjaman ke-' . $installment['angsuran_ke']
+                        : null),
+                    'periode_id' => $periode->id,
+                ]);
+                TransaksiHarianAnggota::create([
+                    'transaksi_harian_id' => $transaksiHarian->id,
+                    'anggota_id' => $validated['anggota_id'],
+                ]);
+
+                $pokok = $installment
+                    ? $installment['pokok']
+                    : (int) Money::rupiahToString($request->nominal_pinjaman);
+                $bunga = $installment
+                    ? $installment['bunga']
+                    : (int) Money::rupiahToString($request->nominal_bunga);
+
+                TransaksiHarianBiaya::create([
+                    'transaksi_harian_id' => $transaksiHarian->id,
+                    'biaya_id' => '6',
+                    'nominal' => $pokok,
+                ]);
+                TransaksiHarianBiaya::create([
+                    'transaksi_harian_id' => $transaksiHarian->id,
+                    'biaya_id' => '7',
+                    'nominal' => $bunga,
+                ]);
+
+                if ($installment) {
+                    $savingTransaction = TransaksiHarian::create([
+                        'tgl' => $tgl,
+                        'divisi_id' => '1',
+                        'jenis_pembayaran' => $validated['jenis_pembayaran'],
+                        'jenis_transaksi' => '1',
+                        'keterangan' => 'Simpanan wajib angsuran pinjaman ke-' . $installment['angsuran_ke'],
+                        'periode_id' => $periode->id,
+                    ]);
+                    TransaksiHarianAnggota::create([
+                        'transaksi_harian_id' => $savingTransaction->id,
+                        'anggota_id' => $validated['anggota_id'],
+                    ]);
+                    TransaksiHarianBiaya::create([
+                        'transaksi_harian_id' => $savingTransaction->id,
+                        'biaya_id' => '2',
+                        'nominal' => $installment['tabungan'],
+                    ]);
+
+                    TransaksiPinjamanCicilan::create([
+                        'transaksi_pinjaman_id' => $validated['transaksi_pinjaman_id'],
+                        'transaksi_harian_id' => $transaksiHarian->id,
+                        'simpanan_transaksi_harian_id' => $savingTransaction->id,
+                        'angsuran_ke' => $installment['angsuran_ke'],
+                        'jatuh_tempo' => $installment['jatuh_tempo']->format('Y-m-d'),
+                        'pokok' => $installment['pokok'],
+                        'bunga' => $installment['bunga'],
+                        'tabungan' => $installment['tabungan'],
+                    ]);
+                }
+            });
 
             Session::flash("flash_notification", [
                 "level" => "success",
@@ -213,7 +292,18 @@ class PinjamanDebetController extends Controller
             $nominal_bunga = Money::stringToRupiah($nominal_bunga);
             $transaksiHarian->nominal = Money::stringToRupiah($transaksiHarian->nominal);
             $transaksiHarian->tgl = date('d-m-Y', strtotime($transaksiHarian->tgl));
-            return view('pinjaman-debet.edit')->with(compact('transaksiHarian', 'nominal_pinjaman', 'nominal_bunga'));
+            $memberLink = TransaksiHarianAnggota::where('transaksi_harian_id', $id)->first();
+            $transaksiHarian->anggota_id = $memberLink ? $memberLink->anggota_id : null;
+            $transaksiHarian->nama_anggota = $memberLink && $memberLink->anggota
+                ? $memberLink->anggota->nama
+                : '';
+            $installmentPayment = TransaksiPinjamanCicilan::where('transaksi_harian_id', $id)->first();
+            return view('pinjaman-debet.edit')->with(compact(
+                'transaksiHarian',
+                'nominal_pinjaman',
+                'nominal_bunga',
+                'installmentPayment'
+            ));
         } else {
             # code...
             return redirect()->back()->with('error', __('Permission denied.'));
@@ -233,32 +323,59 @@ class PinjamanDebetController extends Controller
         //
         if (\Auth::user()->can('edit-debet-pinjaman')) {
             # code...
-            $this->validate($request, [
+            $validated = $this->validate($request, [
                 'tgl' => 'required',
-                'divisi_id' => 'required',
-                'jenis_transaksi' => 'required'
+                'jenis_pembayaran' => 'required|in:1,2',
+                'anggota_id' => 'required|exists:anggotas,id',
+                'keterangan' => 'nullable|string',
             ]);
 
-            //Save Transaction Kopkar
-            $transaksiHarian = TransaksiHarian::find($id);
-            $transaksiHarian->tgl = Tanggal::convert_tanggal($request->tgl);
-            $transaksiHarian->jenis_pembayaran = $request->jenis_pembayaran;
-            $transaksiHarian->jenis_transaksi = $request->jenis_transaksi;
-            $transaksiHarian->keterangan = $request->keterangan;
-            $transaksiHarian->update();
+            $installmentPayment = TransaksiPinjamanCicilan::where('transaksi_harian_id', $id)->first();
+            if (!$installmentPayment) {
+                $this->validate($request, [
+                    'nominal_pinjaman' => 'required|string',
+                    'nominal_bunga' => 'required|string',
+                ]);
+            }
 
-            //Save Transation Member Kopkar
-            $transaksi_harian_anggota = TransaksiHarianAnggota::where('transaksi_harian_id', $id)->first();
-            $transaksi_harian_anggota->anggota_id = $request->anggota_id;
-            $transaksi_harian_anggota->update();
+            DB::transaction(function () use ($request, $id, $validated, $installmentPayment) {
+                $transaksiHarian = TransaksiHarian::findOrFail($id);
+                $memberLink = TransaksiHarianAnggota::where('transaksi_harian_id', $id)->firstOrFail();
+                if ($installmentPayment && (int) $validated['anggota_id'] !== (int) $memberLink->anggota_id) {
+                    throw ValidationException::withMessages([
+                        'anggota_id' => 'Anggota pembayaran cicilan tidak dapat diubah.',
+                    ]);
+                }
 
-            $transaksi_biaya = TransaksiHarianBiaya::where('transaksi_harian_id', $id)->where('biaya_id', '6')->first();
-            $transaksi_biaya->nominal = Money::rupiahToString($request->nominal_pinjaman);
-            $transaksi_biaya->update();
+                $transaksiHarian->tgl = Tanggal::convert_tanggal($request->tgl);
+                $transaksiHarian->jenis_pembayaran = $validated['jenis_pembayaran'];
+                $transaksiHarian->keterangan = $request->keterangan;
+                $transaksiHarian->save();
 
-            $transaksi_biaya = TransaksiHarianBiaya::where('transaksi_harian_id', $id)->where('biaya_id', '7')->first();
-            $transaksi_biaya->nominal = Money::rupiahToString($request->nominal_bunga);
-            $transaksi_biaya->update();
+                if (!$installmentPayment) {
+                    $memberLink->anggota_id = $validated['anggota_id'];
+                    $memberLink->save();
+                }
+
+                $pokok = $installmentPayment
+                    ? $installmentPayment->pokok
+                    : (int) Money::rupiahToString($request->nominal_pinjaman);
+                $bunga = $installmentPayment
+                    ? $installmentPayment->bunga
+                    : (int) Money::rupiahToString($request->nominal_bunga);
+                TransaksiHarianBiaya::where('transaksi_harian_id', $id)
+                    ->where('biaya_id', '6')->firstOrFail()->update(['nominal' => $pokok]);
+                TransaksiHarianBiaya::where('transaksi_harian_id', $id)
+                    ->where('biaya_id', '7')->firstOrFail()->update(['nominal' => $bunga]);
+
+                if ($installmentPayment) {
+                    $savingTransaction = TransaksiHarian::findOrFail($installmentPayment->simpanan_transaksi_harian_id);
+                    $savingTransaction->tgl = $transaksiHarian->tgl;
+                    $savingTransaction->jenis_pembayaran = $transaksiHarian->jenis_pembayaran;
+                    $savingTransaction->keterangan = 'Simpanan wajib angsuran pinjaman ke-' . $installmentPayment->angsuran_ke;
+                    $savingTransaction->save();
+                }
+            });
 
             Session::flash("flash_notification", [
                 "level" => "success",
@@ -281,10 +398,25 @@ class PinjamanDebetController extends Controller
     public function destroy($id)
     {
         abort_unless(!\Auth::user()->hasMemberRole(), 403);
-        //
-        TransaksiHarianAnggota::where('transaksi_harian_id', $id)->delete();
-        TransaksiHarianBiaya::where('transaksi_harian_id', $id)->delete();
-        TransaksiHarian::find($id)->delete();
+        abort_unless(\Auth::user()->can('delete-debet-pinjaman'), 403);
+        DB::transaction(function () use ($id) {
+            $installmentPayment = TransaksiPinjamanCicilan::where('transaksi_harian_id', $id)->first();
+            if ($installmentPayment) {
+                TransaksiPinjamanCicilan::whereKey($installmentPayment->id)->delete();
+                TransaksiHarianAnggota::where(
+                    'transaksi_harian_id',
+                    $installmentPayment->simpanan_transaksi_harian_id
+                )->delete();
+                TransaksiHarianBiaya::where(
+                    'transaksi_harian_id',
+                    $installmentPayment->simpanan_transaksi_harian_id
+                )->delete();
+                TransaksiHarian::whereKey($installmentPayment->simpanan_transaksi_harian_id)->delete();
+            }
+            TransaksiHarianAnggota::where('transaksi_harian_id', $id)->delete();
+            TransaksiHarianBiaya::where('transaksi_harian_id', $id)->delete();
+            TransaksiHarian::findOrFail($id)->delete();
+        });
         Session::flash("flash_notification", [
             "level" => "success",
             "message" => "Berhasil Menghapus Transaksi !!!"
@@ -331,6 +463,114 @@ class PinjamanDebetController extends Controller
                 $failure->values(); // The values of the row that has failed.
             }
         }
+    }
+
+    private function availableInstallments($anggotaId = null)
+    {
+        $loans = TransaksiPinjaman::with([
+            'transaksi_harian_biaya.transaksi_harian.transaksi_harian_anggota.anggota',
+        ])->get();
+        $installments = [];
+
+        foreach ($loans as $loan) {
+            $cost = $loan->transaksi_harian_biaya;
+            $creditTransaction = $cost ? $cost->transaksi_harian : null;
+            $memberLink = $creditTransaction ? $creditTransaction->transaksi_harian_anggota : null;
+            $member = $memberLink ? $memberLink->anggota : null;
+
+            if (!$cost || !$creditTransaction || !$member
+                || (int) $creditTransaction->divisi_id !== 2
+                || (int) $creditTransaction->jenis_transaksi !== 2
+                || ($anggotaId && (int) $member->id !== (int) $anggotaId)) {
+                continue;
+            }
+
+            $nextInstallment = $this->nextUnpaidSchedule($loan, (int) $cost->nominal);
+            if (!$nextInstallment) {
+                continue;
+            }
+
+            $installments[] = array_merge($nextInstallment, [
+                'transaksi_pinjaman_id' => $loan->id,
+                'anggota_id' => $member->id,
+                'anggota_nama' => $member->nama,
+                'produk' => $loan->produk_pinjaman_nama ?: 'Produk lama',
+                'nominal_pinjaman' => (int) $cost->nominal,
+                'tgl_pinjaman' => date('d-m-Y', strtotime($creditTransaction->tgl)),
+            ]);
+        }
+
+        usort($installments, function ($first, $second) {
+            return [$first['anggota_nama'], $first['tgl_pinjaman'], $first['transaksi_pinjaman_id']]
+                <=> [$second['anggota_nama'], $second['tgl_pinjaman'], $second['transaksi_pinjaman_id']];
+        });
+
+        return $installments;
+    }
+
+    private function resolveNextInstallment($loanId, $anggotaId, $lockForUpdate = false)
+    {
+        $query = TransaksiPinjaman::with([
+            'transaksi_harian_biaya.transaksi_harian.transaksi_harian_anggota',
+        ])->whereKey($loanId);
+        if ($lockForUpdate) {
+            $query->lockForUpdate();
+        }
+        $loan = $query->firstOrFail();
+        $cost = $loan->transaksi_harian_biaya;
+        $creditTransaction = $cost ? $cost->transaksi_harian : null;
+        $memberLink = $creditTransaction ? $creditTransaction->transaksi_harian_anggota : null;
+
+        if (!$cost || !$creditTransaction || !$memberLink
+            || (int) $creditTransaction->divisi_id !== 2
+            || (int) $creditTransaction->jenis_transaksi !== 2
+            || (int) $memberLink->anggota_id !== (int) $anggotaId) {
+            throw ValidationException::withMessages([
+                'transaksi_pinjaman_id' => 'Pinjaman kredit tidak ditemukan untuk anggota yang dipilih.',
+            ]);
+        }
+
+        $nextInstallment = $this->nextUnpaidSchedule($loan, (int) $cost->nominal);
+        if (!$nextInstallment) {
+            throw ValidationException::withMessages([
+                'transaksi_pinjaman_id' => 'Semua cicilan pinjaman ini sudah dibayar.',
+            ]);
+        }
+
+        return $nextInstallment;
+    }
+
+    private function nextUnpaidSchedule(TransaksiPinjaman $loan, $amount)
+    {
+        $creditTransaction = $loan->transaksi_harian_biaya
+            ? $loan->transaksi_harian_biaya->transaksi_harian
+            : null;
+        if (!$creditTransaction) {
+            return null;
+        }
+
+        $schedule = PinjamanCalculator::schedule(
+            $amount,
+            $loan->lama_cicilan,
+            $creditTransaction->tgl,
+            $loan->bunga_persen ?: 1,
+            $loan->tabungan_persen ?: 0.5
+        );
+        $paidNumbers = TransaksiPinjamanCicilan::where('transaksi_pinjaman_id', $loan->id)
+            ->pluck('angsuran_ke')
+            ->map(function ($number) {
+                return (int) $number;
+            })
+            ->all();
+
+        foreach ($schedule as $installment) {
+            if (!in_array((int) $installment['bulan'], $paidNumbers, true)) {
+                $installment['angsuran_ke'] = (int) $installment['bulan'];
+                return $installment;
+            }
+        }
+
+        return null;
     }
 
     public function closeBook()

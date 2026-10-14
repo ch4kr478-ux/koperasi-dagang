@@ -28,6 +28,13 @@
                     </a>
                 </li>
                 @endpermission
+                @permission('manage-produk-pinjaman')
+                <li class="{{ set_active(['produk-pinjaman.index', 'produk-pinjaman.create', 'produk-pinjaman.edit']) }}">
+                    <a href="{{ route('produk-pinjaman.index') }}" class="{{ set_active(['produk-pinjaman.index', 'produk-pinjaman.create', 'produk-pinjaman.edit']) }}">
+                        <i class="fi-layers"></i> <span>Produk Pinjaman</span>
+                    </a>
+                </li>
+                @endpermission
                 @permission('manage-periode')
                 <li class="{{ set_active(['periode.index', 'periode.create', 'periode.edit'])}}">
                     <a href="{{ route('periode.index') }}" class="{{ set_active(['periode.index', 'periode.create', 'periode.edit'])}}">

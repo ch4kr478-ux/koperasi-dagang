@@ -39,6 +39,18 @@
     </div>
 </div>
 @endif
+@if (session()->has('error'))
+<div class="row">
+    <div class="col-12">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+    </div>
+</div>
+@endif
 <div class="row">
     <div class="col-12">
         <div class="card-box table-responsive">
@@ -53,6 +65,8 @@
                         <th>Transaksi</th>
                         <th>Cicilan</th>
                         <th>Bunga</th>
+                        <th>Angsuran Kredit</th>
+                        <th>Simpanan Wajib Cicilan</th>
                         <th>Keterangan</th>
                         <th>Status Buku</th>
                         @unless($isMember)
@@ -97,6 +111,8 @@
                             { data: 'jenis_transaksi', name: 'jenis_transaksi' },
                             { data: 'sumCicilan', name: 'sumCicilan', orderable: false, searchable: false},
                             { data: 'sumBunga', name: 'sumBunga', orderable: false, searchable: false },
+                            { data: 'angsuran_kredit', name: 'angsuran_kredit', orderable: false, searchable: false },
+                            { data: 'tabungan_cicilan', name: 'tabungan_cicilan', orderable: false, searchable: false },
                             { data: 'keterangan', name: 'keterangan' },
                             { data: 'is_close', name: 'is_close' },
                             @unless($isMember)

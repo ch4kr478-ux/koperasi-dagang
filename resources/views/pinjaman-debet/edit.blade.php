@@ -127,4 +127,5 @@
         });
     })
 </script>
+@include('pinjaman-debet._installment-script')
 @endsection

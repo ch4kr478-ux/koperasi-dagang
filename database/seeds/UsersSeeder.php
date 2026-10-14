@@ -450,6 +450,26 @@ class UsersSeeder extends Seeder
             ]);
         }
 
+        $moduleProdukPinjaman = Module::firstOrCreate([
+            'name' => 'Module Produk Pinjaman',
+        ]);
+        $permissionProdukPinjaman = [
+            'manage-produk-pinjaman' => ['Mengelola Produk Pinjaman', 'Bisa melihat daftar produk pinjaman'],
+            'create-produk-pinjaman' => ['Membuat Produk Pinjaman', 'Bisa membuat produk pinjaman'],
+            'edit-produk-pinjaman' => ['Mengubah Produk Pinjaman', 'Bisa mengubah produk pinjaman'],
+            'delete-produk-pinjaman' => ['Menghapus Produk Pinjaman', 'Bisa menghapus produk pinjaman'],
+        ];
+        foreach ($permissionProdukPinjaman as $name => $labels) {
+            Permission::firstOrCreate(
+                ['name' => $name],
+                [
+                    'display_name' => $labels[0],
+                    'description' => $labels[1],
+                    'module_id' => $moduleProdukPinjaman->id,
+                ]
+            );
+        }
+
         $moduleDivisiDebet = Module::create([
             'name' => 'Module Divisi Debet'
         ]);
@@ -804,6 +824,10 @@ class UsersSeeder extends Seeder
             'edit-kredit-pinjaman',
             'download-kredit-pinjaman',
             'upload-kredit-pinjaman',
+            'manage-produk-pinjaman',
+            'create-produk-pinjaman',
+            'edit-produk-pinjaman',
+            'delete-produk-pinjaman',
             'manage-debet-divisi',
             'create-debet-divisi',
             'edit-debet-divisi',
