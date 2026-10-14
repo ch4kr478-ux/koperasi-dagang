@@ -148,7 +148,7 @@
 
         <section class="welcome-portal-copy">
             <span class="welcome-portal-badge">
-                <i class="mdi mdi-shield-check" aria-hidden="true"></i>
+                <i class="mdi mdi-shield" aria-hidden="true"></i>
                 Portal Koperasi Terpadu
             </span>
             <h2>Selamat datang</h2>
@@ -159,7 +159,7 @@
                 </a>
                 @if (Route::has('register'))
                     <a href="{{ route('register') }}" class="btn btn-outline-secondary">
-                        <i class="mdi mdi-account-plus-outline" aria-hidden="true"></i> Daftar Anggota
+                        <i class="mdi mdi-account-plus" aria-hidden="true"></i> Daftar Anggota
                     </a>
                 @endif
             </div>

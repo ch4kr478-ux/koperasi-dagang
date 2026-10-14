@@ -237,7 +237,7 @@
             <div class="page-title-box">
                 <div class="float-left">
                     <h4 class="page-title">
-                        <i class="mdi mdi-cash-plus text-teal mr-1" aria-hidden="true"></i> Pencairan Pinjaman
+                        <i class="mdi mdi-cash text-teal mr-1" aria-hidden="true"></i> Pencairan Pinjaman
                     </h4>
                     <div class="page-title-sub">Pencatatan pencairan pinjaman dan skema angsuran anggota</div>
                 </div>

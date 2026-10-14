@@ -40,7 +40,7 @@
                         <span class="auth-user-name">{{ Auth::user()->name }}</span>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button type="submit">{{ __('Logout') }}</button>
+                            <button type="submit"><i class="mdi mdi-logout" aria-hidden="true"></i> {{ __('Logout') }}</button>
                         </form>
                     @endguest
                 </nav>

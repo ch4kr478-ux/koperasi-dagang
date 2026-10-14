@@ -49,5 +49,5 @@
         @enderror
     </div>
 </div>
-<button type="submit" class="btn btn-primary">Simpan</button>
-<a href="{{ route('periode.index') }}" class="btn btn-danger">Kembali</a>
+<button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save" aria-hidden="true"></i> Simpan</button>
+<a href="{{ route('periode.index') }}" class="btn btn-danger"><i class="mdi mdi-arrow-left" aria-hidden="true"></i> Kembali</a>

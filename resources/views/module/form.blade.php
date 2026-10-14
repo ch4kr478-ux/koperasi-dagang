@@ -9,5 +9,5 @@
         @enderror
     </div>
 </div>
-<button type="submit" class="btn btn-primary">Simpan</button>
-<a href="{{route('module.index')}}" class="btn btn-warning" >Kembali</a>
+<button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save" aria-hidden="true"></i> Simpan</button>
+<a href="{{route('module.index')}}" class="btn btn-warning" ><i class="mdi mdi-arrow-left" aria-hidden="true"></i> Kembali</a>

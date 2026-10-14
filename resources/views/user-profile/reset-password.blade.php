@@ -199,7 +199,7 @@
             <div class="page-title-box">
                 <div class="float-left">
                     <h4 class="page-title">
-                        <i class="mdi mdi-account-circle-outline text-teal mr-1" aria-hidden="true"></i>
+                        <i class="mdi mdi-account-circle text-teal mr-1" aria-hidden="true"></i>
                         Profil {{ $isMember ? 'Anggota' : 'Pengguna' }}
                     </h4>
                     <small>Kelola informasi profil dan keamanan akun Anda.</small>
@@ -210,7 +210,7 @@
                         <li class="breadcrumb-item active">Profil</li>
                     </ol>
                     <span class="badge badge-soft-primary">
-                        <i class="mdi mdi-shield-check-outline mr-1" aria-hidden="true"></i>
+                        <i class="mdi mdi-shield mr-1" aria-hidden="true"></i>
                         Pengaturan Akun
                     </span>
                 </div>

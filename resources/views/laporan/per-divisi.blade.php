@@ -46,10 +46,10 @@
 </select>
                 </div>
                 @permission('search-laporan-divisi')
-                <input type="submit" value="Cari" class="btn btn-primary" name="search">
+                <button type="submit" class="btn btn-primary" name="search" value="Cari"><i class="mdi mdi-magnify" aria-hidden="true"></i> Cari</button>
                 @endpermission
                 @permission('excell-laporan-divisi')
-                <input type="submit" value="Excell" class="btn btn-danger" name="export_excell">
+                <button type="submit" class="btn btn-danger" name="export_excell" value="Excell"><i class="mdi mdi-file-excel" aria-hidden="true"></i> Excel</button>
                 @endpermission
             </form>
         </div>

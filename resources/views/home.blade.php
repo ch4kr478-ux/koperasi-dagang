@@ -262,7 +262,7 @@
     <!-- Corporate Executive Welcome Banner -->
     <div class="home-banner">
         <div class="home-banner-badge">
-            <i class="mdi mdi-shield-check"></i> Enterprise Corporate Portal
+            <i class="mdi mdi-shield"></i> Enterprise Corporate Portal
         </div>
         <h3>Sistem Informasi Manajemen Koperasi Karyawan</h3>
         <p>

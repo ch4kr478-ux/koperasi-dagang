@@ -93,7 +93,7 @@
                     });
 
         @permission('create-user')
-        $("div.toolbar").html(`<a href="{{ route('user.create') }}" class="btn btn-gradient btn-rounded waves-light waves-effect w-md">Tambah User</a>`);
+        $("div.toolbar").html(`<a href="{{ route('user.create') }}" class="btn btn-gradient btn-rounded waves-light waves-effect w-md"><i class="mdi mdi-account-plus" aria-hidden="true"></i> Tambah User</a>`);
         @endpermission
 
     });

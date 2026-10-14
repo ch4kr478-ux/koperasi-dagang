@@ -34,5 +34,5 @@
     <label class="form-check-label" for="is_active">Aktif dan dapat dipilih pada transaksi</label>
 </div>
 
-<button type="submit" class="btn btn-primary">Simpan</button>
-<a href="{{ route('produk-pinjaman.index') }}" class="btn btn-secondary">Batal</a>
+<button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save" aria-hidden="true"></i> Simpan</button>
+<a href="{{ route('produk-pinjaman.index') }}" class="btn btn-secondary"><i class="mdi mdi-close" aria-hidden="true"></i> Batal</a>

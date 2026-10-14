@@ -63,7 +63,7 @@
 @section('content')
 <main class="error-page">
     <div class="error-page-mark">
-        <i class="mdi mdi-map-marker-question-outline" aria-hidden="true"></i>
+        <i class="mdi mdi-map-marker" aria-hidden="true"></i>
     </div>
     <p class="error-page-code">404</p>
     <h1>Halaman tidak ditemukan</h1>

@@ -102,7 +102,7 @@
         actions.push('<a href="{{ route('biaya.create') }}" class="btn btn-primary"><i class="mdi mdi-plus mr-1"></i> Tambah Biaya</a>');
         @endpermission
         @permission('manage-biaya')
-        actions.push('<a href="{{ route('biaya.template') }}" class="btn btn-success"><i class="mdi mdi-file-excel-outline mr-1"></i> Unduh Template Excel</a>');
+        actions.push('<a href="{{ route('biaya.template') }}" class="btn btn-success"><i class="mdi mdi-file-excel mr-1"></i> Unduh Template Excel</a>');
         @endpermission
         if (actions.length) {
             $('div.toolbar').html(actions.join(''));

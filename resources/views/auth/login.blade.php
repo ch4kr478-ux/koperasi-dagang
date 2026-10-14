@@ -418,7 +418,7 @@
                             </button>
                         </form>
                         <div class="login-secure-note">
-                            <i class="mdi mdi-shield-check-outline" aria-hidden="true"></i>
+                            <i class="mdi mdi-shield" aria-hidden="true"></i>
                             Akses aman untuk anggota dan pengelola koperasi
                         </div>
                     </div>

@@ -69,5 +69,5 @@
         @enderror
     </div>
 </div>
-<button type="submit" class="btn btn-primary">Simpan</button>
-<a href="{{ route('anggota.index') }}" class="btn btn-help-block">Kembali</a>
+<button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save" aria-hidden="true"></i> Simpan</button>
+<a href="{{ route('anggota.index') }}" class="btn btn-help-block"><i class="mdi mdi-arrow-left" aria-hidden="true"></i> Kembali</a>

@@ -14,6 +14,11 @@
             headerTag: "h3",
             bodyTag: "section",
             transitionEffect: "slideLeft",
+            labels: {
+                previous: '<i class="mdi mdi-arrow-left" aria-hidden="true"></i> Sebelumnya',
+                next: 'Selanjutnya <i class="mdi mdi-arrow-right" aria-hidden="true"></i>',
+                finish: '<i class="mdi mdi-content-save-outline" aria-hidden="true"></i> Simpan'
+            },
             onFinishing: function (event, currentIndex) { 
                 //NOTE: Here you can do form validation and return true or false based on your validation logic
                 console.log("Form has been validated!");

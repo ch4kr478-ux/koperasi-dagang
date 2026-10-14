@@ -1304,6 +1304,10 @@ label {
     transition: all 0.18s ease;
 }
 
+.wizard > .actions a i {
+    margin: 0 6px;
+}
+
 .wizard > .actions a[href="#previous"] {
     background: #ffffff !important;
     color: var(--k-text-body) !important;

@@ -39,7 +39,7 @@
                         </div>
                     </section>
                 </div>
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save" aria-hidden="true"></i> Simpan</button>
             </form>
         </div>
     </div>

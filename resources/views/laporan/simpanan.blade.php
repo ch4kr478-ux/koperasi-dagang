@@ -48,10 +48,10 @@
                 </div>
                 @endpermission
                 @permission('search-simpanan-anggota')
-                <button type="button" class="btn btn-primary" id="cari" data-url="{{ route('simpanan-anggota.cari') }}">Cari</button>
+                <button type="button" class="btn btn-primary" id="cari" data-url="{{ route('simpanan-anggota.cari') }}"><i class="mdi mdi-magnify" aria-hidden="true"></i> Cari</button>
                 @endpermission
                 @permission('excell-simpanan-anggota')
-                <input type="submit" value="Excell" class="btn btn-danger" name="export_excell">
+                <button type="submit" class="btn btn-danger" name="export_excell" value="Excell"><i class="mdi mdi-file-excel" aria-hidden="true"></i> Excel</button>
                 @endpermission
             </form>
         </div>
@@ -120,7 +120,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Tutup"><i class="mdi mdi-close" aria-hidden="true"></i></button>
                 </div>
                 <div class="modal-body">
                     <div id="response">

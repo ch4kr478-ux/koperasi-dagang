@@ -2,5 +2,5 @@
 <form method="post" action="{{ $form_url }}" class="form-inline js-confirm">
 @csrf
 
-<input type="submit" value="Tutup Buku" class="btn btn-space btn-success active btn-sm">
+<button type="submit" class="btn btn-space btn-success active btn-sm"><i class="mdi mdi-book" aria-hidden="true"></i> Tutup Buku</button>
 </form>

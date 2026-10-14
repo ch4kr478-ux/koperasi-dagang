@@ -93,7 +93,7 @@
                         order: [[ 0, "desc" ]]
                     });
                     @permission('create-periode')
-                    $("div.toolbar").html('<a href="{{ route('periode.create') }}" class="btn btn-gradient btn-rounded waves-light waves-effect w-md">Tambah Periode</a>');
+                    $("div.toolbar").html('<a href="{{ route('periode.create') }}" class="btn btn-gradient btn-rounded waves-light waves-effect w-md"><i class="mdi mdi-plus" aria-hidden="true"></i> Tambah Periode</a>');
                     @endpermission
 
     });

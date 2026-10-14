@@ -137,7 +137,7 @@
             <div class="page-title-box">
                 <div class="float-left">
                     <h4 class="page-title">
-                        <i class="mdi mdi-bank-transfer-out text-teal mr-1" aria-hidden="true"></i> Penarikan Simpanan
+                        <i class="mdi mdi-bank text-teal mr-1" aria-hidden="true"></i> Penarikan Simpanan
                     </h4>
                     <div class="page-title-sub">Pencatatan transaksi kredit simpanan anggota koperasi</div>
                 </div>

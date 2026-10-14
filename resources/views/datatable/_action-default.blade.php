@@ -4,9 +4,9 @@
 @csrf
 @method('DELETE')
 
-<a href="{{ $edit_url }}" class="btn btn-space btn-primary active btn-sm">Ubah</a> |
+<a href="{{ $edit_url }}" class="btn btn-space btn-primary active btn-sm"><i class="mdi mdi-pencil" aria-hidden="true"></i> Ubah</a> |
 @endpermission
 @permission($can_delete)
-<input type="submit" value="Hapus" class="btn btn-space btn-danger active btn-sm">
+<button type="submit" class="btn btn-space btn-danger active btn-sm"><i class="mdi mdi-delete" aria-hidden="true"></i> Hapus</button>
 @endpermission
 </form>

@@ -95,7 +95,7 @@
                     });
 
         @permission('create-permissions')
-        $("div.toolbar").html(`<a href="{{ route('permission.create') }}" class="btn btn-gradient btn-rounded waves-light waves-effect w-md">Tambah Permission</a>`);
+        $("div.toolbar").html(`<a href="{{ route('permission.create') }}" class="btn btn-gradient btn-rounded waves-light waves-effect w-md"><i class="mdi mdi-plus" aria-hidden="true"></i> Tambah Permission</a>`);
         @endpermission
 
     });

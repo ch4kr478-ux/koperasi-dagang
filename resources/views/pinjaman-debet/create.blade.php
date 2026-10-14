@@ -176,7 +176,7 @@
             <div class="page-title-box">
                 <div class="float-left">
                     <h4 class="page-title">
-                        <i class="mdi mdi-cash-minus text-teal mr-1" aria-hidden="true"></i> Pembayaran Pinjaman
+                        <i class="mdi mdi-cash text-teal mr-1" aria-hidden="true"></i> Pembayaran Pinjaman
                     </h4>
                     <div class="page-title-sub">Pencatatan pembayaran angsuran atau transaksi debet pinjaman anggota</div>
                 </div>

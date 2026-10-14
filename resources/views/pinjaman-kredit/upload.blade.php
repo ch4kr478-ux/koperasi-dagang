@@ -65,9 +65,9 @@
                     <small class="form-text text-muted">Pilih file template transaksi pinjaman yang telah diisi.</small>
                 </div>
                 <button type="submit" class="btn btn-primary">
-                    <i class="mdi mdi-cloud-upload mr-1"></i> Upload dan Simpan
+                    <i class="mdi mdi-cloud-upload mr-1"></i> Upload dan                     <i class="mdi mdi-content-save" aria-hidden="true"></i> Simpan
                 </button>
-                <a href="{{ route('pinjaman-kredit.index') }}" class="btn btn-light">Kembali</a>
+                <a href="{{ route('pinjaman-kredit.index') }}" class="btn btn-light"><i class="mdi mdi-arrow-left" aria-hidden="true"></i> Kembali</a>
             </form>
         </div>
     </div>

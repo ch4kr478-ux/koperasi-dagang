@@ -367,7 +367,7 @@
             <p class="welcome-description">Pantau ringkasan simpanan, pinjaman, dan aktivitas transaksi Anda.</p>
         </div>
         <div class="welcome-period">
-            <i class="mdi mdi-calendar-blank-outline mr-1" aria-hidden="true"></i>
+            <i class="mdi mdi-calendar-blank mr-1" aria-hidden="true"></i>
             {{ $periode ? 'Periode ' . $periode->name : 'Akumulasi seluruh periode' }}
         </div>
     </div>
@@ -393,28 +393,28 @@
         <div class="row">
             <div class="col-12 col-sm-6 col-xl-3">
                 <div class="member-stat-card">
-                    <span class="member-stat-icon"><i class="mdi mdi-piggy-bank-outline" aria-hidden="true"></i></span>
+                    <span class="member-stat-icon"><i class="mdi mdi-bank" aria-hidden="true"></i></span>
                     <div class="member-stat-label">Setoran Simpanan</div>
                     <p class="member-stat-value">{{ Money::stringToRupiah($totalSetoranSimpanan) }}</p>
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-xl-3">
                 <div class="member-stat-card credit">
-                    <span class="member-stat-icon"><i class="mdi mdi-cash-minus" aria-hidden="true"></i></span>
+                    <span class="member-stat-icon"><i class="mdi mdi-cash" aria-hidden="true"></i></span>
                     <div class="member-stat-label">Penarikan Simpanan</div>
                     <p class="member-stat-value">{{ Money::stringToRupiah($totalPenarikanSimpanan) }}</p>
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-xl-3">
                 <div class="member-stat-card">
-                    <span class="member-stat-icon"><i class="mdi mdi-hand-coin-outline" aria-hidden="true"></i></span>
+                    <span class="member-stat-icon"><i class="mdi mdi-cash" aria-hidden="true"></i></span>
                     <div class="member-stat-label">Pinjaman Diterima</div>
                     <p class="member-stat-value">{{ Money::stringToRupiah($totalPinjamanDiterima) }}</p>
                 </div>
             </div>
             <div class="col-12 col-sm-6 col-xl-3">
                 <div class="member-stat-card credit">
-                    <span class="member-stat-icon"><i class="mdi mdi-cash-check" aria-hidden="true"></i></span>
+                    <span class="member-stat-icon"><i class="mdi mdi-cash" aria-hidden="true"></i></span>
                     <div class="member-stat-label">Pembayaran Pinjaman</div>
                     <p class="member-stat-value">{{ Money::stringToRupiah($totalPembayaranPinjaman) }}</p>
                 </div>
@@ -462,7 +462,7 @@
                 </div>
             @else
                 <div class="member-empty-state">
-                    <i class="mdi mdi-text-box-search-outline" aria-hidden="true"></i>
+                    <i class="mdi mdi-magnify" aria-hidden="true"></i>
                     <h5>Belum ada transaksi</h5>
                     <p>Transaksi simpanan atau pinjaman Anda akan muncul di sini.</p>
                 </div>
@@ -471,7 +471,7 @@
     @else
         <div class="member-activity-panel">
             <div class="member-empty-state">
-                <i class="mdi mdi-account-alert-outline" aria-hidden="true"></i>
+                <i class="mdi mdi-account-alert" aria-hidden="true"></i>
                 <h5>Data anggota belum terhubung</h5>
                 <p>Hubungi administrator agar akun Anda dapat ditautkan ke data anggota koperasi.</p>
             </div>

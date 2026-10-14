@@ -108,12 +108,12 @@
                                                         <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;"></div>
                                                         <div>
                                                             <span class="btn btn-primary btn-file">
-                                                                <span class="fileinput-new"> {{__('Pilih Gambar')}} </span>
-                                                                <span class="fileinput-exists"> {{__('Ubah')}} </span>
+                                                                <span class="fileinput-new"><i class="mdi mdi-image" aria-hidden="true"></i> {{__('Pilih Gambar')}} </span>
+                                                                <span class="fileinput-exists"><i class="mdi mdi-image" aria-hidden="true"></i> {{__('Ubah')}} </span>
                                                                 <input type="hidden">
                                                                 <input type="file" name="logo" id="logo">
                                                             </span>
-                                                            <a href="javascript:;" class="btn btn-danger fileinput-exists" data-dismiss="fileinput"> {{__('Hapus')}} </a>
+                                                            <a href="javascript:;" class="btn btn-danger fileinput-exists" data-dismiss="fileinput"><i class="mdi mdi-delete" aria-hidden="true"></i> {{__('Hapus')}} </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -126,12 +126,12 @@
                                                         <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;"></div>
                                                         <div>
                                                             <span class="btn btn-primary btn-file">
-                                                                <span class="fileinput-new"> {{__('Pilih Gambar')}} </span>
-                                                                <span class="fileinput-exists"> {{__('Ubah')}} </span>
+                                                                <span class="fileinput-new"><i class="mdi mdi-image" aria-hidden="true"></i> {{__('Pilih Gambar')}} </span>
+                                                                <span class="fileinput-exists"><i class="mdi mdi-image" aria-hidden="true"></i> {{__('Ubah')}} </span>
                                                                 <input type="hidden">
                                                                 <input type="file" name="small_logo" id="small_logo">
                                                             </span>
-                                                            <a href="javascript:;" class="btn btn-danger fileinput-exists" data-dismiss="fileinput"> {{__('Hapus')}} </a>
+                                                            <a href="javascript:;" class="btn btn-danger fileinput-exists" data-dismiss="fileinput"><i class="mdi mdi-delete" aria-hidden="true"></i> {{__('Hapus')}} </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -144,12 +144,12 @@
                                                         <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 150px; line-height: 10px;"></div>
                                                         <div>
                                                             <span class="btn btn-primary btn-file">
-                                                                <span class="fileinput-new"> {{__('Pilih Gambar')}} </span>
-                                                                <span class="fileinput-exists"> {{__('Ubah')}} </span>
+                                                                <span class="fileinput-new"><i class="mdi mdi-image" aria-hidden="true"></i> {{__('Pilih Gambar')}} </span>
+                                                                <span class="fileinput-exists"><i class="mdi mdi-image" aria-hidden="true"></i> {{__('Ubah')}} </span>
                                                                 <input type="hidden">
                                                                 <input type="file" name="favicon" id="favicon">
                                                             </span>
-                                                            <a href="javascript:;" class="btn btn-danger fileinput-exists" data-dismiss="fileinput"> {{__('Hapus')}} </a>
+                                                            <a href="javascript:;" class="btn btn-danger fileinput-exists" data-dismiss="fileinput"><i class="mdi mdi-delete" aria-hidden="true"></i> {{__('Hapus')}} </a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -184,7 +184,7 @@
                                         </div>
                                     </div>
                                     <div class="text-right">
-                                        <input type="submit" value="{{ __('Simpan') }}" class="btn btn-primary">
+                                        <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save" aria-hidden="true"></i> {{ __('Simpan') }}</button>
                                     </div>
                                     </form>
                                 </div>
@@ -262,7 +262,7 @@
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <input type="submit" value="{{ __('Simpan') }}" class="btn btn-primary">
+                                            <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save" aria-hidden="true"></i> {{ __('Simpan') }}</button>
                                         </div>
                                         </form>
                                     </div>
@@ -349,7 +349,7 @@
                                         </div>
                                         @permission('create-email')
                                         <div class="text-right">
-                                            <input type="submit" value="{{ __('Simpan') }}" class="btn btn-primary">
+                                            <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save" aria-hidden="true"></i> {{ __('Simpan') }}</button>
                                         </div>
                                         @endpermission
                                         </form>
@@ -402,7 +402,7 @@
                                             </div>
                                         </div>
                                         <div class="text-right">
-                                            <input type="submit" value="{{ __('Simpan') }}" class="btn btn-primary">
+                                            <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save" aria-hidden="true"></i> {{ __('Simpan') }}</button>
                                         </div>
                                         </form>
                                     </div>

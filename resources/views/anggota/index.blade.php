@@ -12,7 +12,7 @@
         <div class="page-title-box">
             <div class="float-left">
                 <h4 class="page-title">
-                    <i class="mdi mdi-account-group-outline text-teal mr-1" aria-hidden="true"></i> Data Anggota
+                    <i class="mdi mdi-account-multiple text-teal mr-1" aria-hidden="true"></i> Data Anggota
                 </h4>
                 <small>Kelola informasi anggota dan status keanggotaan koperasi.</small>
             </div>
@@ -120,10 +120,10 @@
 
         var actions = [];
         @permission('create-anggota')
-        actions.push('<a href="{{ route('anggota.create') }}" class="btn btn-primary"><i class="mdi mdi-account-plus-outline mr-1"></i> Tambah Anggota</a>');
+        actions.push('<a href="{{ route('anggota.create') }}" class="btn btn-primary"><i class="mdi mdi-account-plus mr-1"></i> Tambah Anggota</a>');
         @endpermission
         @permission('download-anggota')
-        actions.push('<a href="{{ route('anggota.export') }}" class="btn btn-success"><i class="mdi mdi-file-excel-outline mr-1"></i> Unduh Excel</a>');
+        actions.push('<a href="{{ route('anggota.export') }}" class="btn btn-success"><i class="mdi mdi-file-excel mr-1"></i> Unduh Excel</a>');
         @endpermission
         if (actions.length) {
             $('div.toolbar').html(actions.join(''));

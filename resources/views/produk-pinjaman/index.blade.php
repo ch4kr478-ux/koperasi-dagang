@@ -21,7 +21,7 @@
     <div class="col-12">
         <div class="card-box table-responsive">
             @permission('create-produk-pinjaman')
-                <a href="{{ route('produk-pinjaman.create') }}" class="btn btn-primary mb-3">Tambah Produk Pinjaman</a>
+                <a href="{{ route('produk-pinjaman.create') }}" class="btn btn-primary mb-3"><i class="mdi mdi-plus" aria-hidden="true"></i> Tambah Produk Pinjaman</a>
             @endpermission
             <table class="table table-striped table-bordered">
                 <thead>
@@ -48,14 +48,14 @@
                             </td>
                             <td class="text-nowrap">
                                 @permission('edit-produk-pinjaman')
-                                    <a href="{{ route('produk-pinjaman.edit', $produk->id) }}" class="btn btn-sm btn-warning">Ubah</a>
+                                    <a href="{{ route('produk-pinjaman.edit', $produk->id) }}" class="btn btn-sm btn-warning"><i class="mdi mdi-pencil" aria-hidden="true"></i> Ubah</a>
                                 @endpermission
                                 @permission('delete-produk-pinjaman')
                                     <form method="POST" action="{{ route('produk-pinjaman.destroy', $produk->id) }}" class="d-inline"
                                         onsubmit="return confirm('Hapus produk pinjaman ini?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                        <button type="submit" class="btn btn-sm btn-danger"><i class="mdi mdi-delete" aria-hidden="true"></i> Hapus</button>
                                     </form>
                                 @endpermission
                             </td>

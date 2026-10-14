@@ -489,7 +489,7 @@
         <div class="dashboard-panel chart-panel">
             <div class="dashboard-panel-heading">
                 <div class="chart-panel-title">
-                    <span class="chart-heading-icon members"><i class="mdi mdi-account-group-outline"></i></span>
+                    <span class="chart-heading-icon members"><i class="mdi mdi-account-multiple"></i></span>
                     <div>
                         <h5>Status Anggota</h5>
                         <p>Perbandingan anggota aktif dan nonaktif</p>

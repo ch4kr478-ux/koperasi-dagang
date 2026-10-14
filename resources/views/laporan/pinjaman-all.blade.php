@@ -64,7 +64,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                <button class="btn btn-success text-right" type="button" id="export">Excell</button>
+                <button class="btn btn-success text-right" type="button" id="export"><i class="mdi mdi-file-excel" aria-hidden="true"></i> Excel</button>
             </form>
         </div>
     </div>
