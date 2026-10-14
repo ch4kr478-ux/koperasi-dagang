@@ -1,4 +1,4 @@
-Aplikasi Koperasi Karyawan Universitas Prasetiyamulya
+Aplikasi Koperasi Karyawan
 
 ## Instalasi
 
