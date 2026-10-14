@@ -14,6 +14,13 @@
                     </a>
                 </li>
                 @endpermission
+                @if(Auth::user()->hasMemberRole())
+                <li class="{{ set_active(['user.user-profile']) }}">
+                    <a href="{{ route('user.user-profile', Auth::user()->id) }}" class="{{ set_active(['user.user-profile']) }}">
+                        <i class="fi-head"></i> <span>Profil Member</span>
+                    </a>
+                </li>
+                @endif
                 @permission('manage-divisi')
                 <li class="{{ set_active(['divisi.index', 'divisi.create', 'divisi.edit'])}}">
                     <a href="{{ route('divisi.index') }}" class="{{ set_active(['divisi.index', 'divisi.create', 'divisi.edit'])}}">
