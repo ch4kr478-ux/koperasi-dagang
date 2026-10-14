@@ -28,9 +28,7 @@ class PinjamanKreditController extends Controller
     public function index(Request $request)
     {
         //
-        $user = \Auth::user();
-        $isMember = $user->hasMemberRole();
-        if ($user->can('manage-kredit-pinjaman') || $isMember) {
+        if (\Auth::user()->can('manage-kredit-pinjaman')) {
             # code...
             if ($request->ajax()) {
                 $transaksiHarian = TransaksiHarian::with([
@@ -39,21 +37,8 @@ class PinjamanKreditController extends Controller
                     }, 'sumKreditPinjaman'
                 ])
                     ->where('divisi_id', '2')
-                    ->where('jenis_transaksi', '2')
-                    ->orderBy('id', 'desc');
-                if ($isMember) {
-                    $transaksiHarian->whereIn('id', function ($query) use ($user) {
-                        $query->select('transaksi_harian_id')
-                            ->from('transaksi_harian_anggotas')
-                            ->whereIn('anggota_id', function ($query) use ($user) {
-                                $query->select('anggota_id')
-                                    ->from('user_anggotas')
-                                    ->where('user_id', $user->id);
-                            });
-                    });
-                }
+                    ->where('jenis_transaksi', '2');
                 return DataTables::of($transaksiHarian)
-                    ->addIndexColumn()
                     ->editColumn('tgl', function ($transaksiHarian) {
                         return Tanggal::tanggal_id($transaksiHarian->tgl);
                     })
@@ -90,7 +75,7 @@ class PinjamanKreditController extends Controller
                     ->rawColumns(['jenis_pembayaran', 'jenis_transaksi', 'action', 'is_close'])
                     ->make(true);
             }
-            return view('pinjaman-kredit.index', compact('isMember'));
+            return view('pinjaman-kredit.index');
         } else {
             # code...
             return redirect()->back()->with('error', __('Permission denied.'));
@@ -105,7 +90,6 @@ class PinjamanKreditController extends Controller
     public function create()
     {
         //
-        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         if (\Auth::user()->can('create-kredit-pinjaman')) {
             # code...
             return view('pinjaman-kredit.create');
@@ -124,7 +108,6 @@ class PinjamanKreditController extends Controller
     public function store(Request $request)
     {
         //
-        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         if (\Auth::user()->can('create-kredit-pinjaman')) {
             # code...
             $this->validate($request, [

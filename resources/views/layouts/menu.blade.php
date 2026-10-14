@@ -35,9 +35,10 @@
                     </a>
                 </li>
                 @endpermission
-                @if(Auth::user()->can('manage-debet-simpanan') || Auth::user()->can('manage-kredit-simpanan') || Auth::user()->can('manage-debet-pinjaman') || Auth::user()->can('manage-kredit-pinjaman') || Auth::user()->can('manage-debet-divisi') || Auth::user()->can('manage-kredit-divisi') || Auth::user()->can('manage-copy-saldo') || Auth::user()->hasMemberRole())
+                @permission('manage-debet-simpanan|manage-kredit-simpanan|manage-debet-pinjaman
+                |manage-kredit-pinjaman|manage-debet-divisi|manage-kredit-divisi|manage-copy-saldo')
                 <li class="menu-title">Transaksi</li>
-                @endif
+                @endpermission
                 @permission('manage-copy-saldo')
                 <li class="{{ set_active(['copy-saldo.index', 'copy-saldo.create', 'copy-saldo.edit'])}}">
                     <a href="{{ route('copy-saldo.index') }}" class="{{ set_active(['copy-saldo.index', 'copy-saldo.create', 'copy-saldo.edit'])}}">
@@ -45,7 +46,7 @@
                     </a>
                 </li>
                 @endpermission
-                @if(Auth::user()->can('manage-debet-simpanan') || Auth::user()->can('manage-kredit-simpanan') || Auth::user()->hasMemberRole())
+                @permission('manage-debet-simpanan|manage-kredit-simpanan')
                 <li class="{{ set_active(['simpanan-debet.index', 'simpanan-debet.create', 'simpanan-debet.edit', 'simpanan-debet.upload',
                 'simpanan-kredit.index', 'simpanan-kredit.create', 'simpanan-kredit.edit', 'simpanan-kredit.upload'])}}">
                     <a href="javascript: void(0);" class="{{ set_active(['simpanan-debet.index', 'simpanan-debet.create', 'simpanan-debet.edit', 'simpanan-debet.upload',
@@ -60,13 +61,6 @@
                             </a>
                         </li>
                         @endpermission
-                        @if(Auth::user()->hasMemberRole() && !Auth::user()->can('manage-debet-simpanan'))
-                        <li class="{{ set_active(['simpanan-debet.index'])}}">
-                            <a href="{{ route('simpanan-debet.index') }}" class="{{ set_active(['simpanan-debet.index'])}}">
-                                Debet
-                            </a>
-                        </li>
-                        @endif
                         @permission('manage-kredit-simpanan')
                         <li class="{{ set_active(['simpanan-kredit.index', 'simpanan-kredit.create', 'simpanan-kredit.edit', 'simpanan-kredit.upload'])}}">
                             <a href="{{ route('simpanan-kredit.index') }}" class="{{ set_active(['simpanan-kredit.index', 'simpanan-kredit.create', 'simpanan-kredit.edit', 'simpanan-kredit.upload'])}}">Kredit</a>
@@ -74,14 +68,12 @@
                         @endpermission
                     </ul>
                 </li>
-                @endif
-                @if(Auth::user()->can('manage-debet-pinjaman') || Auth::user()->can('manage-kredit-pinjaman') || Auth::user()->can('pinjaman-debet-create') || Auth::user()->hasMemberRole() || Auth::user()->can('view-pengajuan-pinjaman-kredit'))
+                @endpermission
+                @permission('manage-debet-pinjaman|manage-kredit-simpanan|pinjaman-debet-create')
                 <li class="{{ set_active(['pinjaman-debet.index', 'pinjaman-debet.create', 'pinjaman-debet.edit', 'pinjaman-debet.upload',
-                'pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload',
-                'pengajuan-pinjaman.index', 'pengajuan-pinjaman.create', 'pengajuan-pinjaman.show'])}}">
+                'pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload'])}}">
                     <a href="javascript: void(0);" class="{{ set_active(['pinjaman-debet.index', 'pinjaman-debet.create', 'pinjaman-debet.edit', 'pinjaman-debet.upload',
-                    'pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload',
-                    'pengajuan-pinjaman.index', 'pengajuan-pinjaman.create', 'pengajuan-pinjaman.show'])}}">
+                    'pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload'])}}">
                         <i class="fi-map"></i> <span> Pinjaman </span> <span class="menu-arrow"></span>
                     </a>
                     <ul class="nav-second-level collapse" aria-expanded="false" style="">
@@ -92,23 +84,16 @@
                             </a>
                         </li>
                         @endpermission
-                        @if(Auth::user()->can('manage-kredit-pinjaman') || Auth::user()->hasMemberRole() || Auth::user()->can('view-pengajuan-pinjaman-kredit'))
-                        <li class="{{ set_active(['pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload', 'pengajuan-pinjaman.index', 'pengajuan-pinjaman.create', 'pengajuan-pinjaman.show'])}}">
-                            <a href="{{ Auth::user()->can('manage-kredit-pinjaman') || Auth::user()->hasMemberRole() ? route('pinjaman-kredit.index') : route('pengajuan-pinjaman.index') }}" class="{{ set_active(['pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload', 'pengajuan-pinjaman.index', 'pengajuan-pinjaman.create', 'pengajuan-pinjaman.show'])}}">
+                        @permission('manage-kredit-pinjaman')
+                        <li class="{{ set_active(['pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload'])}}">
+                            <a href="{{ route('pinjaman-kredit.index') }}" class="{{ set_active(['pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload'])}}">
                                 Kredit
                             </a>
                         </li>
-                        @endif
-                        @if(Auth::user()->hasMemberRole() && !Auth::user()->can('manage-debet-pinjaman'))
-                        <li class="{{ set_active(['pinjaman-debet.index'])}}">
-                            <a href="{{ route('pinjaman-debet.index') }}" class="{{ set_active(['pinjaman-debet.index'])}}">
-                                Debet
-                            </a>
-                        </li>
-                        @endif
+                        @endpermission
                     </ul>
                 </li>
-                @endif
+                @endpermission
                 @permission('manage-debet-divisi|manage-kredit-divisi')
                 <li class="{{ set_active(['divisi-debet.index', 'divisi-debet.create', 'divisi-debet.edit', 'divisi-debet.upload',
                 'divisi-kredit.index', 'divisi-kredit.create', 'divisi-kredit.edit', 'divisi-kredit.upload'])}}">

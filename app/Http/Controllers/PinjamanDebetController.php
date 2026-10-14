@@ -28,9 +28,7 @@ class PinjamanDebetController extends Controller
     public function index(Request $request)
     {
         //
-        $user = \Auth::user();
-        $isMember = $user->hasMemberRole();
-        if ($user->can('manage-debet-pinjaman') || $isMember) {
+        if (\Auth::user()->can('manage-debet-pinjaman')) {
             # code...
             if ($request->ajax()) {
                 $transaksiHarian = TransaksiHarian::with([
@@ -39,21 +37,8 @@ class PinjamanDebetController extends Controller
                     }, 'sumBunga', 'sumCicilan'
                 ])
                     ->where('divisi_id', '2')
-                    ->where('jenis_transaksi', '1')
-                    ->orderBy('id', 'desc');
-                if ($isMember) {
-                    $transaksiHarian->whereIn('id', function ($query) use ($user) {
-                        $query->select('transaksi_harian_id')
-                            ->from('transaksi_harian_anggotas')
-                            ->whereIn('anggota_id', function ($query) use ($user) {
-                                $query->select('anggota_id')
-                                    ->from('user_anggotas')
-                                    ->where('user_id', $user->id);
-                            });
-                    });
-                }
+                    ->where('jenis_transaksi', '1');
                 return DataTables::of($transaksiHarian)
-                    ->addIndexColumn()
                     ->editColumn('tgl', function ($transaksiHarian) {
                         return Tanggal::tanggal_id($transaksiHarian->tgl);
                     })
@@ -93,7 +78,7 @@ class PinjamanDebetController extends Controller
                     ->rawColumns(['jenis_pembayaran', 'jenis_transaksi', 'action', 'is_close'])
                     ->make(true);
             }
-            return view('pinjaman-debet.index', compact('isMember'));
+            return view('pinjaman-debet.index');
         } else {
             # code...
             return redirect()->back()->with('error', __('Permission denied.'));

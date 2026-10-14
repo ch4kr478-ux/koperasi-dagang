@@ -35,10 +35,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('laporan-pinjaman-validation', 'LaporanAllController@validationPinjaman')->name('laporan-pinjaman-all.validation');
         Route::post('laporan-pinjaman-export', 'LaporanAllController@exportPinjaman')->name('laporan-pinjaman-all.export');
         Route::get('/user/{user}/profile-user/', 'UserController@editPasswordMember')->name('user.user-profile');
-        Route::put('/user/profile/{user}/anggota', 'UserController@updateMemberProfile')->name('user.update-member-profile');
         Route::put('/user/profile/{user}', 'UserController@putEditPassword')->name('user.edit-password');
-        Route::resource('pengajuan-pinjaman', 'PengajuanPinjamanKreditController')->only(['index', 'create', 'store', 'show']);
-        Route::post('pengajuan-pinjaman/{pengajuanPinjaman}/keputusan', 'PengajuanPinjamanKreditController@decide')->name('pengajuan-pinjaman.decide');
         Route::get('/home', 'HomeController@index')->name('home');
         Route::resource('anggota', 'AnggotaController');
         Route::get('/anggota-export', 'AnggotaController@export')->name('anggota.export');

@@ -11,7 +11,7 @@
     <div class="col-12">
         <div class="page-title-box">
             <div class="float-left">
-                <h4 class="page-title">{{ $isMember ? 'Pinjaman Kredit Saya' : 'Pinjaman Kredit' }}</h4>
+                <h4 class="page-title">Pinjaman Kredit </h4>
                 <small class="text-danger">Periode : {{ periode()->name }}</small>
             </div>
             <div class="float-right">
@@ -38,25 +38,13 @@
     </div>
 </div>
 @endif
-@if (Auth::user()->can('view-pengajuan-pinjaman-kredit') || (Auth::user()->hasMemberRole() && Auth::user()->can('create-pengajuan-pinjaman-kredit')))
-<div class="row mb-3">
-    <div class="col-12">
-        @if (Auth::user()->can('view-pengajuan-pinjaman-kredit'))
-            <a href="{{ route('pengajuan-pinjaman.index') }}" class="btn btn-info">Daftar Pengajuan Kredit</a>
-        @endif
-        @if (Auth::user()->hasMemberRole() && Auth::user()->can('create-pengajuan-pinjaman-kredit'))
-            <a href="{{ route('pengajuan-pinjaman.create') }}" class="btn btn-primary">Ajukan Pinjaman Kredit</a>
-        @endif
-    </div>
-</div>
-@endif
 <div class="row">
     <div class="col-12">
         <div class="card-box table-responsive">
             <table id="datatable-buttons" class="table table-striped table-bordered display nowrap" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>#ID</th>
                         <th>Nama Anggota</th>
                         <th>Tanggal</th>
                         <th>Jenis</th>
@@ -65,9 +53,7 @@
                         <th>Pinjaman</th>
                         <th>Keterangan</th>
                         <th>Status Buku</th>
-                        @permission('manage-kredit-pinjaman')
                         <th>ACTION DEFAULT</th>
-                        @endpermission
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -99,7 +85,7 @@
                         serverSide: true,
                         ajax: "{{ route('pinjaman-kredit.index') }}",
                         columns: [
-                            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
+                            { data: 'id', name: 'id' },
                             { data: 'nama_anggota.anggota.nama', name: 'nama_anggota.anggota.nama', orderable: false, searchable: false },
                             { data: 'tgl', name: 'tgl' },
                             { data: 'jenis_pembayaran', name: 'jenis_pembayaran' },
@@ -108,22 +94,18 @@
                             { data: 'sumKreditPinjaman', name: 'sumKreditPinjaman', orderable: false, searchable: false },
                             { data: 'keterangan', name: 'keterangan' },
                             { data: 'is_close', name: 'is_close' },
-                            @permission('manage-kredit-pinjaman')
                             { data: 'action', name: 'action', orderable: false, searchable: false },
-                            @endpermission
                         ],
                         dom: '<"toolbar">frtip',
-                        order: [],
+                        order: [[ 0, "desc" ]],
                         scrollX: true
                     });
                     $("div.toolbar").html(`@permission('create-kredit-pinjaman')<a href="{{ route('pinjaman-kredit.create') }}" class="btn btn-gradient waves-light waves-effect w-md"><i class="fa fa-plus"></i> Tambah</a>@endpermission
                     @permission('download-kredit-pinjaman')<a href="https://docs.google.com/spreadsheets/d/1D3nG6RPUnYhrW3NdonvSDiQVd7IJewGU/export?format=xlsx" class="btn btn-success waves-light waves-effect w-md"><i class="mdi mdi-file-excel"></i>Download Template</a>@endpermission
                     @permission('upload-kredit-pinjaman')<a href="{{ route('pinjaman-kredit.upload') }}" class="btn btn-warning waves-light waves-effect w-md"><i class="mdi mdi-cloud-upload"></i> Upload</a>@endpermission
-                    @permission('manage-kredit-pinjaman')
                     @if(Pembukuan::closeBook('2', '2', ['8']) == '1')
                         <a href="{{ route('pinjaman-kredit.close-book') }}" class="btn btn-danger waves-light waves-effect w-md"><i class="fa fa-book"></i> Tutup Buku</a>
                     @endif
-                    @endpermission
                     `);
     });
 </script>

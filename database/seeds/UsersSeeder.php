@@ -753,24 +753,6 @@ class UsersSeeder extends Seeder
             ]);
         }
 
-        $modulePengajuanPinjaman = Module::firstOrCreate([
-            'name' => 'Module Pengajuan Pinjaman Kredit',
-        ]);
-        $approvalPermissions = [
-            'view-pengajuan-pinjaman-kredit' => 'Melihat Pengajuan Pinjaman Kredit',
-            'create-pengajuan-pinjaman-kredit' => 'Membuat Pengajuan Pinjaman Kredit',
-            'approve-pengajuan-pinjaman-admin' => 'Menyetujui Pengajuan Pinjaman Kredit (Admin)',
-            'approve-pengajuan-pinjaman-bendahara' => 'Menyetujui Pengajuan Pinjaman Kredit (Bendahara)',
-            'approve-pengajuan-pinjaman-ketua' => 'Menyetujui Pengajuan Pinjaman Kredit (Ketua)',
-        ];
-        foreach ($approvalPermissions as $name => $displayName) {
-            $permission = Permission::firstOrNew(['name' => $name]);
-            $permission->display_name = $displayName;
-            $permission->description = $displayName;
-            $permission->module_id = $modulePengajuanPinjaman->id;
-            $permission->save();
-        }
-
         //Adminstrator Rules
         Role::create([
             'name' => 'admin',
@@ -780,8 +762,6 @@ class UsersSeeder extends Seeder
 
         $adminRole = Role::where('name', 'admin')->first();
         $adminPermission = [
-            'view-pengajuan-pinjaman-kredit',
-            'approve-pengajuan-pinjaman-admin',
             'manage-anggota',
             'create-anggota',
             'edit-anggota',
@@ -894,8 +874,6 @@ class UsersSeeder extends Seeder
 
         $memberRole = Role::where('name', 'member')->first();
         $memberPermission = [
-            'view-pengajuan-pinjaman-kredit',
-            'create-pengajuan-pinjaman-kredit',
             'manage-simpanan-anggota',
             'search-simpanan-anggota',
             'excell-simpanan-anggota',
@@ -917,25 +895,5 @@ class UsersSeeder extends Seeder
         }
 
         $memberUser->addRole($memberRole);
-
-        $bendaharaRole = Role::firstOrCreate(
-            ['name' => 'bendahara'],
-            ['display_name' => 'Bendahara', 'description' => 'Role Bendahara']
-        );
-        $bendaharaRole->givePermission(Permission::where('name', 'view-pengajuan-pinjaman-kredit')->value('id'));
-        $bendaharaRole->givePermission(Permission::where('name', 'approve-pengajuan-pinjaman-bendahara')->value('id'));
-
-        $ketuaRole = Role::firstOrCreate(
-            ['name' => 'ketua'],
-            ['display_name' => 'Ketua', 'description' => 'Role Ketua']
-        );
-        $ketuaRole->givePermission(Permission::where('name', 'view-pengajuan-pinjaman-kredit')->value('id'));
-        $ketuaRole->givePermission(Permission::where('name', 'approve-pengajuan-pinjaman-ketua')->value('id'));
-
-        $ketuaKoperasiRole = Role::whereRaw('LOWER(name) = ?', ['ketua koperasi'])->first();
-        if ($ketuaKoperasiRole) {
-            $ketuaKoperasiRole->givePermission(Permission::where('name', 'view-pengajuan-pinjaman-kredit')->value('id'));
-            $ketuaKoperasiRole->givePermission(Permission::where('name', 'approve-pengajuan-pinjaman-ketua')->value('id'));
-        }
     }
 }

@@ -44,13 +44,6 @@ class User extends Authenticatable implements LaratrustUser
         return $this->hasOne('App\UserAnggota');
     }
 
-    public function hasMemberRole()
-    {
-        return $this->roles->contains(function ($role) {
-            return strcasecmp($role->name, 'member') === 0;
-        });
-    }
-
     public function getRoleListAttribute()
 	{
 		return $this->roles->pluck('id')->toArray();
