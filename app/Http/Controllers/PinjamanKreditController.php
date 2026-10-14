@@ -12,6 +12,7 @@ use App\TransaksiHarianBiaya;
 use Money;
 use App\TransaksiPinjaman;
 use App\Imports\PinjamanKredit;
+use App\UserAnggota;
 use Maatwebsite\Excel\Facades\Excel;
 use File;
 use Session;
@@ -29,7 +30,7 @@ class PinjamanKreditController extends Controller
     {
         //
         $user = \Auth::user();
-        $isMember = $user->hasRole('member');
+        $isMember = $user->roles->pluck('name')->contains('member');
         if ($user->can('manage-kredit-pinjaman') || $isMember) {
             # code...
             if ($request->ajax()) {
@@ -41,7 +42,7 @@ class PinjamanKreditController extends Controller
                     ->where('divisi_id', '2')
                     ->where('jenis_transaksi', '2');
                 if ($isMember) {
-                    $anggotaId = $user->user_anggota ? $user->user_anggota->anggota_id : null;
+                    $anggotaId = UserAnggota::where('user_id', $user->id)->value('anggota_id');
                     if ($anggotaId) {
                         $transaksiHarian->whereHas('transaksi_harian_anggota', function ($query) use ($anggotaId) {
                             $query->where('anggota_id', $anggotaId);
