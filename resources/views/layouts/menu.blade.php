@@ -71,10 +71,10 @@
                         <li class="{{ set_active(['simpanan-kredit.index', 'simpanan-kredit.create', 'simpanan-kredit.edit', 'simpanan-kredit.upload'])}}">
                             <a href="{{ route('simpanan-kredit.index') }}" class="{{ set_active(['simpanan-kredit.index', 'simpanan-kredit.create', 'simpanan-kredit.edit', 'simpanan-kredit.upload'])}}">Kredit</a>
                         </li>
-                        @endif
+                        @endpermission
                     </ul>
                 </li>
-                @endpermission
+                @endif
                 @if(Auth::user()->can('manage-debet-pinjaman') || Auth::user()->can('manage-kredit-pinjaman') || Auth::user()->can('pinjaman-debet-create') || Auth::user()->hasMemberRole())
                 <li class="{{ set_active(['pinjaman-debet.index', 'pinjaman-debet.create', 'pinjaman-debet.edit', 'pinjaman-debet.upload',
                 'pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload'])}}">
