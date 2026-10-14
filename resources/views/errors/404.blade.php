@@ -15,6 +15,7 @@
         <link href="{{ asset('css/icons.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/metismenu.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/css/koperasi-theme.css') }}" rel="stylesheet" type="text/css" />
 
         <script src="{{ asset('js/modernizr.min.js') }}"></script>
 

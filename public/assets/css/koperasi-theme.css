@@ -552,6 +552,75 @@ a:hover, a:focus {
     padding-top: 24px;
 }
 
+/* Shared page header used by index, form, and report views. */
+.content-page .content .container-fluid .page-title-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    min-height: 96px;
+    margin: 0 0 24px;
+    padding: 22px 28px;
+    border: 1px solid var(--k-border);
+    border-left: 4px solid var(--k-primary);
+    border-radius: var(--k-radius-lg);
+    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 55%, #f0fdfa 100%);
+    box-shadow: var(--k-shadow-sm);
+}
+
+.content-page .content .container-fluid .page-title-box:after {
+    position: absolute;
+    top: -90px;
+    right: 10%;
+    width: 220px;
+    height: 220px;
+    border: 1px solid rgba(15, 118, 110, 0.08);
+    border-radius: 50%;
+    box-shadow: 0 0 0 24px rgba(15, 118, 110, 0.02), 0 0 0 52px rgba(15, 118, 110, 0.015);
+    content: "";
+    pointer-events: none;
+}
+
+.content-page .content .container-fluid .page-title-box > .float-left,
+.content-page .content .container-fluid .page-title-box > .float-right {
+    position: relative;
+    z-index: 1;
+    float: none !important;
+}
+
+.content-page .content .container-fluid .page-title-box h4.page-title {
+    margin: 0 0 4px;
+    color: var(--k-text-main);
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
+.content-page .content .container-fluid .page-title-box .breadcrumb {
+    justify-content: flex-end;
+    margin: 0 0 4px;
+    padding: 0;
+    background: transparent;
+}
+
+.content-page .content .container-fluid .page-title-box .breadcrumb-item,
+.content-page .content .container-fluid .page-title-box .breadcrumb-item a {
+    color: var(--k-text-muted);
+    font-size: 11.5px;
+    font-weight: 500;
+}
+
+.content-page .content .container-fluid .page-title-box .breadcrumb-item a:hover {
+    color: var(--k-primary);
+}
+
+.content-page .content .container-fluid .page-title-box small.text-danger {
+    color: var(--k-primary) !important;
+    font-size: 11px;
+    font-weight: 600;
+}
+
 /* Corporate Footer */
 .footer {
     height: 56px;
@@ -826,6 +895,18 @@ label {
 /* DataTables Controls & Pagination */
 .dataTables_wrapper {
     font-size: 12px;
+}
+
+.dataTables_wrapper .toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.dataTables_wrapper .toolbar .btn {
+    margin: 0;
 }
 
 .dataTables_wrapper .dataTables_length select {
@@ -1309,6 +1390,27 @@ label {
         padding: 16px;
     }
 
+    .content-page .content .container-fluid .page-title-box {
+        flex-direction: column;
+        align-items: flex-start;
+        min-height: 0;
+        padding: 18px 20px;
+    }
+
+    .content-page .content .container-fluid .page-title-box > .float-right {
+        margin-top: 12px;
+        align-self: flex-start;
+    }
+
+    .content-page .content .container-fluid .page-title-box .breadcrumb {
+        justify-content: flex-start;
+    }
+
+    .content-page .content .container-fluid .row > .col-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
     .topbar-status-chip {
         display: none;
     }
@@ -1323,5 +1425,13 @@ label {
 
     .wizard > .steps > ul {
         flex-direction: column;
+    }
+
+    .dataTables_wrapper .toolbar {
+        align-items: stretch;
+    }
+
+    .dataTables_wrapper .toolbar .btn {
+        flex: 1 1 auto;
     }
 }
