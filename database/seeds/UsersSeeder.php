@@ -37,6 +37,11 @@ class UsersSeeder extends Seeder
                 'description' => 'Bisa Mengubah Anggota'
             ],
             [
+                'name' => 'delete-anggota',
+                'display_name' => 'Hapus Anggota',
+                'description' => 'Bisa Menghapus Anggota'
+            ],
+            [
                 'name' => 'download-anggota',
                 'display_name' => 'download anggota',
                 'description' => 'Bisa Download Anggota'
@@ -765,6 +770,7 @@ class UsersSeeder extends Seeder
             'manage-anggota',
             'create-anggota',
             'edit-anggota',
+            'delete-anggota',
             'download-anggota',
             'manage-divisi',
             'create-divisi',

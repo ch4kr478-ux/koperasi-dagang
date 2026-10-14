@@ -13,6 +13,7 @@ use App\Periode;
 use App\Exports\AnggotaExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Session;
+use Illuminate\Support\Facades\Auth;
 
 
 class AnggotaController extends Controller
@@ -47,9 +48,13 @@ class AnggotaController extends Controller
                         return Tanggal::tanggal_id($anggota->tgl_daftar);
                     })
                     ->addColumn('action', function ($anggota) {
-                        return view('datatable._nodelete', [
+                        return view('datatable._action-anggota', [
+                            'model' => $anggota,
                             'edit_url' => route('anggota.edit', $anggota->id),
-                            'can_edit' => 'edit-anggota'
+                            'form_url' => route('anggota.destroy', $anggota->id),
+                            'can_edit' => 'edit-anggota',
+                            'can_delete' => 'delete-anggota',
+                            'confirm_message' => 'Yakin ingin menghapus anggota ' . $anggota->nama . '? Akun login member yang terhubung juga akan dihapus.'
                         ]);
                     })
                     ->editColumn('is_close', function ($anggota) {
@@ -213,7 +218,59 @@ class AnggotaController extends Controller
      */
     public function destroy(Anggota $anggota)
     {
-        //
+        abort_unless(Auth::user()->can('delete-anggota'), 403);
+
+        $deleted = DB::transaction(function () use ($anggota) {
+            $lockedAnggota = Anggota::whereKey($anggota->id)->lockForUpdate()->firstOrFail();
+            $hasTransactions = DB::table('transaksi_harian_anggotas')
+                ->where('anggota_id', $lockedAnggota->id)
+                ->exists();
+            $hasLoanApplications = DB::table('pengajuan_pinjaman_kredit')
+                ->where('anggota_id', $lockedAnggota->id)
+                ->exists();
+
+            if ($hasTransactions || $hasLoanApplications) {
+                return false;
+            }
+
+            $userAnggota = UserAnggota::where('anggota_id', $lockedAnggota->id)->first();
+            $linkedUser = $userAnggota ? User::find($userAnggota->user_id) : null;
+
+            if ($linkedUser) {
+                $memberRole = $linkedUser->roles()->whereRaw('LOWER(name) = ?', ['member'])->first();
+                if ($memberRole && $linkedUser->roles()->count() === 1) {
+                    DB::table('permission_user')->where('user_id', $linkedUser->id)->delete();
+                    DB::table('role_user')->where('user_id', $linkedUser->id)->delete();
+                    $linkedUser->delete();
+                } elseif ($memberRole) {
+                    DB::table('role_user')
+                        ->where('user_id', $linkedUser->id)
+                        ->where('role_id', $memberRole->id)
+                        ->delete();
+                }
+            }
+
+            UserAnggota::where('anggota_id', $lockedAnggota->id)->delete();
+            $lockedAnggota->delete();
+
+            return true;
+        });
+
+        if (!$deleted) {
+            Session::flash('flash_notification', [
+                'level' => 'warning',
+                'message' => 'Anggota tidak dapat dihapus karena memiliki riwayat transaksi atau pengajuan pinjaman. Ubah status anggota menjadi Non Aktif jika tidak lagi digunakan.'
+            ]);
+
+            return redirect()->route('anggota.index');
+        }
+
+        Session::flash('flash_notification', [
+            'level' => 'success',
+            'message' => 'Data anggota berhasil dihapus.'
+        ]);
+
+        return redirect()->route('anggota.index');
     }
 
     public function export()
