@@ -12,15 +12,22 @@
     <div class="col-12">
         <div class="page-title-box">
             <div class="float-left">
-                <h4 class="page-title">Pinjaman Kredit </h4>
-                <small class="text-danger">Periode : {{ periode()->name }}</small>
+                <h4 class="page-title">
+                    <i class="fi-tag text-teal mr-1"></i> Pinjaman Kredit
+                </h4>
+                <small>Daftar transaksi pencairan pinjaman dan jadwal angsuran anggota</small>
             </div>
             <div class="float-right">
                 <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
                     <li class="breadcrumb-item"><a href="#">Transaksi</a></li>
-                <li class="breadcrumb-item active"><a href="{{route('pinjaman-kredit.index')}}">Pinjaman Kredit</a></li>
+                    <li class="breadcrumb-item active">Pinjaman Kredit</li>
                 </ol>
-                <small class="text-danger">Tahun Buku : {{ periode()->open_date }} - {{ periode()->close_date }}</small>
+                <span class="badge badge-soft-primary">
+                    <i class="mdi mdi-calendar mr-1"></i>
+                    Periode: {{ periode()->name }}
+                    ({{ date('d-m-Y', strtotime(periode()->open_date)) }} s/d {{ date('d-m-Y', strtotime(periode()->close_date)) }})
+                </span>
             </div>
             <div class="clearfix"></div>
         </div>
