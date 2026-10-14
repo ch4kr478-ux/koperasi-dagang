@@ -53,7 +53,9 @@
                         <th>Pinjaman</th>
                         <th>Keterangan</th>
                         <th>Status Buku</th>
+                        @permission('manage-kredit-pinjaman')
                         <th>ACTION DEFAULT</th>
+                        @endpermission
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -94,7 +96,9 @@
                             { data: 'sumKreditPinjaman', name: 'sumKreditPinjaman', orderable: false, searchable: false },
                             { data: 'keterangan', name: 'keterangan' },
                             { data: 'is_close', name: 'is_close' },
+                            @permission('manage-kredit-pinjaman')
                             { data: 'action', name: 'action', orderable: false, searchable: false },
+                            @endpermission
                         ],
                         dom: '<"toolbar">frtip',
                         order: [[ 0, "desc" ]],
@@ -103,9 +107,11 @@
                     $("div.toolbar").html(`@permission('create-kredit-pinjaman')<a href="{{ route('pinjaman-kredit.create') }}" class="btn btn-gradient waves-light waves-effect w-md"><i class="fa fa-plus"></i> Tambah</a>@endpermission
                     @permission('download-kredit-pinjaman')<a href="https://docs.google.com/spreadsheets/d/1D3nG6RPUnYhrW3NdonvSDiQVd7IJewGU/export?format=xlsx" class="btn btn-success waves-light waves-effect w-md"><i class="mdi mdi-file-excel"></i>Download Template</a>@endpermission
                     @permission('upload-kredit-pinjaman')<a href="{{ route('pinjaman-kredit.upload') }}" class="btn btn-warning waves-light waves-effect w-md"><i class="mdi mdi-cloud-upload"></i> Upload</a>@endpermission
+                    @permission('manage-kredit-pinjaman')
                     @if(Pembukuan::closeBook('2', '2', ['8']) == '1')
                         <a href="{{ route('pinjaman-kredit.close-book') }}" class="btn btn-danger waves-light waves-effect w-md"><i class="fa fa-book"></i> Tutup Buku</a>
                     @endif
+                    @endpermission
                     `);
     });
 </script>

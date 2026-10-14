@@ -35,6 +35,7 @@ Route::group(['middleware' => 'web'], function () {
         Route::post('laporan-pinjaman-validation', 'LaporanAllController@validationPinjaman')->name('laporan-pinjaman-all.validation');
         Route::post('laporan-pinjaman-export', 'LaporanAllController@exportPinjaman')->name('laporan-pinjaman-all.export');
         Route::get('/user/{user}/profile-user/', 'UserController@editPasswordMember')->name('user.user-profile');
+        Route::put('/user/profile/{user}/anggota', 'UserController@updateMemberProfile')->name('user.update-member-profile');
         Route::put('/user/profile/{user}', 'UserController@putEditPassword')->name('user.edit-password');
         Route::get('/home', 'HomeController@index')->name('home');
         Route::resource('anggota', 'AnggotaController');

@@ -8,8 +8,10 @@ use DataTables;
 use Session;
 use App\RoleUser;
 use Auth;
+use Tanggal;
 use Illuminate\Support\Facades\DB;
-use App\Anngota;
+use App\Anggota;
+use App\UserAnggota;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -228,7 +230,9 @@ class UserController extends Controller
         if($user)
         {
             if ($user->id == Auth::user()->id) {
-                return view('user-profile.reset-password')->with(compact('user'));
+                $userAnggota = UserAnggota::where('user_id', $user->id)->first();
+                $anggota = $userAnggota ? Anggota::find($userAnggota->anggota_id) : null;
+                return view('user-profile.reset-password')->with(compact('user', 'anggota'));
             } else {
                 return view('errors.404');
             }
@@ -236,6 +240,33 @@ class UserController extends Controller
             return view('errors.404');
         }
 
+    }
+
+    public function updateMemberProfile(Request $request, $id)
+    {
+        if ((int) $id !== (int) Auth::id()) {
+            abort(404);
+        }
+
+        $validated = $request->validate([
+            'inisial' => 'required|string|max:255',
+            'tgl_daftar' => 'required|date_format:d-m-Y',
+            'homebase' => 'nullable|string|max:255',
+        ]);
+
+        $userAnggota = UserAnggota::where('user_id', $id)->firstOrFail();
+        $anggota = Anggota::findOrFail($userAnggota->anggota_id);
+        $anggota->inisial = $validated['inisial'];
+        $anggota->tgl_daftar = Tanggal::convert_tanggal($validated['tgl_daftar']);
+        $anggota->homebase = $validated['homebase'] ?? null;
+        $anggota->save();
+
+        Session::flash("flash_notification", [
+            "level" => "success",
+            "message" => "Data Profile Berhasil Diubah !!!"
+        ]);
+
+        return redirect()->route('user.user-profile', Auth::id());
     }
 
     public function putEditPassword(Request $request, $id)

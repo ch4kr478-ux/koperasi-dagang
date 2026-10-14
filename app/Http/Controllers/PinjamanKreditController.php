@@ -28,7 +28,9 @@ class PinjamanKreditController extends Controller
     public function index(Request $request)
     {
         //
-        if (\Auth::user()->can('manage-kredit-pinjaman')) {
+        $user = \Auth::user();
+        $isMember = $user->hasRole('member');
+        if ($user->can('manage-kredit-pinjaman') || $isMember) {
             # code...
             if ($request->ajax()) {
                 $transaksiHarian = TransaksiHarian::with([
@@ -38,6 +40,16 @@ class PinjamanKreditController extends Controller
                 ])
                     ->where('divisi_id', '2')
                     ->where('jenis_transaksi', '2');
+                if ($isMember) {
+                    $anggotaId = $user->user_anggota ? $user->user_anggota->anggota_id : null;
+                    if ($anggotaId) {
+                        $transaksiHarian->whereHas('transaksi_harian_anggota', function ($query) use ($anggotaId) {
+                            $query->where('anggota_id', $anggotaId);
+                        });
+                    } else {
+                        $transaksiHarian->whereIn('id', []);
+                    }
+                }
                 return DataTables::of($transaksiHarian)
                     ->editColumn('tgl', function ($transaksiHarian) {
                         return Tanggal::tanggal_id($transaksiHarian->tgl);

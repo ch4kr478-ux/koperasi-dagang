@@ -69,7 +69,7 @@
                     </ul>
                 </li>
                 @endpermission
-                @permission('manage-debet-pinjaman|manage-kredit-simpanan|pinjaman-debet-create')
+                @if(Auth::user()->can('manage-debet-pinjaman') || Auth::user()->can('manage-kredit-simpanan') || Auth::user()->can('pinjaman-debet-create') || Auth::user()->hasRole('member'))
                 <li class="{{ set_active(['pinjaman-debet.index', 'pinjaman-debet.create', 'pinjaman-debet.edit', 'pinjaman-debet.upload',
                 'pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload'])}}">
                     <a href="javascript: void(0);" class="{{ set_active(['pinjaman-debet.index', 'pinjaman-debet.create', 'pinjaman-debet.edit', 'pinjaman-debet.upload',
@@ -91,9 +91,16 @@
                             </a>
                         </li>
                         @endpermission
+                        @if(Auth::user()->hasRole('member') && !Auth::user()->can('manage-kredit-pinjaman'))
+                        <li class="{{ set_active(['pinjaman-kredit.index'])}}">
+                            <a href="{{ route('pinjaman-kredit.index') }}" class="{{ set_active(['pinjaman-kredit.index'])}}">
+                                Kredit
+                            </a>
+                        </li>
+                        @endif
                     </ul>
                 </li>
-                @endpermission
+                @endif
                 @permission('manage-debet-divisi|manage-kredit-divisi')
                 <li class="{{ set_active(['divisi-debet.index', 'divisi-debet.create', 'divisi-debet.edit', 'divisi-debet.upload',
                 'divisi-kredit.index', 'divisi-kredit.create', 'divisi-kredit.edit', 'divisi-kredit.upload'])}}">
