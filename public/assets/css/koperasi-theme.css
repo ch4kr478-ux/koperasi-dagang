@@ -1275,7 +1275,7 @@ label {
 }
 
 .wizard > .actions ul {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: flex-end;
     gap: 12px;
