@@ -47,10 +47,26 @@ class HomeController extends Controller
             }
 
             $transaksi_harian = TransaksiHarian::with(['sumKreditAll', 'sumDebitAll'])
-                ->select(['id', 'tgl', 'keterangan', 'jenis_transaksi'])
+                ->with(['divisi', 'nama_anggota.anggota'])
                 ->orderBy('tgl', 'DESC')
-                ->limit(10)
+                ->orderBy('id', 'DESC')
+                ->limit(15)
                 ->get();
+            $aktivitas_transaksi = DB::table('transaksi_harians')
+                ->leftJoin('transaksi_harian_biayas', 'transaksi_harians.id', '=', 'transaksi_harian_biayas.transaksi_harian_id')
+                ->whereIn('transaksi_harians.jenis_transaksi', [1, 2])
+                ->select(
+                    'transaksi_harians.jenis_transaksi',
+                    DB::raw('COUNT(DISTINCT transaksi_harians.id) as jumlah_transaksi'),
+                    DB::raw('COALESCE(SUM(transaksi_harian_biayas.nominal), 0) as total_nominal')
+                )
+                ->groupBy('transaksi_harians.jenis_transaksi')
+                ->get()
+                ->keyBy('jenis_transaksi');
+            $total_debet_semua = $aktivitas_transaksi->get(1)->total_nominal ?? 0;
+            $total_kredit_semua = $aktivitas_transaksi->get(2)->total_nominal ?? 0;
+            $jumlah_debet_semua = $aktivitas_transaksi->get(1)->jumlah_transaksi ?? 0;
+            $jumlah_kredit_semua = $aktivitas_transaksi->get(2)->jumlah_transaksi ?? 0;
             $sum_pokok = DB::table('transaksi_harians')
                         ->join('transaksi_harian_biayas', 'transaksi_harians.id', '=', 'transaksi_harian_biayas.transaksi_harian_id')
                         ->join('transaksi_harian_anggotas', 'transaksi_harians.id', '=', 'transaksi_harian_anggotas.transaksi_harian_id')
@@ -164,7 +180,7 @@ class HomeController extends Controller
             }
             return view('dashboard.admin')->with(compact('countAnggota', 'countDivisi', 'periode', 'sum_pokok', 'sum_wajib', 'sum_sukarela', 'kredit_simpanan',
                     'debet_pinjaman', 'bunga_pinjaman', 'kredit_pinjaman', 'transaksi_harian', 'activity_log', 'saldo_kredit', 'saldo_debit', 'status_anggota',
-                'months', 'debitAll', 'kreditAll'));
+                'months', 'debitAll', 'kreditAll', 'total_debet_semua', 'total_kredit_semua', 'jumlah_debet_semua', 'jumlah_kredit_semua'));
         }
         elseif($user->roles->pluck( 'name' )->contains( 'member' ))
         {
