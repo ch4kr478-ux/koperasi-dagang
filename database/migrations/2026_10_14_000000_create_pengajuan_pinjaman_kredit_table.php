@@ -80,11 +80,11 @@ class CreatePengajuanPinjamanKreditTable extends Migration
 
         foreach ($rolePermissions as $roleName => $permissionNames) {
             $role = DB::table('roles')->whereRaw('LOWER(name) = ?', [$roleName])->first();
-            if (!$role && $roleName === 'ketua') {
+            if (!$role && in_array($roleName, ['bendahara', 'ketua'], true)) {
                 $roleId = DB::table('roles')->insertGetId([
-                    'name' => 'ketua',
-                    'display_name' => 'Ketua',
-                    'description' => 'Role Ketua',
+                    'name' => $roleName,
+                    'display_name' => ucfirst($roleName),
+                    'description' => 'Role ' . ucfirst($roleName),
                     'created_at' => $now,
                     'updated_at' => $now,
                 ]);

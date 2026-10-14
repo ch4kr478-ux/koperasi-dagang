@@ -102,7 +102,14 @@ class PengajuanPinjamanKreditController extends Controller
     public function show(PengajuanPinjamanKredit $pengajuanPinjaman)
     {
         $this->authorizeApplication($pengajuanPinjaman);
-        $pengajuanPinjaman->load(['anggota', 'user', 'transaksiHarian']);
+        $pengajuanPinjaman->load([
+            'anggota',
+            'user',
+            'transaksiHarian',
+            'adminApprover',
+            'bendaharaApprover',
+            'ketuaApprover',
+        ]);
 
         $stage = $this->approvalStages[$pengajuanPinjaman->status] ?? null;
         $canApprove = $stage && Auth::user()->can($stage['permission']);
@@ -119,7 +126,7 @@ class PengajuanPinjamanKreditController extends Controller
             'decision' => 'required|in:approve,reject',
             'catatan' => 'nullable|string|max:2000',
         ];
-        if ($pengajuanPinjaman->status === 'menunggu_ketua') {
+        if ($pengajuanPinjaman->status === 'menunggu_ketua' && $request->input('decision') === 'approve') {
             $rules['tgl_pencairan'] = 'required|date_format:d-m-Y';
             $rules['jenis_pembayaran'] = 'required|in:1,2';
         }

@@ -41,17 +41,22 @@
     <div class="col-lg-8">
         <div class="card-box">
             <h5>Riwayat Persetujuan</h5>
+            @php
+                $rejectedRole = $pengajuanPinjaman->ketua_user_id
+                    ? 'Ketua'
+                    : ($pengajuanPinjaman->bendahara_user_id ? 'Bendahara' : ($pengajuanPinjaman->admin_user_id ? 'Admin' : null));
+            @endphp
             <ol>
                 @foreach ([
-                    ['Admin', $pengajuanPinjaman->admin_user_id, $pengajuanPinjaman->admin_diproses_pada, $pengajuanPinjaman->admin_catatan],
-                    ['Bendahara', $pengajuanPinjaman->bendahara_user_id, $pengajuanPinjaman->bendahara_diproses_pada, $pengajuanPinjaman->bendahara_catatan],
-                    ['Ketua', $pengajuanPinjaman->ketua_user_id, $pengajuanPinjaman->ketua_diproses_pada, $pengajuanPinjaman->ketua_catatan],
-                ] as [$roleName, $reviewerId, $processedAt, $note])
+                    ['Admin', $pengajuanPinjaman->adminApprover, $pengajuanPinjaman->admin_diproses_pada, $pengajuanPinjaman->admin_catatan],
+                    ['Bendahara', $pengajuanPinjaman->bendaharaApprover, $pengajuanPinjaman->bendahara_diproses_pada, $pengajuanPinjaman->bendahara_catatan],
+                    ['Ketua', $pengajuanPinjaman->ketuaApprover, $pengajuanPinjaman->ketua_diproses_pada, $pengajuanPinjaman->ketua_catatan],
+                ] as [$roleName, $reviewer, $processedAt, $note])
                     <li>
                         {{ $roleName }}:
-                        @if ($reviewerId)
-                            {{ $pengajuanPinjaman->status === 'ditolak' && $loop->last ? 'Menolak' : 'Memproses' }}
-                            ({{ $processedAt->format('d-m-Y H:i') }}) — {{ $note ?: 'Disetujui' }}
+                        @if ($reviewer)
+                            {{ $pengajuanPinjaman->status === 'ditolak' && $rejectedRole === $roleName ? 'Menolak' : 'Menyetujui' }}
+                            oleh {{ $reviewer->name }} ({{ $processedAt->format('d-m-Y H:i') }}) — {{ $note ?: 'Disetujui' }}
                         @else
                             Menunggu
                         @endif
@@ -95,7 +100,7 @@
                     <small class="form-text text-muted">Wajib diisi jika pengajuan ditolak.</small>
                 </div>
                 <button type="submit" name="decision" value="approve" class="btn btn-success">Setujui</button>
-                <button type="submit" name="decision" value="reject" class="btn btn-danger">Tolak</button>
+                <button type="submit" name="decision" value="reject" formnovalidate class="btn btn-danger">Tolak</button>
             </form>
         </div>
     </div>

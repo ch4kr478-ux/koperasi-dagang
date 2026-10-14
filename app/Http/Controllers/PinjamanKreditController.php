@@ -105,6 +105,7 @@ class PinjamanKreditController extends Controller
     public function create()
     {
         //
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         if (\Auth::user()->can('create-kredit-pinjaman')) {
             # code...
             return view('pinjaman-kredit.create');
@@ -123,6 +124,7 @@ class PinjamanKreditController extends Controller
     public function store(Request $request)
     {
         //
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         if (\Auth::user()->can('create-kredit-pinjaman')) {
             # code...
             $this->validate($request, [
