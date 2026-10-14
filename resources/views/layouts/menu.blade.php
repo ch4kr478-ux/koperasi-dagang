@@ -180,7 +180,7 @@
                 @permission('manage-laporan-simpanan-all')
                 <li class="{{ set_active(['laporan.simpanan-all']) }}">
                     <a href="{{ route('laporan.simpanan-all') }}" class="{{ set_active(['laporan.simpanan-all']) }}">
-                        <i class="fi-pie-chart"></i> <span>Rekap Simpanan (Semua)</span>
+                        <i class="mdi mdi-chart-pie" aria-hidden="true"></i> <span>Rekap Simpanan (Semua)</span>
                     </a>
                 </li>
                 @endpermission
@@ -188,7 +188,7 @@
                 @permission('manage-laporan-pinjaman-all')
                 <li class="{{ set_active(['laporan.pinjaman-all']) }}">
                     <a href="{{ route('laporan.pinjaman-all') }}" class="{{ set_active(['laporan.pinjaman-all']) }}">
-                        <i class="fi-bar-chart-2"></i> <span>Rekap Pinjaman (Semua)</span>
+                        <i class="mdi mdi-chart-bar" aria-hidden="true"></i> <span>Rekap Pinjaman (Semua)</span>
                     </a>
                 </li>
                 @endpermission
@@ -204,7 +204,7 @@
                 @permission('manage-pinjaman-anggota')
                 <li class="{{ set_active(['laporan.pinjaman']) }}">
                     <a href="{{ route('laporan.pinjaman') }}" class="{{ set_active(['laporan.pinjaman']) }}">
-                        <i class="fi-file-text"></i> <span>Pinjaman Anggota</span>
+                        <i class="mdi mdi-file-document" aria-hidden="true"></i> <span>Pinjaman Anggota</span>
                     </a>
                 </li>
                 @endpermission
@@ -240,7 +240,7 @@
                 @permission('manage-role')
                 <li class="{{ set_active(['role.index', 'role.create', 'role.edit'])}}">
                     <a href="{{ route('role.index') }}" class="{{ set_active(['role.index', 'role.create', 'role.edit'])}}">
-                        <i class="fi-shield"></i> <span>Peran (Role)</span>
+                        <i class="mdi mdi-account-key" aria-hidden="true"></i> <span>Peran (Role)</span>
                     </a>
                 </li>
                 @endpermission
