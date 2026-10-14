@@ -458,6 +458,8 @@ class UsersSeeder extends Seeder
             'create-produk-pinjaman' => ['Membuat Produk Pinjaman', 'Bisa membuat produk pinjaman'],
             'edit-produk-pinjaman' => ['Mengubah Produk Pinjaman', 'Bisa mengubah produk pinjaman'],
             'delete-produk-pinjaman' => ['Menghapus Produk Pinjaman', 'Bisa menghapus produk pinjaman'],
+            'download-produk-pinjaman' => ['Mengunduh Template Produk Pinjaman', 'Bisa mengunduh template produk pinjaman'],
+            'upload-produk-pinjaman' => ['Mengunggah Produk Pinjaman', 'Bisa mengunggah produk pinjaman dari file Excel'],
         ];
         foreach ($permissionProdukPinjaman as $name => $labels) {
             Permission::firstOrCreate(
@@ -828,6 +830,8 @@ class UsersSeeder extends Seeder
             'create-produk-pinjaman',
             'edit-produk-pinjaman',
             'delete-produk-pinjaman',
+            'download-produk-pinjaman',
+            'upload-produk-pinjaman',
             'manage-debet-divisi',
             'create-debet-divisi',
             'edit-debet-divisi',

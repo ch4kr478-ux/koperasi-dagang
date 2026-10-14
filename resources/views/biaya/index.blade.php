@@ -99,10 +99,10 @@
 
         var actions = [];
         @permission('create-biaya')
-        actions.push('<a href="{{ route('biaya.create') }}" class="btn btn-primary"><i class="mdi mdi-plus mr-1"></i> Tambah Biaya</a>');
+        actions.push('<a href="{{ route('biaya.create') }}" class="btn btn-primary"><i class="mdi mdi-plus mr-1"></i> Tambah</a>');
         @endpermission
         @permission('manage-biaya')
-        actions.push('<a href="{{ route('biaya.template') }}" class="btn btn-success"><i class="mdi mdi-file-excel mr-1"></i> Unduh Template Excel</a>');
+        actions.push('<a href="{{ route('biaya.template') }}" class="btn btn-success"><i class="mdi mdi-file-excel mr-1" aria-hidden="true"></i> Download Template</a>');
         @endpermission
         if (actions.length) {
             $('div.toolbar').html(actions.join(''));

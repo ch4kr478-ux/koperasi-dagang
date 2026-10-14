@@ -44,7 +44,7 @@
 
 <div class="d-flex flex-wrap" style="gap: 10px;">
     <button type="submit" class="btn btn-primary">
-        <i class="mdi mdi-content-save" aria-hidden="true"></i> Simpan Biaya
+        <i class="mdi mdi-content-save" aria-hidden="true"></i> Simpan
     </button>
     <a href="{{ route('biaya.index') }}" class="btn btn-outline-secondary">
         <i class="mdi mdi-arrow-left" aria-hidden="true"></i> Kembali

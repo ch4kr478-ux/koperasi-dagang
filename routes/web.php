@@ -42,6 +42,9 @@ Route::group(['middleware' => 'web'], function () {
         Route::get('/anggota-export', 'AnggotaController@export')->name('anggota.export');
         Route::get('/biaya-template', 'BiayaController@downloadTemplate')->name('biaya.template');
         Route::resource('divisi', 'DivisiController');
+        Route::get('/produk-pinjaman/template', 'ProdukPinjamanController@downloadTemplate')->name('produk-pinjaman.template');
+        Route::get('/produk-pinjaman/upload', 'ProdukPinjamanController@upload')->name('produk-pinjaman.upload');
+        Route::post('/produk-pinjaman/doupload', 'ProdukPinjamanController@doUpload')->name('produk-pinjaman.doupload');
         Route::resource('produk-pinjaman', 'ProdukPinjamanController')->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
         Route::resource('transaksi-harian', 'TransaksiHarianController');
         Route::resource('periode', 'PeriodeController');

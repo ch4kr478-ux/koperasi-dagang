@@ -281,7 +281,7 @@
                                 @enderror
                             </div>
                             <button type="submit" class="btn btn-primary">
-                                <i class="fa fa-save mr-1" aria-hidden="true"></i> Simpan Jabatan
+                                <i class="fa fa-save mr-1" aria-hidden="true"></i> Simpan
                             </button>
                         </form>
                     </div>
@@ -346,7 +346,7 @@
                         @enderror
                     </div>
                     <button type="submit" class="btn btn-primary">
-                        <i class="fa fa-lock mr-1" aria-hidden="true"></i> Simpan Password
+                        <i class="fa fa-lock mr-1" aria-hidden="true"></i> Simpan
                     </button>
                 </form>
             </div>

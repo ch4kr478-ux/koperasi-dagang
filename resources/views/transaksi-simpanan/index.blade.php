@@ -76,7 +76,7 @@
                         dom: '<"toolbar">frtip',
                         order: [[ 0, "desc" ]]
                     });
-                    $("div.toolbar").html('<a href="{{ route('transaksi-simpanan.create') }}" class="btn btn-gradient btn-rounded waves-light waves-effect w-md"><i class="mdi mdi-plus" aria-hidden="true"></i> Tambah Simpanan</a>');
+                    $("div.toolbar").html('<a href="{{ route('transaksi-simpanan.create') }}" class="btn btn-gradient btn-rounded waves-light waves-effect w-md"><i class="mdi mdi-plus" aria-hidden="true"></i> Tambah</a>');
 
     });
 </script>

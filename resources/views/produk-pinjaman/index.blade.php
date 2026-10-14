@@ -1,4 +1,7 @@
 @extends('layouts.master')
+@section('style')
+@include('shared.index-page-style')
+@endsection
 @section('content')
 <div class="row">
     <div class="col-12">
@@ -21,7 +24,13 @@
     <div class="col-12">
         <div class="card-box table-responsive">
             @permission('create-produk-pinjaman')
-                <a href="{{ route('produk-pinjaman.create') }}" class="btn btn-primary mb-3"><i class="mdi mdi-plus" aria-hidden="true"></i> Tambah Produk Pinjaman</a>
+                <a href="{{ route('produk-pinjaman.create') }}" class="btn btn-gradient mb-3"><i class="mdi mdi-plus" aria-hidden="true"></i> Tambah</a>
+            @endpermission
+            @permission('download-produk-pinjaman')
+                <a href="{{ route('produk-pinjaman.template') }}" class="btn btn-success mb-3"><i class="mdi mdi-file-excel" aria-hidden="true"></i> Download Template</a>
+            @endpermission
+            @permission('upload-produk-pinjaman')
+                <a href="{{ route('produk-pinjaman.upload') }}" class="btn btn-warning mb-3"><i class="mdi mdi-cloud-upload" aria-hidden="true"></i> Upload</a>
             @endpermission
             <table class="table table-striped table-bordered">
                 <thead>

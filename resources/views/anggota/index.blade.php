@@ -120,7 +120,7 @@
 
         var actions = [];
         @permission('create-anggota')
-        actions.push('<a href="{{ route('anggota.create') }}" class="btn btn-primary"><i class="mdi mdi-account-plus mr-1"></i> Tambah Anggota</a>');
+        actions.push('<a href="{{ route('anggota.create') }}" class="btn btn-primary"><i class="mdi mdi-account-plus mr-1"></i> Tambah</a>');
         @endpermission
         @permission('download-anggota')
         actions.push('<a href="{{ route('anggota.export') }}" class="btn btn-success"><i class="mdi mdi-file-excel mr-1"></i> Unduh Excel</a>');

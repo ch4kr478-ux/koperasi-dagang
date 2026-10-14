@@ -4,12 +4,59 @@ namespace App\Http\Controllers;
 
 use App\ProdukPinjaman;
 use App\TransaksiPinjaman;
+use App\Exports\ProdukPinjamanTemplate;
+use App\Imports\ProdukPinjamanImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException as ExcelValidationException;
 
 class ProdukPinjamanController extends Controller
 {
+    public function downloadTemplate()
+    {
+        abort_unless(Auth::user()->can('download-produk-pinjaman'), 403);
+
+        return Excel::download(new ProdukPinjamanTemplate(), 'template-produk-pinjaman.xlsx');
+    }
+
+    public function upload()
+    {
+        abort_unless(Auth::user()->can('upload-produk-pinjaman'), 403);
+
+        return view('produk-pinjaman.upload');
+    }
+
+    public function doUpload(Request $request)
+    {
+        abort_unless(Auth::user()->can('upload-produk-pinjaman'), 403);
+
+        $request->validate([
+            'file' => 'required|file|mimes:xlsx,xls,csv',
+        ]);
+
+        try {
+            DB::transaction(function () use ($request) {
+                Excel::import(new ProdukPinjamanImport(), $request->file('file'));
+            });
+        } catch (ExcelValidationException $exception) {
+            $errors = [];
+            foreach ($exception->failures() as $failure) {
+                foreach ($failure->errors() as $error) {
+                    $errors[] = $error;
+                }
+            }
+
+            return back()->withErrors($errors)->withInput();
+        }
+
+        activity()->log('Upload Data Produk Pinjaman');
+
+        return redirect()->route('produk-pinjaman.index')
+            ->with('success', 'Produk pinjaman berhasil diimpor.');
+    }
+
     public function index()
     {
         abort_unless(Auth::user()->can('manage-produk-pinjaman'), 403);

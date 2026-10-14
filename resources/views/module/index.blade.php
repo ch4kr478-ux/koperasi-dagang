@@ -78,7 +78,7 @@
                     });
 
         @permission('create-module')
-        $("div.toolbar").html('<a href="{{ route('module.create') }}" class="btn btn-gradient btn-rounded waves-light waves-effect w-md"><i class="mdi mdi-plus" aria-hidden="true"></i> Tambah Module</a>');
+        $("div.toolbar").html('<a href="{{ route('module.create') }}" class="btn btn-gradient btn-rounded waves-light waves-effect w-md"><i class="mdi mdi-plus" aria-hidden="true"></i> Tambah</a>');
         @endpermission
 
     });
