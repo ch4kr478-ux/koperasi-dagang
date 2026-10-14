@@ -75,11 +75,13 @@
                     </ul>
                 </li>
                 @endif
-                @if(Auth::user()->can('manage-debet-pinjaman') || Auth::user()->can('manage-kredit-pinjaman') || Auth::user()->can('pinjaman-debet-create') || Auth::user()->hasMemberRole())
+                @if(Auth::user()->can('manage-debet-pinjaman') || Auth::user()->can('manage-kredit-pinjaman') || Auth::user()->can('pinjaman-debet-create') || Auth::user()->hasMemberRole() || Auth::user()->can('view-pengajuan-pinjaman-kredit'))
                 <li class="{{ set_active(['pinjaman-debet.index', 'pinjaman-debet.create', 'pinjaman-debet.edit', 'pinjaman-debet.upload',
-                'pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload'])}}">
+                'pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload',
+                'pengajuan-pinjaman.index', 'pengajuan-pinjaman.create', 'pengajuan-pinjaman.show'])}}">
                     <a href="javascript: void(0);" class="{{ set_active(['pinjaman-debet.index', 'pinjaman-debet.create', 'pinjaman-debet.edit', 'pinjaman-debet.upload',
-                    'pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload'])}}">
+                    'pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload',
+                    'pengajuan-pinjaman.index', 'pengajuan-pinjaman.create', 'pengajuan-pinjaman.show'])}}">
                         <i class="fi-map"></i> <span> Pinjaman </span> <span class="menu-arrow"></span>
                     </a>
                     <ul class="nav-second-level collapse" aria-expanded="false" style="">
@@ -90,13 +92,13 @@
                             </a>
                         </li>
                         @endpermission
-                        @permission('manage-kredit-pinjaman')
-                        <li class="{{ set_active(['pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload'])}}">
-                            <a href="{{ route('pinjaman-kredit.index') }}" class="{{ set_active(['pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload'])}}">
+                        @if(Auth::user()->can('manage-kredit-pinjaman') || Auth::user()->hasMemberRole() || Auth::user()->can('view-pengajuan-pinjaman-kredit'))
+                        <li class="{{ set_active(['pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload', 'pengajuan-pinjaman.index', 'pengajuan-pinjaman.create', 'pengajuan-pinjaman.show'])}}">
+                            <a href="{{ Auth::user()->can('manage-kredit-pinjaman') || Auth::user()->hasMemberRole() ? route('pinjaman-kredit.index') : route('pengajuan-pinjaman.index') }}" class="{{ set_active(['pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload', 'pengajuan-pinjaman.index', 'pengajuan-pinjaman.create', 'pengajuan-pinjaman.show'])}}">
                                 Kredit
                             </a>
                         </li>
-                        @endpermission
+                        @endif
                         @if(Auth::user()->hasMemberRole() && !Auth::user()->can('manage-debet-pinjaman'))
                         <li class="{{ set_active(['pinjaman-debet.index'])}}">
                             <a href="{{ route('pinjaman-debet.index') }}" class="{{ set_active(['pinjaman-debet.index'])}}">
@@ -104,20 +106,6 @@
                             </a>
                         </li>
                         @endif
-                        @if(Auth::user()->hasMemberRole() && !Auth::user()->can('manage-kredit-pinjaman'))
-                        <li class="{{ set_active(['pinjaman-kredit.index'])}}">
-                            <a href="{{ route('pinjaman-kredit.index') }}" class="{{ set_active(['pinjaman-kredit.index'])}}">
-                                Kredit
-                            </a>
-                        </li>
-                        @endif
-                        @permission('view-pengajuan-pinjaman-kredit')
-                        <li class="{{ set_active(['pengajuan-pinjaman.index', 'pengajuan-pinjaman.create', 'pengajuan-pinjaman.show'])}}">
-                            <a href="{{ route('pengajuan-pinjaman.index') }}" class="{{ set_active(['pengajuan-pinjaman.index', 'pengajuan-pinjaman.create', 'pengajuan-pinjaman.show'])}}">
-                                Pengajuan Kredit
-                            </a>
-                        </li>
-                        @endpermission
                     </ul>
                 </li>
                 @endif

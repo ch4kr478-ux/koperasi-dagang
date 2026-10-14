@@ -38,6 +38,18 @@
     </div>
 </div>
 @endif
+@if (Auth::user()->can('view-pengajuan-pinjaman-kredit') || (Auth::user()->hasMemberRole() && Auth::user()->can('create-pengajuan-pinjaman-kredit')))
+<div class="row mb-3">
+    <div class="col-12">
+        @if (Auth::user()->can('view-pengajuan-pinjaman-kredit'))
+            <a href="{{ route('pengajuan-pinjaman.index') }}" class="btn btn-info">Daftar Pengajuan Kredit</a>
+        @endif
+        @if (Auth::user()->hasMemberRole() && Auth::user()->can('create-pengajuan-pinjaman-kredit'))
+            <a href="{{ route('pengajuan-pinjaman.create') }}" class="btn btn-primary">Ajukan Pinjaman Kredit</a>
+        @endif
+    </div>
+</div>
+@endif
 <div class="row">
     <div class="col-12">
         <div class="card-box table-responsive">
