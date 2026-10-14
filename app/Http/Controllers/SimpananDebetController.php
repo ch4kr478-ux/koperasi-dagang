@@ -38,7 +38,7 @@ class SimpananDebetController extends Controller
                         $sql->with('anggota');
                     }, 'sumPokok', 'sumWajib', 'sumSukarela'
                 ])
-                    ->withDisplayNumber()
+                    ->withDisplayNumber(1, 1)
                     ->where('divisi_id', '1')
                     ->where('jenis_transaksi', '1')
                     ->orderBy('transaksi_harians.id', 'asc');

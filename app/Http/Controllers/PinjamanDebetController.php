@@ -38,7 +38,7 @@ class PinjamanDebetController extends Controller
                         $sql->with('anggota');
                     }, 'sumBunga', 'sumCicilan'
                 ])
-                    ->withDisplayNumber()
+                    ->withDisplayNumber(2, 1)
                     ->where('divisi_id', '2')
                     ->where('jenis_transaksi', '1')
                     ->orderBy('transaksi_harians.id', 'asc');

@@ -30,17 +30,18 @@ class TransaksiHarian extends Model
         });
     }
 
-    public function scopeWithDisplayNumber($query)
+    public function scopeWithDisplayNumber($query, $divisiId, $jenisTransaksi)
     {
         return $query->addSelect([
             'nomor_urut' => static function ($query) {
                 $query->from('transaksi_harians as transaksi_sebelumnya')
                     ->selectRaw('COUNT(*)')
                     ->whereColumn('transaksi_sebelumnya.id', '<=', 'transaksi_harians.id')
-                    ->whereIn('transaksi_sebelumnya.divisi_id', [1, 2])
-                    ->whereIn('transaksi_sebelumnya.jenis_transaksi', [1, 2]);
+                    ->whereColumn('transaksi_sebelumnya.divisi_id', 'transaksi_harians.divisi_id')
+                    ->whereColumn('transaksi_sebelumnya.jenis_transaksi', 'transaksi_harians.jenis_transaksi');
             },
-        ]);
+        ])->where('divisi_id', $divisiId)
+            ->where('jenis_transaksi', $jenisTransaksi);
     }
 
     public function divisi()
