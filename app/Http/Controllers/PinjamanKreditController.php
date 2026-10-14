@@ -12,7 +12,6 @@ use App\TransaksiHarianBiaya;
 use Money;
 use App\TransaksiPinjaman;
 use App\Imports\PinjamanKredit;
-use App\UserAnggota;
 use Maatwebsite\Excel\Facades\Excel;
 use File;
 use Session;
@@ -42,14 +41,15 @@ class PinjamanKreditController extends Controller
                     ->where('divisi_id', '2')
                     ->where('jenis_transaksi', '2');
                 if ($isMember) {
-                    $anggotaId = UserAnggota::where('user_id', $user->id)->value('anggota_id');
-                    if ($anggotaId) {
-                        $transaksiHarian->whereHas('transaksi_harian_anggota', function ($query) use ($anggotaId) {
-                            $query->where('anggota_id', $anggotaId);
-                        });
-                    } else {
-                        $transaksiHarian->whereIn('id', []);
-                    }
+                    $transaksiHarian->whereIn('id', function ($query) use ($user) {
+                        $query->select('transaksi_harian_id')
+                            ->from('transaksi_harian_anggotas')
+                            ->whereIn('anggota_id', function ($query) use ($user) {
+                                $query->select('anggota_id')
+                                    ->from('user_anggotas')
+                                    ->where('user_id', $user->id);
+                            });
+                    });
                 }
                 return DataTables::of($transaksiHarian)
                     ->editColumn('tgl', function ($transaksiHarian) {
@@ -88,7 +88,7 @@ class PinjamanKreditController extends Controller
                     ->rawColumns(['jenis_pembayaran', 'jenis_transaksi', 'action', 'is_close'])
                     ->make(true);
             }
-            return view('pinjaman-kredit.index');
+            return view('pinjaman-kredit.index', compact('isMember'));
         } else {
             # code...
             return redirect()->back()->with('error', __('Permission denied.'));

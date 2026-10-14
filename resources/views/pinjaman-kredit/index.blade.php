@@ -11,7 +11,7 @@
     <div class="col-12">
         <div class="page-title-box">
             <div class="float-left">
-                <h4 class="page-title">Pinjaman Kredit </h4>
+                <h4 class="page-title">{{ $isMember ? 'Pinjaman Kredit Saya' : 'Pinjaman Kredit' }}</h4>
                 <small class="text-danger">Periode : {{ periode()->name }}</small>
             </div>
             <div class="float-right">
