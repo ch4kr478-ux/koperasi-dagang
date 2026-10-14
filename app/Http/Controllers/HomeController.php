@@ -41,7 +41,7 @@ class HomeController extends Controller
         $anggota_aktif = Anggota::select()->where('status', 1)->count();
         $anggota_disable = Anggota::select()->where('status', 0)->count();
         $status_anggota = [$anggota_aktif, $anggota_disable];
-        if ($roleNames->intersect(['admin', 'ketua', 'ketua koperasi', 'operator'])->isNotEmpty())
+        if ($roleNames->intersect(['admin', 'ketua', 'ketua koperasi', 'bendahara', 'operator'])->isNotEmpty())
         {
             if (!$periode) {
                 return redirect()->route('periode.index')->with('flash_notification', [
