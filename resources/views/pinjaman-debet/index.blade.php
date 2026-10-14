@@ -11,7 +11,7 @@
     <div class="col-12">
         <div class="page-title-box">
             <div class="float-left">
-                <h4 class="page-title">Pinjaman Debet </h4>
+                <h4 class="page-title">{{ $isMember ? 'Pinjaman Debet Saya' : 'Pinjaman Debet' }}</h4>
                 <small class="text-danger">Periode : {{ periode()->name }}</small>
             </div>
             <div class="float-right">
@@ -54,7 +54,9 @@
                         <th>Bunga</th>
                         <th>Keterangan</th>
                         <th>Status Buku</th>
+                        @permission('manage-debet-pinjaman')
                         <th>ACTION DEFAULT</th>
+                        @endpermission
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -96,7 +98,9 @@
                             { data: 'sumBunga', name: 'sumBunga', orderable: false, searchable: false },
                             { data: 'keterangan', name: 'keterangan' },
                             { data: 'is_close', name: 'is_close' },
+                            @permission('manage-debet-pinjaman')
                             { data: 'action', name: 'action', orderable: false, searchable: false}
+                            @endpermission
                         ],
                         dom: '<"toolbar">frtip',
                         order: [[ 0, "desc" ]],
@@ -105,9 +109,11 @@
                     $("div.toolbar").html(`@permission('create-debet-pinjaman')<a href="{{ route('pinjaman-debet.create') }}" class="btn btn-gradient waves-light waves-effect w-md"><i class="fa fa-plus"></i> Tambah</a>@endpermission
                     @permission('download-debet-pinjaman')<a href="https://docs.google.com/spreadsheets/d/1-fMrfyFf7ThvUuNbljLfJPGL19WR3yOl/export?format=xlsx" class="btn btn-success waves-light waves-effect w-md"><i class="mdi mdi-file-excel"></i>Download Template</a>@endpermission
                     @permission('upload-debet-pinjaman')<a href="{{ route('pinjaman-debet.upload') }}" class="btn btn-warning waves-light waves-effect w-md"><i class="mdi mdi-cloud-upload"></i> Upload</a>@endpermission
+                    @permission('manage-debet-pinjaman')
                     @if(Pembukuan::closeBook('2', '1', ['6', '7']) == '1')
                         <a href="{{ route('pinjaman-debet.close-book') }}" class="btn btn-danger waves-light waves-effect w-md"><i class="fa fa-book"></i> Tutup Buku</a>
                     @endif
+                    @endpermission
                     `);
 
     });
