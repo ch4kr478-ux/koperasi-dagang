@@ -20,82 +20,405 @@
         <link href="{{ asset('css/icons.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/metismenu.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" />
+        <style>
+            :root {
+                --login-green: #426a50;
+                --login-green-dark: #284a36;
+                --login-green-soft: #edf4ef;
+                --login-ink: #344054;
+                --login-muted: #7d8798;
+                --login-border: #e5eaf0;
+            }
 
-        <script src="assets/js/modernizr.min.js"></script>
-        @php
-            $logo=asset(Storage::url('logo/'));
-        @endphp
+            html,
+            body {
+                min-height: 100%;
+            }
+
+            body.login-page {
+                min-height: 100vh;
+                margin: 0;
+                color: var(--login-ink);
+                background:
+                    radial-gradient(circle at 12% 14%, rgba(114, 151, 124, .12), transparent 30%),
+                    radial-gradient(circle at 88% 82%, rgba(198, 177, 139, .1), transparent 28%),
+                    #f4f6f5;
+                font-family: "Roboto", "Segoe UI", Arial, sans-serif;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            .login-shell {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                min-height: 100vh;
+                padding: 38px 20px;
+            }
+
+            .login-card {
+                display: grid;
+                grid-template-columns: minmax(300px, .92fr) minmax(380px, 1.08fr);
+                width: 100%;
+                max-width: 940px;
+                min-height: 560px;
+                overflow: hidden;
+                border: 1px solid rgba(224, 230, 226, .95);
+                border-radius: 20px;
+                background: #fff;
+                box-shadow: 0 24px 65px rgba(39, 60, 46, .12), 0 3px 12px rgba(39, 60, 46, .04);
+            }
+
+            .login-brand-panel {
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                overflow: hidden;
+                padding: 42px 38px 34px;
+                color: #fff;
+                background: linear-gradient(145deg, #365e44 0%, #284a36 72%, #203f2d 100%);
+            }
+
+            .login-brand-panel:before,
+            .login-brand-panel:after {
+                position: absolute;
+                border: 1px solid rgba(255, 255, 255, .1);
+                border-radius: 50%;
+                content: "";
+                pointer-events: none;
+            }
+
+            .login-brand-panel:before {
+                top: 22%;
+                right: -140px;
+                width: 340px;
+                height: 340px;
+                box-shadow: 0 0 0 24px rgba(255, 255, 255, .025), 0 0 0 52px rgba(255, 255, 255, .02);
+            }
+
+            .login-brand-panel:after {
+                right: 24px;
+                bottom: -180px;
+                width: 290px;
+                height: 290px;
+                border-color: rgba(255, 255, 255, .07);
+            }
+
+            .login-brand-top,
+            .login-brand-message,
+            .login-brand-footer {
+                position: relative;
+                z-index: 1;
+            }
+
+            .login-brand-logo {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                width: 60px;
+                height: 60px;
+                margin-bottom: 24px;
+                border: 1px solid rgba(255, 255, 255, .25);
+                border-radius: 17px;
+                background: rgba(255, 255, 255, .12);
+                box-shadow: 0 8px 22px rgba(13, 35, 21, .12);
+            }
+
+            .login-brand-logo img {
+                max-width: 43px;
+                max-height: 43px;
+                object-fit: contain;
+            }
+
+            .login-brand-kicker {
+                margin: 0 0 9px;
+                color: rgba(255, 255, 255, .68);
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: .14em;
+                text-transform: uppercase;
+            }
+
+            .login-brand-title {
+                max-width: 320px;
+                margin: 0;
+                color: #fff;
+                font-size: 29px;
+                font-weight: 700;
+                line-height: 1.24;
+                letter-spacing: -.025em;
+            }
+
+            .login-brand-description {
+                max-width: 310px;
+                margin: 16px 0 0;
+                color: rgba(255, 255, 255, .76);
+                font-size: 13px;
+                line-height: 1.75;
+            }
+
+            .login-brand-footer {
+                color: rgba(255, 255, 255, .57);
+                font-size: 10px;
+            }
+
+            .login-form-panel {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 48px 52px;
+            }
+
+            .login-form-content {
+                width: 100%;
+                max-width: 365px;
+            }
+
+            .login-welcome-label {
+                margin-bottom: 8px;
+                color: #7f8d81;
+                font-size: 10px;
+                font-weight: 700;
+                letter-spacing: .12em;
+                text-transform: uppercase;
+            }
+
+            .login-form-content h1 {
+                margin: 0 0 8px;
+                color: #303c33;
+                font-size: 25px;
+                font-weight: 700;
+                letter-spacing: -.02em;
+            }
+
+            .login-form-description {
+                margin: 0 0 29px;
+                color: var(--login-muted);
+                font-size: 12px;
+                line-height: 1.6;
+            }
+
+            .login-form-content .form-group {
+                margin-bottom: 19px;
+            }
+
+            .login-form-content label {
+                display: block;
+                margin-bottom: 7px;
+                color: #4d5a50;
+                font-size: 11px;
+                font-weight: 600;
+            }
+
+            .login-input-wrap {
+                position: relative;
+            }
+
+            .login-input-wrap > i {
+                position: absolute;
+                top: 50%;
+                left: 13px;
+                z-index: 2;
+                color: #8a998e;
+                font-size: 16px;
+                transform: translateY(-50%);
+                pointer-events: none;
+            }
+
+            .login-input-wrap .form-control {
+                height: 45px;
+                padding: 10px 13px 10px 40px;
+                border: 1px solid var(--login-border);
+                border-radius: 8px;
+                color: #38443b;
+                background: #fff;
+                font-size: 12px;
+                box-shadow: none;
+                transition: border-color .15s ease, box-shadow .15s ease;
+            }
+
+            .login-input-wrap .form-control::placeholder {
+                color: #a5adb5;
+            }
+
+            .login-input-wrap .form-control:focus {
+                border-color: #91a998;
+                box-shadow: 0 0 0 3px rgba(85, 123, 100, .1);
+            }
+
+            .login-input-wrap .form-control.is-invalid {
+                border-color: #d59b9e;
+            }
+
+            .login-form-content .invalid-feedback {
+                font-size: 10px;
+            }
+
+            .login-submit {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 100%;
+                min-height: 45px;
+                margin-top: 26px;
+                border: 1px solid var(--login-green);
+                border-radius: 8px;
+                color: #fff;
+                background: linear-gradient(110deg, #557b64, #426a50);
+                box-shadow: 0 6px 14px rgba(66, 106, 80, .17);
+                font-size: 12px;
+                font-weight: 700;
+                letter-spacing: .02em;
+                transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+            }
+
+            .login-submit:hover,
+            .login-submit:focus {
+                color: #fff;
+                background: linear-gradient(110deg, #496f58, #365e44);
+                box-shadow: 0 8px 17px rgba(66, 106, 80, .22);
+                transform: translateY(-1px);
+            }
+
+            .login-submit i {
+                margin-left: 8px;
+                font-size: 15px;
+            }
+
+            .login-secure-note {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-top: 20px;
+                color: #9aa39b;
+                font-size: 10px;
+            }
+
+            .login-secure-note i {
+                margin-right: 5px;
+                color: #78917e;
+                font-size: 13px;
+            }
+
+            @media (max-width: 767.98px) {
+                .login-shell {
+                    align-items: flex-start;
+                    padding: 18px 13px;
+                }
+
+                .login-card {
+                    display: block;
+                    max-width: 470px;
+                    min-height: 0;
+                    border-radius: 15px;
+                }
+
+                .login-brand-panel {
+                    min-height: 205px;
+                    padding: 23px 25px;
+                }
+
+                .login-brand-logo {
+                    width: 46px;
+                    height: 46px;
+                    margin-bottom: 15px;
+                    border-radius: 13px;
+                }
+
+                .login-brand-logo img {
+                    max-width: 34px;
+                    max-height: 34px;
+                }
+
+                .login-brand-title {
+                    max-width: 300px;
+                    font-size: 21px;
+                }
+
+                .login-brand-description {
+                    margin-top: 8px;
+                    font-size: 11px;
+                }
+
+                .login-brand-footer {
+                    display: none;
+                }
+
+                .login-form-panel {
+                    padding: 29px 25px 27px;
+                }
+
+                .login-form-content h1 {
+                    font-size: 22px;
+                }
+
+                .login-form-description {
+                    margin-bottom: 22px;
+                }
+            }
+        </style>
     </head>
 
 
-    <body class="bg-accpunt-pages">
+    <body class="login-page">
+        <main class="login-shell">
+            <section class="login-card" aria-label="Masuk ke aplikasi koperasi">
+                <div class="login-brand-panel">
+                    <div class="login-brand-top">
+                        <a href="{{ url('/') }}" class="login-brand-logo" aria-label="Beranda">
+                            <img src="{{ $logo.'/small_logo.png' }}" alt="Logo Koperasi">
+                        </a>
+                        <p class="login-brand-kicker">Layanan Koperasi</p>
+                    </div>
+                    <div class="login-brand-message">
+                        <h2 class="login-brand-title">Bersama membangun kesejahteraan.</h2>
+                        <p class="login-brand-description">Akses informasi simpanan, pinjaman, dan layanan koperasi dengan mudah dalam satu platform.</p>
+                    </div>
+                    <div class="login-brand-footer">Sistem Informasi Koperasi Karyawan</div>
+                </div>
 
-        <!-- HOME -->
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
+                <div class="login-form-panel">
+                    <div class="login-form-content">
+                        <div class="login-welcome-label">Selamat datang kembali</div>
+                        <h1>Masuk ke akun Anda</h1>
+                        <p class="login-form-description">Gunakan email atau nomor anggota untuk melanjutkan.</p>
 
-                        <div class="wrapper-page">
-
-                            <div class="account-pages">
-                                <div class="account-box">
-                                    <div class="account-logo-box">
-                                        <h2 class="text-uppercase text-center">
-                                            <a href="{{ url('/') }}" class="text-success">
-                                                <span><img class="img-fluid logo-img" src="{{$logo.'/small_logo.png' }}" alt="" width="90"></span>
-                                            </a>
-                                        </h2>
-                                        <h6 class="text-uppercase text-center font-bold mt-4">
-                                            SIGN IN
-                                        </h6>
-                                    </div>
-                                    <div class="account-content">
-                                        <form method="POST" action="{{ route('login') }}" class="form-horizontal">
-                                            @csrf
-                                            <div class="form-group m-b-20 row">
-                                                <div class="col-12">
-                                                    <label for="emailaddress">Email atau No Anggota</label>
-                                                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
-                                                    @error('email')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group row m-b-20">
-                                                <div class="col-12">
-                                                    <label for="password">Password</label>
-                                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password">
-                                                    @error('password')
-                                                        <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $message }}</strong>
-                                                        </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                            <div class="form-group row text-center m-t-10">
-                                                <div class="col-12">
-                                                    <button class="btn btn-block btn-gradient waves-effect waves-light" type="submit">Sign In</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                        <form method="POST" action="{{ route('login') }}" class="form-horizontal">
+                            @csrf
+                            <div class="form-group">
+                                <label for="email">Email atau No Anggota</label>
+                                <div class="login-input-wrap">
+                                    <i class="mdi mdi-account-outline" aria-hidden="true"></i>
+                                    <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="username" autofocus required placeholder="Masukkan email atau nomor anggota">
                                 </div>
+                                @error('email')
+                                    <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
                             </div>
-                            <!-- end card-box-->
 
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <div class="login-input-wrap">
+                                    <i class="mdi mdi-lock-outline" aria-hidden="true"></i>
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" autocomplete="current-password" required placeholder="Masukkan password">
+                                </div>
+                                @error('password')
+                                    <span class="invalid-feedback d-block" role="alert"><strong>{{ $message }}</strong></span>
+                                @enderror
+                            </div>
 
+                            <button class="login-submit" type="submit">
+                                Masuk <i class="mdi mdi-arrow-right" aria-hidden="true"></i>
+                            </button>
+                        </form>
+                        <div class="login-secure-note">
+                            <i class="mdi mdi-shield-check-outline" aria-hidden="true"></i>
+                            Akses aman untuk anggota dan pengelola koperasi
                         </div>
-                        <!-- end wrapper -->
-
                     </div>
                 </div>
-            </div>
-        </section>
-        <!-- END HOME -->
+            </section>
+        </main>
         <!-- jQuery  -->
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/popper.min.js') }}"></script>
