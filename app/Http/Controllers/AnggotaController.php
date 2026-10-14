@@ -49,7 +49,6 @@ class AnggotaController extends Controller
                     })
                     ->addColumn('action', function ($anggota) {
                         return view('datatable._action-anggota', [
-                            'model' => $anggota,
                             'edit_url' => route('anggota.edit', $anggota->id),
                             'form_url' => route('anggota.destroy', $anggota->id),
                             'can_edit' => 'edit-anggota',
