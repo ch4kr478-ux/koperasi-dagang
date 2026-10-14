@@ -260,12 +260,79 @@
         padding: 8px 4px 0;
     }
 
+    .admin-dashboard .chart-panels-row {
+        margin-right: -12px;
+        margin-left: -12px;
+    }
+
+    .admin-dashboard .chart-panels-row > [class*="col-"] {
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+
+    .admin-dashboard .chart-panel {
+        display: flex;
+        flex-direction: column;
+        height: calc(100% - 20px);
+        min-height: 470px;
+        padding: 24px;
+        border-color: #e7ebf2;
+        border-radius: 14px;
+        background: linear-gradient(145deg, #fff 0%, #fdfdfe 100%);
+        box-shadow: 0 6px 20px rgba(35, 47, 74, .045);
+    }
+
+    .admin-dashboard .chart-panel:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 11px 26px rgba(35, 47, 74, .075);
+    }
+
+    .admin-dashboard .chart-panel .dashboard-panel-heading {
+        align-items: center;
+        min-height: 58px;
+        margin-bottom: 15px;
+        padding-bottom: 15px;
+    }
+
+    .admin-dashboard .chart-panel-title {
+        display: flex;
+        align-items: center;
+    }
+
+    .admin-dashboard .chart-heading-icon {
+        display: inline-flex;
+        flex: 0 0 38px;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        margin-right: 12px;
+        border: 1px solid #e7eee9;
+        border-radius: 12px;
+        color: #64836f;
+        background: #f0f5f1;
+        font-size: 17px;
+    }
+
+    .admin-dashboard .chart-heading-icon.members {
+        border-color: #e9eaf2;
+        color: #7882a0;
+        background: #f2f3f8;
+    }
+
+    .admin-dashboard .chart-panel .dashboard-chart {
+        flex: 1;
+        min-height: 300px;
+        height: auto;
+        padding: 10px 4px 0;
+    }
+
     .admin-dashboard .chart-total {
-        margin-top: 2px;
+        height: 100%;
         padding: 12px 14px;
         border: 1px solid #eff1f5;
-        border-radius: 9px;
-        background: #fafbfc;
+        border-radius: 10px;
+        background: linear-gradient(135deg, #fbfcfd, #f8f9fb);
     }
 
     .admin-dashboard .chart-total-label {
@@ -397,6 +464,11 @@
             height: 260px;
         }
 
+        .admin-dashboard .chart-panel {
+            min-height: 430px;
+            padding: 18px;
+        }
+
         .admin-dashboard .activity-person-time {
             font-size: 10px;
         }
@@ -430,7 +502,7 @@
 <div class="dashboard-section-title">Simpanan · Periode Aktif</div>
 <div class="row">
     <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-        <div class="dashboard-card credit-card">
+        <div class="dashboard-card">
             <span class="dashboard-card-icon debit"><i class="fi-layers"></i></span>
             <h6 class="dashboard-card-label">Saldo Pokok</h6>
             <div class="dashboard-card-value">{{ Money::stringToRupiah($sum_pokok) }}</div>
@@ -454,7 +526,7 @@
         </div>
     </div>
     <div class="col-xs-12 col-md-6 col-lg-6 col-xl-3">
-        <div class="dashboard-card">
+        <div class="dashboard-card credit-card">
             <span class="dashboard-card-icon credit"><i class="fi-layers"></i></span>
             <h6 class="dashboard-card-label">Kredit Simpanan</h6>
             <div class="dashboard-card-value">{{ Money::stringToRupiah($kredit_simpanan) }}</div>
@@ -462,13 +534,17 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-xl-6">
-        <div class="dashboard-panel">
+<div class="dashboard-section-title">Analisis Keuangan dan Anggota</div>
+<div class="row chart-panels-row">
+    <div class="col-12 col-lg-6">
+        <div class="dashboard-panel chart-panel">
             <div class="dashboard-panel-heading">
-                <div>
-                    <h5>Tren Debet dan Kredit</h5>
-                    <p>Pergerakan transaksi per bulan pada periode aktif: {{ $periode->name }}</p>
+                <div class="chart-panel-title">
+                    <span class="chart-heading-icon"><i class="mdi mdi-chart-bar"></i></span>
+                    <div>
+                        <h5>Tren Debet dan Kredit</h5>
+                        <p>Pergerakan transaksi per bulan · {{ $periode->name }}</p>
+                    </div>
                 </div>
             </div>
             <div class="row">
@@ -488,12 +564,15 @@
             <div class="dashboard-chart"><canvas id="chartPeriode"></canvas></div>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="dashboard-panel">
+    <div class="col-12 col-lg-6">
+        <div class="dashboard-panel chart-panel">
             <div class="dashboard-panel-heading">
-                <div>
-                    <h5>Status Anggota</h5>
-                    <p>Perbandingan anggota aktif dan nonaktif</p>
+                <div class="chart-panel-title">
+                    <span class="chart-heading-icon members"><i class="mdi mdi-account-group-outline"></i></span>
+                    <div>
+                        <h5>Status Anggota</h5>
+                        <p>Perbandingan anggota aktif dan nonaktif</p>
+                    </div>
                 </div>
             </div>
             <div class="dashboard-chart"><canvas id="chartAnggota"></canvas></div>
@@ -542,7 +621,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-6 col-xl-3 mb-3 mb-xl-0">
-                    <div class="dashboard-card credit-card">
+                    <div class="dashboard-card">
                         <span class="dashboard-card-icon debit"><i class="dripicons-arrow-up"></i></span>
                         <h6 class="dashboard-card-label">Arus Debet</h6>
                         <div class="dashboard-card-value">{{ Money::stringToRupiah($total_debet_semua) }}</div>
@@ -639,14 +718,14 @@
 
             <div class="inbox-widget slimscroll" style="max-height: 370px;">
                 @forelse ($activity_log as $item)
-                    <a href="javascript:void(0);">
-                        <div class="inbox-item">
-                            <div class="inbox-item-img"><img src="{{ asset('images/users/avatar-1.jpg') }}" class="rounded-circle bx-shadow-lg" alt=""></div>
-                            <p class="inbox-item-author">{{ optional($item->user)->name ?? 'Pengguna sistem' }}</p>
-                            <p class="inbox-item-text">{{ $item->description}}</p>
-                            <p class="inbox-item-date">{{ Carbon\Carbon::parse($item->created_at)->format('g:i A') }}</p>
+                    <div class="activity-person">
+                        <span class="activity-initial" aria-hidden="true">{{ strtoupper(substr(optional($item->user)->name ?? 'S', 0, 1)) }}</span>
+                        <div>
+                            <p class="activity-person-name">{{ optional($item->user)->name ?? 'Pengguna sistem' }}</p>
+                            <p class="activity-person-description">{{ $item->description }}</p>
                         </div>
-                    </a>
+                        <span class="activity-person-time">{{ Carbon\Carbon::parse($item->created_at)->format('d-m H:i') }}</span>
+                    </div>
                 @empty
                     <p class="text-muted mb-0">Belum ada aktivitas pengguna.</p>
                 @endforelse
@@ -722,15 +801,28 @@
                 label: '# of Votes',
                 data: {{ json_encode($status_anggota) }},
                 backgroundColor: [
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 99, 132, 0.2)'
+                    'rgba(116, 157, 132, 0.78)',
+                    'rgba(196, 139, 145, 0.72)'
                 ],
                 borderColor: [
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 99, 132, 1)'
+                    '#ffffff',
+                    '#ffffff'
                 ],
-                borderWidth: 1
+                borderWidth: 3
             }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutoutPercentage: 66,
+            legend: {
+                position: 'bottom',
+                labels: {
+                    usePointStyle: true,
+                    padding: 20,
+                    fontColor: '#778196'
+                }
+            }
         }
     });
 
@@ -738,27 +830,38 @@
             labels: {!! json_encode($months) !!},
             datasets: [
                 {
-                    label: "Debit",
-                    backgroundColor: "blue",
-                    borderColor: [
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 99, 132, 1)'
-                    ],
+                    label: "Debet",
+                    backgroundColor: "rgba(116, 157, 132, 0.68)",
+                    borderColor: "rgba(92, 135, 108, 0.9)",
+                    borderWidth: 1,
                     data: {!! json_encode($debitAll) !!}
                 },
                 {
                     label: "Kredit",
-                    backgroundColor: "red",
+                    backgroundColor: "rgba(196, 139, 145, 0.62)",
+                    borderColor: "rgba(171, 111, 119, 0.9)",
+                    borderWidth: 1,
                     data: {!! json_encode($kreditAll) !!}
                 }
             ]
     };
 
     var options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+            position: 'bottom',
+            labels: {
+                usePointStyle: true,
+                padding: 18,
+                fontColor: '#778196'
+            }
+        },
         scales: {
             yAxes: [{
                 ticks: {
                     beginAtZero:true,
+                    fontColor: '#8992a1',
                     userCallback: function(value, index, values) {
                         // Convert the number to a string and splite the string every 3 charaters from the end
                         value = value.toString();
@@ -768,8 +871,20 @@
                         value = value.join('.');
                         return 'Rp ' + value;
                     }
+                },
+                gridLines: {
+                    color: 'rgba(115, 128, 153, 0.10)',
+                    zeroLineColor: 'rgba(115, 128, 153, 0.16)'
                 }
-            }] 
+            }],
+            xAxes: [{
+                ticks: {
+                    fontColor: '#8992a1'
+                },
+                gridLines: {
+                    display: false
+                }
+            }]
         }
     };
 
