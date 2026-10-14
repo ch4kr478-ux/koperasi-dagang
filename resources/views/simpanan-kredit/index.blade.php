@@ -44,7 +44,7 @@
             <table id="datatable-buttons" class="table table-striped table-bordered display nowrap" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th>#ID</th>
+                        <th>ID</th>
                         <th>Anggota</th>
                         <th>Tanggal</th>
                         <th>Jenis</th>
@@ -87,7 +87,7 @@
                         serverSide: true,
                         ajax: "{{ route('simpanan-kredit.index') }}",
                         columns: [
-                            { data: 'id', name: 'id' },
+                            { data: 'nomor_urut', name: 'id' },
                             { data: 'nama_anggota.anggota.nama', name: 'nama_anggota.anggota.nama', orderable: false, searchable: false },
                             { data: 'tgl', name: 'tgl' },
                             { data: 'jenis_pembayaran', name: 'jenis_pembayaran' },
@@ -101,7 +101,7 @@
                             @endunless
                         ],
                         dom: '<"toolbar">frtip',
-                        order: [[ 0, "desc" ]],
+                        order: [[ 0, "asc" ]],
                         scrollX: true
                     });
                     $("div.toolbar").html(`@unless($isMember)@permission('create-kredit-simpanan')<a href="{{ route('simpanan-kredit.create') }}" class="btn btn-gradient waves-light waves-effect w-md"><i class="fa fa-plus"></i> Tambah</a>@endpermission

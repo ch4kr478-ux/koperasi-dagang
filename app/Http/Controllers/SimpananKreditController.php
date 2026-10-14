@@ -37,6 +37,7 @@ class SimpananKreditController extends Controller
                         $sql->with('anggota');
                     }, 'sumKredit'
                 ])
+                    ->withDisplayNumber()
                     ->where('divisi_id', '1')
                     ->where('jenis_transaksi', '2');
                 if ($isMember) {

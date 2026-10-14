@@ -38,6 +38,7 @@ class PinjamanDebetController extends Controller
                         $sql->with('anggota');
                     }, 'sumBunga', 'sumCicilan'
                 ])
+                    ->withDisplayNumber()
                     ->where('divisi_id', '2')
                     ->where('jenis_transaksi', '1');
                 if ($isMember) {

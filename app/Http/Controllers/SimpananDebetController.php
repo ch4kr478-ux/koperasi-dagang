@@ -38,6 +38,7 @@ class SimpananDebetController extends Controller
                         $sql->with('anggota');
                     }, 'sumPokok', 'sumWajib', 'sumSukarela'
                 ])
+                    ->withDisplayNumber()
                     ->where('divisi_id', '1')
                     ->where('jenis_transaksi', '1');
                 if ($isMember) {

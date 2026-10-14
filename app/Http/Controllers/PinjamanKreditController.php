@@ -38,6 +38,7 @@ class PinjamanKreditController extends Controller
                         $sql->with('anggota');
                     }, 'sumKreditPinjaman'
                 ])
+                    ->withDisplayNumber()
                     ->where('divisi_id', '2')
                     ->where('jenis_transaksi', '2');
                 if ($isMember) {
