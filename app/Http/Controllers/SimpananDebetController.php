@@ -57,7 +57,11 @@ class SimpananDebetController extends Controller
                     ->editColumn('jenis_transaksi', function ($transaksiHarian) {
                         return '<span class="badge badge-primary badge-pill">Debet</span>';
                     })
-                    ->addColumn('action', function ($transaksiHarian) {
+                    ->addColumn('action', function ($transaksiHarian) use ($isMember) {
+                        if ($isMember) {
+                            return '';
+                        }
+
                         return view('datatable._action-transaction', [
                             'model' => $transaksiHarian,
                             'form_url' => route('simpanan-debet.destroy', $transaksiHarian->id),
