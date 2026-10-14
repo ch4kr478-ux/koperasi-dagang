@@ -67,6 +67,25 @@ class HomeController extends Controller
             $total_kredit_semua = $aktivitas_transaksi->get(2)->total_nominal ?? 0;
             $jumlah_debet_semua = $aktivitas_transaksi->get(1)->jumlah_transaksi ?? 0;
             $jumlah_kredit_semua = $aktivitas_transaksi->get(2)->jumlah_transaksi ?? 0;
+            $arus_transaksi = DB::table('transaksi_harians as th')
+                ->leftJoin('transaksi_harian_biayas as thb', 'th.id', '=', 'thb.transaksi_harian_id')
+                ->leftJoin('biayas as b', 'thb.biaya_id', '=', 'b.id')
+                ->leftJoin('divisis as d', 'th.divisi_id', '=', 'd.id')
+                ->whereIn('th.jenis_transaksi', [1, 2])
+                ->select(
+                    'th.divisi_id',
+                    'th.jenis_transaksi',
+                    'b.id as biaya_id',
+                    DB::raw("COALESCE(d.name, 'Tanpa divisi') as nama_divisi"),
+                    DB::raw("COALESCE(b.name, 'Tanpa rincian') as nama_biaya"),
+                    DB::raw('COUNT(DISTINCT th.id) as jumlah_transaksi'),
+                    DB::raw('COALESCE(SUM(thb.nominal), 0) as total_nominal')
+                )
+                ->groupBy('th.divisi_id', 'd.name', 'th.jenis_transaksi', 'b.id', 'b.name')
+                ->orderBy('th.jenis_transaksi')
+                ->orderBy('d.name')
+                ->orderBy('b.name')
+                ->get();
             $sum_pokok = DB::table('transaksi_harians')
                         ->join('transaksi_harian_biayas', 'transaksi_harians.id', '=', 'transaksi_harian_biayas.transaksi_harian_id')
                         ->join('transaksi_harian_anggotas', 'transaksi_harians.id', '=', 'transaksi_harian_anggotas.transaksi_harian_id')
@@ -128,7 +147,7 @@ class HomeController extends Controller
                         ->sum('transaksi_harian_biayas.nominal');
             $countAnggota = Anggota::select()->count();
             $countDivisi = Divisi::select()->count();
-            $activity_log =  ActivityLog::with('user')->limit(10)->get();
+            $activity_log = ActivityLog::with('user')->latest('created_at')->limit(10)->get();
             $result = TransaksiHarian::where('periode_id', $periode->id)
                         ->selectRaw('year(tgl) year, monthname(tgl) month, count(*) data, month(tgl) mon')
                         ->groupBy('year', 'month', 'mon')
@@ -180,7 +199,7 @@ class HomeController extends Controller
             }
             return view('dashboard.admin')->with(compact('countAnggota', 'countDivisi', 'periode', 'sum_pokok', 'sum_wajib', 'sum_sukarela', 'kredit_simpanan',
                     'debet_pinjaman', 'bunga_pinjaman', 'kredit_pinjaman', 'transaksi_harian', 'activity_log', 'saldo_kredit', 'saldo_debit', 'status_anggota',
-                'months', 'debitAll', 'kreditAll', 'total_debet_semua', 'total_kredit_semua', 'jumlah_debet_semua', 'jumlah_kredit_semua'));
+                'months', 'debitAll', 'kreditAll', 'total_debet_semua', 'total_kredit_semua', 'jumlah_debet_semua', 'jumlah_kredit_semua', 'arus_transaksi'));
         }
         elseif($user->roles->pluck( 'name' )->contains( 'member' ))
         {
