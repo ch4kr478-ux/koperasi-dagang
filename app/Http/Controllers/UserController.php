@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Anggota;
+use App\UserAnggota;
 use DataTables;
 use Session;
 use App\RoleUser;
@@ -228,7 +230,12 @@ class UserController extends Controller
         if($user)
         {
             if ($user->id == Auth::user()->id) {
-                return view('user-profile.reset-password')->with(compact('user'));
+                $isMember = $user->hasMemberRole();
+                $anggota = $isMember
+                    ? Anggota::whereIn('id', UserAnggota::where('user_id', $user->id)->select('anggota_id'))->first()
+                    : null;
+
+                return view('user-profile.reset-password', compact('user', 'isMember', 'anggota'));
             } else {
                 return view('errors.404');
             }
@@ -236,6 +243,32 @@ class UserController extends Controller
             return view('errors.404');
         }
 
+    }
+
+    public function updateMemberProfile(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        abort_unless((int) $user->id === (int) Auth::id() && $user->hasMemberRole(), 403);
+
+        $anggotaId = UserAnggota::where('user_id', $user->id)->value('anggota_id');
+        abort_unless($anggotaId, 404, 'Data anggota untuk akun ini tidak ditemukan.');
+
+        $anggota = Anggota::findOrFail($anggotaId);
+        $validated = $this->validate($request, [
+            'jabatan' => 'required|string|max:255',
+        ]);
+
+        DB::transaction(function () use ($anggota, $validated) {
+            $anggota->jabatan = $validated['jabatan'];
+            $anggota->save();
+        });
+
+        Session::flash('flash_notification', [
+            'level' => 'success',
+            'message' => 'Profil member berhasil diperbarui.',
+        ]);
+
+        return redirect()->route('user.user-profile', $user->id);
     }
 
     public function putEditPassword(Request $request, $id)

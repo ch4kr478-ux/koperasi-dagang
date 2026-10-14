@@ -94,7 +94,7 @@ class AnggotaController extends Controller
             $this->validate($request, [
                 'nik' => 'required|unique:anggotas',
                 'nama' => 'required',
-                'inisial' => 'required',
+                'jabatan' => 'required',
                 'status' => 'required',
                 'tgl_daftar' => 'required',
                 'homebase' => 'required'
@@ -102,7 +102,7 @@ class AnggotaController extends Controller
             $anggota = new Anggota();
             $anggota->nik = $request->nik;
             $anggota->nama = $request->nama;
-            $anggota->inisial = $request->inisial;
+            $anggota->jabatan = $request->jabatan;
             $anggota->tgl_daftar = Tanggal::convert_tanggal($request->tgl_daftar);
             $anggota->status = $request->status;
             $anggota->homebase = $request->homebase;
@@ -175,7 +175,7 @@ class AnggotaController extends Controller
             $this->validate($request, [
                 'nik' => 'required|unique:anggotas,nik,' . $id,
                 'nama' => 'required',
-                'inisial' => 'required',
+                'jabatan' => 'required',
                 'status' => 'required',
                 'tgl_daftar' => 'required',
                 'homebase' => 'required'
@@ -183,7 +183,7 @@ class AnggotaController extends Controller
             $anggota = Anggota::find($id);
             $anggota->nik = $request->nik;
             $anggota->nama = $request->nama;
-            $anggota->inisial = $request->inisial;
+            $anggota->jabatan = $request->jabatan;
             $anggota->status = $request->status;
             $anggota->tgl_daftar = Tanggal::convert_tanggal($request->tgl_daftar);
             $anggota->homebase = $request->homebase;

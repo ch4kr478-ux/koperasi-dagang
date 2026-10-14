@@ -83,7 +83,7 @@
                 {
                     console.log(data)
                     $('#nama-anggota').text(data.nama)
-                    $('#nama-inisial').text(data.inisial)
+                    $('#nama-jabatan').text(data.jabatan)
                     $('#status-anggota').text(data.status)
                     $('#tanggal-daftar').text(data.tgl_daftar)
                 }

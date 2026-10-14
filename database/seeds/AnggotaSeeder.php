@@ -19,7 +19,7 @@ class AnggotaSeeder extends Seeder
         $anggota = new Anggota();
         $anggota->nik = '320209040401001';
         $anggota->nama = 'Agus Permana';
-        $anggota->inisial = 'AP';
+        $anggota->jabatan = 'AP';
         $anggota->homebase = 'Bogor';
         $anggota->tgl_daftar = '2020-10-05';
         $anggota->status = '1';
@@ -41,7 +41,7 @@ class AnggotaSeeder extends Seeder
         $anggota = new Anggota();
         $anggota->nik = '320209050501002';
         $anggota->nama = 'Ahmad Jaelani';
-        $anggota->inisial = 'AJ';
+        $anggota->jabatan = 'AJ';
         $anggota->homebase = 'Jakarta';
         $anggota->tgl_daftar = '2020-10-05';
         $anggota->status = '1';
@@ -63,7 +63,7 @@ class AnggotaSeeder extends Seeder
         $anggota = new Anggota();
         $anggota->nik = '320209060601003';
         $anggota->nama = 'Miranda';
-        $anggota->inisial = 'M';
+        $anggota->jabatan = 'M';
         $anggota->homebase = 'Tangerang';
         $anggota->tgl_daftar = '2020-10-05';
         $anggota->status = '1';
@@ -85,7 +85,7 @@ class AnggotaSeeder extends Seeder
         $anggota = new Anggota();
         $anggota->nik = '320209070701004';
         $anggota->nama = 'Raka Hadi';
-        $anggota->inisial = 'RH';
+        $anggota->jabatan = 'RH';
         $anggota->homebase = 'Garut';
         $anggota->tgl_daftar = '2020-10-05';
         $anggota->status = '1';
@@ -107,7 +107,7 @@ class AnggotaSeeder extends Seeder
         $anggota = new Anggota();
         $anggota->nik = '320209080801005';
         $anggota->nama = 'Hermansyah';
-        $anggota->inisial = 'H';
+        $anggota->jabatan = 'H';
         $anggota->homebase = 'Bekasi';
         $anggota->tgl_daftar = '2020-10-05';
         $anggota->status = '1';
@@ -129,7 +129,7 @@ class AnggotaSeeder extends Seeder
         $anggota = new Anggota();
         $anggota->nik = '320209080801006';
         $anggota->nama = 'Angga Rojak';
-        $anggota->inisial = 'H';
+        $anggota->jabatan = 'H';
         $anggota->homebase = 'Bekasi';
         $anggota->tgl_daftar = '2020-10-05';
         $anggota->status = '1';
@@ -151,7 +151,7 @@ class AnggotaSeeder extends Seeder
         $anggota = new Anggota();
         $anggota->nik = '320209080801007';
         $anggota->nama = 'Kardun';
-        $anggota->inisial = 'H';
+        $anggota->jabatan = 'H';
         $anggota->homebase = 'Bekasi';
         $anggota->tgl_daftar = '2020-10-05';
         $anggota->status = '1';
@@ -173,7 +173,7 @@ class AnggotaSeeder extends Seeder
         $anggota = new Anggota();
         $anggota->nik = '320209080801008';
         $anggota->nama = 'Jaja Miharja';
-        $anggota->inisial = 'H';
+        $anggota->jabatan = 'H';
         $anggota->homebase = 'Bekasi';
         $anggota->tgl_daftar = '2020-10-05';
         $anggota->status = '1';
@@ -195,7 +195,7 @@ class AnggotaSeeder extends Seeder
         $anggota = new Anggota();
         $anggota->nik = '320209080801009';
         $anggota->nama = 'Miharja';
-        $anggota->inisial = 'H';
+        $anggota->jabatan = 'H';
         $anggota->homebase = 'Bekasi';
         $anggota->tgl_daftar = '2020-10-05';
         $anggota->status = '1';
@@ -217,7 +217,7 @@ class AnggotaSeeder extends Seeder
         $anggota = new Anggota();
         $anggota->nik = '320209080801010';
         $anggota->nama = 'Santika';
-        $anggota->inisial = 'H';
+        $anggota->jabatan = 'H';
         $anggota->homebase = 'Bekasi';
         $anggota->tgl_daftar = '2020-10-05';
         $anggota->status = '1';

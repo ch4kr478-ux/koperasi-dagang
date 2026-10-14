@@ -21,10 +21,10 @@
     </div>
 </div>
 <div class="form-group row">
-    <label class="col-4 col-form-label" for="example-input-normal">Nama Inisial</label>
+    <label class="col-4 col-form-label" for="example-input-normal">Jabatan</label>
     <div class="col-8">
-        <input type="text" name="inisial" value="{{ old('inisial', data_get($formModel ?? null, 'inisial')) }}" class="{{ $errors->has('inisial') ? 'form-control is-invalid' : 'form-control' }}" placeholder="Nama Inisial">
-        @error('inisial')
+        <input type="text" name="jabatan" value="{{ old('jabatan', data_get($formModel ?? null, 'jabatan')) }}" class="{{ $errors->has('jabatan') ? 'form-control is-invalid' : 'form-control' }}" placeholder="Jabatan">
+        @error('jabatan')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
             </span>

@@ -30,10 +30,59 @@
 </div>
 @endif
 <div class="row">
-    <div class="col-6">
+    <div class="{{ $isMember && $anggota ? 'col-6' : 'col-12' }}">
         <div class="card-box">
-            <h4 class="m-t-0 header-title">Profile Pengguna</h4>
+            <h4 class="m-t-0 header-title">Profil {{ $isMember ? 'Member' : 'Pengguna' }}</h4>
             <div class="p-20">
+                @if($isMember && $anggota)
+                <table class="table no-border">
+                    <tbody>
+                        <tr>
+                            <td><strong>NIK / Username</strong></td>
+                            <td>:</td>
+                            <td>{{ $anggota->nik }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nama</strong></td>
+                            <td>:</td>
+                            <td>{{ $anggota->nama }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tanggal Daftar</strong></td>
+                            <td>:</td>
+                            <td>{{ $anggota->tgl_daftar ? \Carbon\Carbon::parse($anggota->tgl_daftar)->format('d-m-Y') : '-' }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Status</strong></td>
+                            <td>:</td>
+                            <td>{{ (string) $anggota->status === '1' ? 'Aktif' : 'Non Aktif' }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Home Base</strong></td>
+                            <td>:</td>
+                            <td>{{ $anggota->homebase }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <form method="post" action="{{ route('user.update-member-profile', $user->id) }}" class="form-horizontal">
+                    @csrf
+                    @method('PUT')
+                    <div class="form-group row">
+                        <label class="col-4 col-form-label" for="profile-jabatan">Jabatan</label>
+                        <div class="col-8">
+                            <input id="profile-jabatan" type="text" name="jabatan" value="{{ old('jabatan', $anggota->jabatan) }}" class="form-control @error('jabatan') is-invalid @enderror" required>
+                            @error('jabatan')
+                            <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+                            @enderror
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Simpan</button>
+                </form>
+                @elseif($isMember)
+                <div class="alert alert-warning mb-0" role="alert">
+                    Data anggota belum terhubung dengan akun ini. Hubungi administrator untuk memperbaikinya.
+                </div>
+                @else
                 <table class="table no-border">
                     <tbody>
                         <tr>
@@ -48,10 +97,12 @@
                         </tr>
                     </tbody>
                 </table>
+                @endif
             </div>
         </div> <!-- end card-box -->
     </div> <!-- end col -->
 
+    @if(!$isMember || $anggota)
     <div class="col-6">
         <div class="card-box">
             <h4 class="m-t-0 header-title">
@@ -100,6 +151,7 @@
                 </form>
             </div>
         </div>
+        @endif
     </div>
 </div>
 @endsection

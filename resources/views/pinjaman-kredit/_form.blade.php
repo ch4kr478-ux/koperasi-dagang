@@ -45,9 +45,9 @@
                     <td id="nama-anggota"></td>
                 </tr>
                 <tr>
-                    <td><strong>Nama Inisial</strong></td>
+                    <td><strong>Jabatan</strong></td>
                     <td>:</td>
-                    <td id="nama-inisial"></td>
+                    <td id="nama-jabatan"></td>
                 </tr>
                 <tr>
                     <td><strong>Status Anggota</strong></td>

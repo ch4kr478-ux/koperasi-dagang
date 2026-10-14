@@ -68,9 +68,9 @@
                         <td id="nama-anggota">{{ $anggota->nama }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Nama Inisial</strong></td>
+                        <td><strong>Jabatan</strong></td>
                         <td>:</td>
-                        <td id="nama-inisial">{{ $anggota->inisial }}</td>
+                        <td id="nama-jabatan">{{ $anggota->jabatan }}</td>
                     </tr>
                     <tr>
                         <td><strong>Status Anggota</strong></td>
@@ -95,9 +95,9 @@
                         <td id="nama-anggota"></td>
                     </tr>
                     <tr>
-                        <td><strong>Nama Inisial</strong></td>
+                        <td><strong>Jabatan</strong></td>
                         <td>:</td>
-                        <td id="nama-inisial"></td>
+                        <td id="nama-jabatan"></td>
                     </tr>
                     <tr>
                         <td><strong>Status Anggota</strong></td>
@@ -172,7 +172,7 @@
                         {
                             console.log(data)
                             $('#nama-anggota').text(data.nama)
-                            $('#nama-inisial').text(data.inisial)
+                            $('#nama-jabatan').text(data.jabatan)
                             $('#status-anggota').text(data.status)
                             $('#tanggal-daftar').text(data.tgl_daftar)
                         }

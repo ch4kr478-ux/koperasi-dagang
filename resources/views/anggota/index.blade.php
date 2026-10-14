@@ -35,7 +35,7 @@
                         <th>#ID</th>
                         <th>NIK</th>
                         <th>Nama</th>
-                        <th>Inisial</th>
+                        <th>Jabatan</th>
                         <th>Tanggal Daftar</th>
                         <th>Home Base</th>
                         <th>Status</th>
@@ -74,7 +74,7 @@
                 { data: 'id', name: 'id' },
                 { data: 'nik', name: 'nik' },
                 { data: 'nama', name: 'nama' },
-                { data: 'inisial', name: 'inisial' },
+                { data: 'jabatan', name: 'jabatan' },
                 { data: 'tgl_daftar', name: 'tgl_daftar' },
                 { data: 'homebase', name: 'homebase' },
                 { data: 'status', name: 'status', orderable: false, searchable: false },
