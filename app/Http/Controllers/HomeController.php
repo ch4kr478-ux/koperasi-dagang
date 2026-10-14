@@ -205,11 +205,68 @@ class HomeController extends Controller
                     'debet_pinjaman', 'bunga_pinjaman', 'kredit_pinjaman', 'transaksi_harian', 'activity_log', 'saldo_kredit', 'saldo_debit', 'status_anggota',
                 'months', 'debitAll', 'kreditAll', 'total_debet_semua', 'total_kredit_semua', 'jumlah_debet_semua', 'jumlah_kredit_semua', 'arus_transaksi'));
         }
-        elseif ($user->hasMemberRole())
+        else
         {
-            return view('dashboard.member');
-        }else {
-            return view('dashboard.member');
+            $userAnggota = $user->user_anggota;
+            $anggota = $userAnggota ? Anggota::find($userAnggota->anggota_id) : null;
+            $periode = Periode::where('status', 1)->first();
+            $memberTotals = collect();
+            $memberActivity = collect();
+
+            if ($anggota) {
+                $totalsQuery = DB::table('transaksi_harians')
+                    ->join('transaksi_harian_anggotas', 'transaksi_harians.id', '=', 'transaksi_harian_anggotas.transaksi_harian_id')
+                    ->join('transaksi_harian_biayas', 'transaksi_harians.id', '=', 'transaksi_harian_biayas.transaksi_harian_id')
+                    ->where('transaksi_harian_anggotas.anggota_id', $anggota->id)
+                    ->whereIn('transaksi_harian_biayas.biaya_id', [1, 2, 3, 4, 6, 7, 8]);
+
+                if ($periode) {
+                    $totalsQuery->whereBetween('transaksi_harians.tgl', [$periode->open_date, $periode->close_date]);
+                }
+
+                $memberTotals = $totalsQuery
+                    ->select('transaksi_harian_biayas.biaya_id', DB::raw('COALESCE(SUM(transaksi_harian_biayas.nominal), 0) as total'))
+                    ->groupBy('transaksi_harian_biayas.biaya_id')
+                    ->pluck('total', 'biaya_id');
+
+                $memberActivity = DB::table('transaksi_harians')
+                    ->join('transaksi_harian_anggotas', 'transaksi_harians.id', '=', 'transaksi_harian_anggotas.transaksi_harian_id')
+                    ->join('transaksi_harian_biayas', 'transaksi_harians.id', '=', 'transaksi_harian_biayas.transaksi_harian_id')
+                    ->leftJoin('biayas', 'transaksi_harian_biayas.biaya_id', '=', 'biayas.id')
+                    ->leftJoin('divisis', 'transaksi_harians.divisi_id', '=', 'divisis.id')
+                    ->where('transaksi_harian_anggotas.anggota_id', $anggota->id)
+                    ->select(
+                        'transaksi_harians.tgl',
+                        'transaksi_harians.jenis_transaksi',
+                        'transaksi_harians.keterangan',
+                        'transaksi_harian_biayas.nominal',
+                        'biayas.name as nama_biaya',
+                        'divisis.name as nama_divisi'
+                    )
+                    ->orderBy('transaksi_harians.tgl', 'desc')
+                    ->orderBy('transaksi_harians.id', 'desc')
+                    ->orderBy('transaksi_harian_biayas.id', 'desc')
+                    ->limit(8)
+                    ->get();
+            }
+
+            $totalSetoranSimpanan = (float) $memberTotals->get(1, 0)
+                + (float) $memberTotals->get(2, 0)
+                + (float) $memberTotals->get(3, 0);
+            $totalPenarikanSimpanan = (float) $memberTotals->get(4, 0);
+            $totalPinjamanDiterima = (float) $memberTotals->get(8, 0);
+            $totalPembayaranPinjaman = (float) $memberTotals->get(6, 0)
+                + (float) $memberTotals->get(7, 0);
+
+            return view('dashboard.member')->with(compact(
+                'anggota',
+                'periode',
+                'memberActivity',
+                'totalSetoranSimpanan',
+                'totalPenarikanSimpanan',
+                'totalPinjamanDiterima',
+                'totalPembayaranPinjaman'
+            ));
         }
     }
 }
