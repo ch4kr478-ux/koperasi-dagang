@@ -114,7 +114,7 @@
                             { data: 'keterangan', name: 'keterangan'},
                             { data: 'is_close', name: 'is_close' },
                             @unless($isMember)
-                            { data: 'action', name: 'action', orderable: false, searchable: false },
+                            { data: 'action', name: 'action', orderable: false, searchable: false, className: 'dt-actions text-center' },
                             @endunless
                         ],
                         dom: '<"toolbar">frtip',

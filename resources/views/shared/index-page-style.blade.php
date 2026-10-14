@@ -208,6 +208,29 @@
         font-weight: 600;
     }
 
+    .content-page .content .container-fluid table.dataTable td.dt-actions {
+        min-width: 128px;
+        white-space: nowrap;
+    }
+
+    .content-page .content .container-fluid table.dataTable .datatable-actions {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .content-page .content .container-fluid table.dataTable .datatable-actions form {
+        margin: 0;
+    }
+
+    .content-page .content .container-fluid table.dataTable .datatable-actions .btn-sm {
+        min-width: 54px;
+        margin: 0;
+        padding: 6px 10px;
+        line-height: 1.35;
+    }
+
     .content-page .content .container-fluid table.dataTable .badge {
         padding: 5px 9px;
         border-radius: 14px;
