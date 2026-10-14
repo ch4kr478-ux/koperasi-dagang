@@ -214,25 +214,8 @@
         font-size: 12px;
     }
 
-    .admin-dashboard .activity-table tbody tr:hover,
-    .admin-dashboard .flow-table tbody tr:hover {
+    .admin-dashboard .activity-table tbody tr:hover {
         background-color: #f8f9fc;
-    }
-
-    .admin-dashboard .flow-table th {
-        border-top: 0;
-        color: #858e9d;
-        font-size: 10px;
-        font-weight: 600;
-        letter-spacing: .04em;
-        text-transform: uppercase;
-        white-space: nowrap;
-    }
-
-    .admin-dashboard .flow-table td {
-        vertical-align: middle;
-        color: #596477;
-        font-size: 12px;
     }
 
     .admin-dashboard .activity-badge {
@@ -359,20 +342,17 @@
         color: #aa6c70;
     }
 
-    .admin-dashboard .activity-table,
-    .admin-dashboard .flow-table {
+    .admin-dashboard .activity-table {
         margin-bottom: 0;
     }
 
-    .admin-dashboard .activity-table thead th,
-    .admin-dashboard .flow-table thead th {
+    .admin-dashboard .activity-table thead th {
         padding-top: 12px;
         padding-bottom: 12px;
         background: #fafbfc;
     }
 
-    .admin-dashboard .activity-table tbody td,
-    .admin-dashboard .flow-table tbody td {
+    .admin-dashboard .activity-table tbody td {
         padding-top: 13px;
         padding-bottom: 13px;
     }
@@ -603,56 +583,6 @@
                         <p class="dashboard-card-note">Selisih pencatatan seluruh periode</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row mb-4">
-    <div class="col-12">
-        <div class="dashboard-panel">
-            <div class="dashboard-panel-heading">
-                <div>
-                    <h5>Alur Pencatatan Debet dan Kredit</h5>
-                    <p>Rincian nominal dan jumlah transaksi menurut divisi serta akun biaya, seluruh periode</p>
-                </div>
-                <span class="badge badge-light">Semua Periode</span>
-            </div>
-            <div class="table-responsive">
-                <table class="table table-hover flow-table mb-0">
-                    <thead>
-                        <tr>
-                            <th>Arah Transaksi</th>
-                            <th>Divisi</th>
-                            <th>Akun Pencatatan</th>
-                            <th class="text-right">Jumlah Transaksi</th>
-                            <th class="text-right">Total Nominal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($arus_transaksi as $arus)
-                        <tr>
-                            <td>
-                                <span class="activity-badge {{ (int) $arus->jenis_transaksi === 1 ? 'debit' : 'credit' }}">
-                                    {{ (int) $arus->jenis_transaksi === 1 ? 'Debet' : 'Kredit' }}
-                                </span>
-                            </td>
-                            <td>{{ $arus->nama_divisi }}</td>
-                            <td>{{ $arus->nama_biaya }}</td>
-                            <td class="text-right">{{ number_format($arus->jumlah_transaksi) }}</td>
-                            <td class="text-right font-weight-bold {{ (int) $arus->jenis_transaksi === 1 ? 'text-success' : 'text-danger' }}">
-                                {{ Money::stringToRupiah($arus->total_nominal) }}
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="5" class="text-center text-muted py-4">Belum ada data transaksi Debet atau Kredit.</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-            <div class="mt-3 text-muted small">
-                Nilai mengikuti jenis transaksi yang tercatat di sistem. Debet dan Kredit ditampilkan terpisah, bukan sebagai saldo kas bersih.
             </div>
         </div>
     </div>
