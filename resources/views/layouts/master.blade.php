@@ -6,7 +6,7 @@
         @endphp
         <meta charset="utf-8" />
         <title>Sistem Informasi Koperasi Karyawan — Enterprise Portal</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta content="Sistem Informasi Manajemen Koperasi Karyawan Tingkat Korporasi" name="description" />
         <meta content="Enterprise IT Solutions" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -23,7 +23,6 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <!-- Core & Plugin CSS -->
-        @yield('style')
         <link href="{{ asset('plugins/jquery-toastr/jquery.toast.min.css') }}" rel="stylesheet" />
         <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css" />
@@ -35,6 +34,7 @@
         <link href="{{ asset('assets/css/bootstrap-chosen.css') }}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('assets/css/yellow.css')}}" rel="stylesheet" />
         <link href="{{ asset('assets/css/bootstrap-fileinput.css')}}" rel="stylesheet" />
+        @yield('style')
         
         <script src="{{ asset('assets/js/modernizr.min.js') }}"></script>
     </head>
@@ -131,11 +131,11 @@
 
                 <footer class="footer">
                     <div class="footer-left">
-                        <strong>&copy; {{ date('Y') }} Koperasi Karyawan Prasetiya Mulya</strong> — Enterprise Portal Management System
+                        <strong>&copy; {{ date('Y') }} Koperasi Karyawan Prasetiya Mulya</strong>
+                        <span class="footer-separator">·</span> Portal Manajemen Koperasi
                     </div>
                     <div class="footer-right d-none d-sm-flex">
-                        <span class="badge badge-soft-success"><i class="mdi mdi-shield-check"></i> SSL 256-Bit Encrypted</span>
-                        <span class="badge badge-corporate-enterprise">v2.4 Enterprise</span>
+                        <span class="badge badge-soft-success"><i class="mdi mdi-check-circle-outline" aria-hidden="true"></i> Sistem Operasional</span>
                     </div>
                 </footer>
             </div>

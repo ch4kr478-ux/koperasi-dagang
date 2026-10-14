@@ -1,81 +1,75 @@
+@extends('layouts.app')
 
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Error 404</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+@section('style')
+<style>
+    .error-page {
+        width: 100%;
+        max-width: 760px;
+        margin: auto;
+        padding: 28px;
+        border: 1px solid var(--k-border);
+        border-radius: var(--k-radius-xl);
+        background: var(--k-surface);
+        box-shadow: var(--k-shadow-lg);
+        text-align: center;
+    }
 
-        <!-- App favicon -->
-        <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}">
+    .error-page-mark {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 72px;
+        height: 72px;
+        margin-bottom: 18px;
+        border: 1px solid var(--k-primary-border);
+        border-radius: var(--k-radius-lg);
+        color: var(--k-primary);
+        background: var(--k-primary-light);
+        font-size: 30px;
+    }
 
-        <!-- App css -->
-        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('css/icons.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('css/metismenu.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('assets/css/koperasi-theme.css') }}" rel="stylesheet" type="text/css" />
+    .error-page-code {
+        margin: 0;
+        color: var(--k-primary);
+        font-size: clamp(56px, 12vw, 88px);
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -.06em;
+    }
 
-        <script src="{{ asset('js/modernizr.min.js') }}"></script>
+    .error-page h1 {
+        margin: 12px 0 8px;
+        font-size: 22px;
+        font-weight: 800;
+    }
 
-    </head>
+    .error-page p {
+        max-width: 460px;
+        margin: 0 auto 22px;
+        color: var(--k-text-muted);
+        font-size: 13px;
+        line-height: 1.7;
+    }
 
+    @media (max-width: 575.98px) {
+        .error-page {
+            padding: 26px 20px;
+            border-radius: var(--k-radius-lg);
+        }
+    }
+</style>
+@endsection
 
-    <body class="bg-accpunt-pages">
-
-        <!-- HOME -->
-        <section>
-            <div class="container">
-                <div class="row">
-                    <div class="col-sm-12">
-
-                        <div class="wrapper-page">
-
-                            <div class="account-pages">
-                                <div class="account-box">
-                                    <div class="account-logo-box">
-                                        <h2 class="text-uppercase text-center">
-                                            <a href="{{ url('/') }}" class="text-success">
-                                                <span><img src="{{ asset('images/logo-kopkar.png') }}" alt="" height="150"></span>
-                                            </a>
-                                        </h2>
-                                    </div>
-                                    <div class="account-content text-center">
-                                        <h1 class="text-error">404</h1>
-                                        <h4 class="text-uppercase text-danger mt-3">Page Not Found</h4>
-                                        <p class="text-muted mt-3">It's looking like you may have taken a wrong turn. Don't worry... it
-                                            happens to the best of us. Here's a
-                                            little tip that might help you get back on track.</p>
-
-                                        <a class="btn btn-md btn-block btn-gradient waves-effect waves-light mt-3" href="{{ url('/') }}"> Return Home</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- end card-box-->
-
-
-                        </div>
-                        <!-- end wrapper -->
-
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- END HOME -->
-
-
-        <!-- jQuery  -->
-        <script src="{{ asset('js/jquery.min.js') }}"></script>
-        <script src="{{ asset('js/popper.min.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('js/metisMenu.min.js') }}"></script>
-        <script src="{{ asset('js/waves.js') }}"></script>
-        <script src="{{ asset('js/jquery.slimscroll.js') }}"></script>
-
-        <!-- App js -->
-        <script src="{{ asset('js/jquery.core.js') }}"></script>
-        <script src="{{ asset('js/jquery.app.js') }}"></script>
-
-    </body>
-</html>
+@section('content')
+<main class="error-page">
+    <div class="error-page-mark">
+        <i class="mdi mdi-map-marker-question-outline" aria-hidden="true"></i>
+    </div>
+    <p class="error-page-code">404</p>
+    <h1>Halaman tidak ditemukan</h1>
+    <p>Halaman yang Anda cari mungkin telah dipindahkan atau alamatnya tidak tersedia. Kembali ke beranda untuk melanjutkan.</p>
+    <a class="btn btn-primary" href="{{ url('/') }}">
+        <i class="mdi mdi-home-outline" aria-hidden="true"></i> Kembali ke Beranda
+    </a>
+</main>
+@endsection

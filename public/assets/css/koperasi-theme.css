@@ -115,6 +115,18 @@ a:hover, a:focus {
     text-decoration: none;
 }
 
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+:focus-visible {
+    outline: 3px solid rgba(15, 118, 110, 0.35);
+    outline-offset: 2px;
+}
+
 /* ==========================================================================
    TOPBAR & HEADER
    ========================================================================== */
@@ -193,7 +205,7 @@ a:hover, a:focus {
     font-size: 18px;
     height: 40px;
     width: 40px;
-    margin: 15px 0 0 20px;
+    margin: 0 0 0 20px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -645,6 +657,11 @@ a:hover, a:focus {
     gap: 10px;
 }
 
+.footer .footer-separator {
+    padding: 0 6px;
+    color: var(--k-border-strong);
+}
+
 /* ==========================================================================
    CARDS & PANELS
    ========================================================================== */
@@ -673,6 +690,12 @@ a:hover, a:focus {
     color: var(--k-text-main);
     letter-spacing: -0.01em;
     margin-bottom: 8px;
+}
+
+.content-page .card-box .header-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .sub-title,
@@ -806,6 +829,24 @@ a:hover, a:focus {
     outline: none;
 }
 
+.content-page .form-group {
+    margin-bottom: 18px;
+}
+
+.content-page .form-text,
+.content-page .invalid-feedback {
+    font-size: 11.5px;
+}
+
+.content-page .invalid-feedback {
+    font-weight: 600;
+}
+
+.content-page .form-control.is-invalid:focus {
+    border-color: var(--k-danger);
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+
 label {
     font-size: 12px;
     font-weight: 600;
@@ -821,6 +862,26 @@ label {
     color: var(--k-text-muted);
     font-size: 13px;
     font-weight: 500;
+}
+
+.input-group > .form-control:not(:first-child),
+.input-group > .custom-select:not(:first-child),
+.input-group > .input-group-append > .input-group-text {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.input-group > .form-control:not(:last-child),
+.input-group > .custom-select:not(:last-child),
+.input-group > .input-group-prepend > .input-group-text {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.input-group > .input-group-prepend > .input-group-text,
+.input-group > .input-group-append > .input-group-text {
+    min-height: 40px;
+    border-color: var(--k-border);
 }
 
 /* Chosen Plugin Overrides */
@@ -1400,6 +1461,7 @@ label {
     .content-page .content .container-fluid .page-title-box > .float-right {
         margin-top: 12px;
         align-self: flex-start;
+        max-width: 100%;
     }
 
     .content-page .content .container-fluid .page-title-box .breadcrumb {
@@ -1421,6 +1483,7 @@ label {
         padding: 12px;
         text-align: center;
         gap: 6px;
+        line-height: 1.5;
     }
 
     .wizard > .steps > ul {
@@ -1553,6 +1616,15 @@ label {
 }
 
 @media (max-width: 575.98px) {
+    .page-title-box {
+        padding: 16px !important;
+    }
+
+    .card,
+    .card-box {
+        border-radius: var(--k-radius-md);
+    }
+
     .auth-navbar-inner {
         min-height: 66px;
         padding: 10px 16px;

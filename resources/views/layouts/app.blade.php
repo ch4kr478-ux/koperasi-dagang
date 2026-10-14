@@ -16,6 +16,7 @@
     <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/koperasi-theme.css') }}" rel="stylesheet">
+    @yield('style')
 </head>
 <body class="auth-page">
     <div id="app" class="auth-layout">

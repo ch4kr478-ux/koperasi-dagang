@@ -6,7 +6,7 @@
         @endphp
         <meta charset="utf-8" />
         <title>Sistem Informasi Koperasi Karyawan</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta content="Aplikasi Koperasi Untuk Memenuhi Kebutuhan Administrasi Di Dalam Koperasi." name="description" />
         <meta content="Asep IT" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -25,6 +25,7 @@
         <link href="{{ asset('css/icons.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/metismenu.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/css/koperasi-theme.css') }}" rel="stylesheet" type="text/css" />
         <style>
             :root {
                 --login-green: #0f766e;
