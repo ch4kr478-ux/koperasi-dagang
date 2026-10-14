@@ -45,7 +45,7 @@
                     </a>
                 </li>
                 @endpermission
-                @permission('manage-debet-simpanan|manage-kredit-simpanan')
+                @if(Auth::user()->can('manage-debet-simpanan') || Auth::user()->can('manage-kredit-simpanan') || Auth::user()->hasMemberRole())
                 <li class="{{ set_active(['simpanan-debet.index', 'simpanan-debet.create', 'simpanan-debet.edit', 'simpanan-debet.upload',
                 'simpanan-kredit.index', 'simpanan-kredit.create', 'simpanan-kredit.edit', 'simpanan-kredit.upload'])}}">
                     <a href="javascript: void(0);" class="{{ set_active(['simpanan-debet.index', 'simpanan-debet.create', 'simpanan-debet.edit', 'simpanan-debet.upload',
@@ -60,11 +60,18 @@
                             </a>
                         </li>
                         @endpermission
+                        @if(Auth::user()->hasMemberRole() && !Auth::user()->can('manage-debet-simpanan'))
+                        <li class="{{ set_active(['simpanan-debet.index'])}}">
+                            <a href="{{ route('simpanan-debet.index') }}" class="{{ set_active(['simpanan-debet.index'])}}">
+                                Debet
+                            </a>
+                        </li>
+                        @endif
                         @permission('manage-kredit-simpanan')
                         <li class="{{ set_active(['simpanan-kredit.index', 'simpanan-kredit.create', 'simpanan-kredit.edit', 'simpanan-kredit.upload'])}}">
                             <a href="{{ route('simpanan-kredit.index') }}" class="{{ set_active(['simpanan-kredit.index', 'simpanan-kredit.create', 'simpanan-kredit.edit', 'simpanan-kredit.upload'])}}">Kredit</a>
                         </li>
-                        @endpermission
+                        @endif
                     </ul>
                 </li>
                 @endpermission

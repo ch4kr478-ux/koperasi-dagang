@@ -11,7 +11,7 @@
     <div class="col-12">
         <div class="page-title-box">
             <div class="float-left">
-                <h4 class="page-title">Simpanan Debet </h4>
+                <h4 class="page-title">{{ $isMember ? 'Simpanan Debet Saya' : 'Simpanan Debet' }}</h4>
                 <small class="text-danger">Periode : {{ periode()->name }}</small>
             </div>
             <div class="float-right">
@@ -55,7 +55,9 @@
                         <th>Sukarela</th>
                         <th>Keterangan</th>
                         <th>Status Buku</th>
+                        @permission('manage-debet-simpanan')
                         <th>ACTION DEFAULT</th>
+                        @endpermission
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -98,7 +100,9 @@
                             { data: 'sumSukarela', name: 'sumSukarela', orderable: false, searchable: false },
                             { data: 'keterangan', name: 'keterangan'},
                             { data: 'is_close', name: 'is_close' },
+                            @permission('manage-debet-simpanan')
                             { data: 'action', name: 'action', orderable: false, searchable: false },
+                            @endpermission
                         ],
                         dom: '<"toolbar">frtip',
                         order: [[ 0, "desc" ]],
@@ -109,9 +113,11 @@
                     @endpermission
                     @permission('download-debet-simpanan')<a href="https://docs.google.com/spreadsheets/d/1di8N5gzGvzpfE0D7pC1WELwvslw7XVx3/export?format=xlsx" class="btn btn-success waves-light waves-effect w-md"><i class="mdi mdi-file-excel"></i>Download Template</a>@endpermission
                     @permission('upload-debet-simpanan')<a href="{{ route('simpanan-debet.upload') }}" class="btn btn-warning waves-light waves-effect w-md"><i class="mdi mdi-cloud-upload"></i> Upload</a>@endpermission
+                    @permission('manage-debet-simpanan')
                     @if(Pembukuan::closeBook('1', '1', ['1', '2', '3']) == '1')
                     <a href="{{ route('simpanan-debet.close-book') }}" class="btn btn-danger waves-light waves-effect w-md"><i class="fa fa-book"></i> Tutup Buku</a>
                     @endif
+                    @endpermission
                     `);
 
     });
