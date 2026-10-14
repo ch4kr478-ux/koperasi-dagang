@@ -377,52 +377,6 @@
         padding-bottom: 13px;
     }
 
-    .admin-dashboard .activity-person {
-        display: flex;
-        align-items: center;
-        margin-bottom: 12px;
-    }
-
-    .admin-dashboard .activity-person:last-child {
-        margin-bottom: 0;
-    }
-
-    .admin-dashboard .activity-initial {
-        display: inline-flex;
-        flex: 0 0 36px;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        margin-right: 11px;
-        border-radius: 50%;
-        color: #687ba8;
-        background: #eef1f8;
-        font-size: 13px;
-        font-weight: 700;
-    }
-
-    .admin-dashboard .activity-person-name {
-        margin-bottom: 2px;
-        color: #4b566b;
-        font-size: 12px;
-        font-weight: 600;
-    }
-
-    .admin-dashboard .activity-person-description {
-        margin-bottom: 0;
-        color: #8992a1;
-        font-size: 11px;
-    }
-
-    .admin-dashboard .activity-person-time {
-        margin-left: auto;
-        padding-left: 10px;
-        color: #9aa2af;
-        font-size: 11px;
-        white-space: nowrap;
-    }
-
     .admin-dashboard .badge-light {
         border: 1px solid #e8ebf1;
         border-radius: 14px;
@@ -469,9 +423,6 @@
             padding: 18px;
         }
 
-        .admin-dashboard .activity-person-time {
-            font-size: 10px;
-        }
     }
 </style>
 @endsection
@@ -707,33 +658,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-lg-6">
-        <div class="dashboard-panel">
-            <div class="dashboard-panel-heading">
-                <div>
-                    <h5>Aktivitas Pengguna</h5>
-                    <p>Aktivitas terbaru di aplikasi</p>
-                </div>
-            </div>
-
-            <div class="inbox-widget slimscroll" style="max-height: 370px;">
-                @forelse ($activity_log as $item)
-                    <div class="activity-person">
-                        <span class="activity-initial" aria-hidden="true">{{ strtoupper(substr(optional($item->user)->name ?? 'S', 0, 1)) }}</span>
-                        <div>
-                            <p class="activity-person-name">{{ optional($item->user)->name ?? 'Pengguna sistem' }}</p>
-                            <p class="activity-person-description">{{ $item->description }}</p>
-                        </div>
-                        <span class="activity-person-time">{{ Carbon\Carbon::parse($item->created_at)->format('d-m H:i') }}</span>
-                    </div>
-                @empty
-                    <p class="text-muted mb-0">Belum ada aktivitas pengguna.</p>
-                @endforelse
-            </div>
-
-        </div>
-    </div>
-    <div class="col-lg-6">
+    <div class="col-12">
         <div class="dashboard-panel">
             <div class="dashboard-panel-heading">
                 <div>
