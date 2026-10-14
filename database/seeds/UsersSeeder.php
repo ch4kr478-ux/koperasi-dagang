@@ -931,5 +931,11 @@ class UsersSeeder extends Seeder
         );
         $ketuaRole->givePermission(Permission::where('name', 'view-pengajuan-pinjaman-kredit')->value('id'));
         $ketuaRole->givePermission(Permission::where('name', 'approve-pengajuan-pinjaman-ketua')->value('id'));
+
+        $ketuaKoperasiRole = Role::whereRaw('LOWER(name) = ?', ['ketua koperasi'])->first();
+        if ($ketuaKoperasiRole) {
+            $ketuaKoperasiRole->givePermission(Permission::where('name', 'view-pengajuan-pinjaman-kredit')->value('id'));
+            $ketuaKoperasiRole->givePermission(Permission::where('name', 'approve-pengajuan-pinjaman-ketua')->value('id'));
+        }
     }
 }
