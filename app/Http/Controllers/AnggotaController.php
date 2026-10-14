@@ -53,7 +53,7 @@ class AnggotaController extends Controller
                             'form_url' => route('anggota.destroy', $anggota->id),
                             'can_edit' => 'edit-anggota',
                             'can_delete' => 'delete-anggota',
-                            'confirm_message' => 'Yakin ingin menghapus anggota ' . $anggota->nama . '? Akun login member yang terhubung juga akan dihapus.'
+                            'confirm_message' => 'Yakin ingin menghapus anggota ' . $anggota->nama . '? Akun login terkait akan dihapus jika hanya digunakan untuk member.'
                         ]);
                     })
                     ->editColumn('is_close', function ($anggota) {
