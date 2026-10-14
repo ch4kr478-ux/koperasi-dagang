@@ -44,7 +44,7 @@
             <table id="datatable-buttons" class="table table-striped table-bordered display nowrap" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th>#ID</th>
+                        <th>#</th>
                         <th>Anggota</th>
                         <th>Tanggal</th>
                         <th>Jenis</th>
@@ -89,7 +89,7 @@
                         serverSide: true,
                         ajax: "{{ route('simpanan-debet.index') }}",
                         columns: [
-                            { data: 'id', name: 'id' },
+                            { data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
                             { data: 'nama_anggota.anggota.nama', name: 'nama_anggota.anggota.nama', orderable: false, searchable: false },
                             { data: 'tgl', name: 'tgl' },
                             { data: 'jenis_pembayaran', name: 'jenis_pembayaran' },
@@ -105,7 +105,7 @@
                             @endpermission
                         ],
                         dom: '<"toolbar">frtip',
-                        order: [[ 0, "desc" ]],
+                        order: [],
                         scrollX: true
                     });
 

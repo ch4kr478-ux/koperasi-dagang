@@ -39,7 +39,8 @@ class PinjamanKreditController extends Controller
                     }, 'sumKreditPinjaman'
                 ])
                     ->where('divisi_id', '2')
-                    ->where('jenis_transaksi', '2');
+                    ->where('jenis_transaksi', '2')
+                    ->orderBy('id', 'desc');
                 if ($isMember) {
                     $transaksiHarian->whereIn('id', function ($query) use ($user) {
                         $query->select('transaksi_harian_id')
@@ -52,6 +53,7 @@ class PinjamanKreditController extends Controller
                     });
                 }
                 return DataTables::of($transaksiHarian)
+                    ->addIndexColumn()
                     ->editColumn('tgl', function ($transaksiHarian) {
                         return Tanggal::tanggal_id($transaksiHarian->tgl);
                     })

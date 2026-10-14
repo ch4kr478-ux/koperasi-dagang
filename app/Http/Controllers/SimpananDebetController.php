@@ -39,7 +39,8 @@ class SimpananDebetController extends Controller
                     }, 'sumPokok', 'sumWajib', 'sumSukarela'
                 ])
                     ->where('divisi_id', '1')
-                    ->where('jenis_transaksi', '1');
+                    ->where('jenis_transaksi', '1')
+                    ->orderBy('id', 'desc');
                 if ($isMember) {
                     $transaksiHarian->whereIn('id', function ($query) use ($user) {
                         $query->select('transaksi_harian_id')
@@ -52,6 +53,7 @@ class SimpananDebetController extends Controller
                     });
                 }
                 return DataTables::of($transaksiHarian)
+                    ->addIndexColumn()
                     ->editColumn('tgl', function ($transaksiHarian) {
                         return Tanggal::tanggal_id($transaksiHarian->tgl);
                     })

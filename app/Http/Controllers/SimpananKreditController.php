@@ -36,8 +36,10 @@ class SimpananKreditController extends Controller
                     }, 'sumKredit'
                 ])
                     ->where('divisi_id', '1')
-                    ->where('jenis_transaksi', '2');
+                    ->where('jenis_transaksi', '2')
+                    ->orderBy('id', 'desc');
                 return DataTables::of($transaksiHarian)
+                    ->addIndexColumn()
                     ->editColumn('tgl', function ($transaksiHarian) {
                         return Tanggal::tanggal_id($transaksiHarian->tgl);
                     })
