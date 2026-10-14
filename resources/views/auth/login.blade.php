@@ -11,6 +11,11 @@
         <meta content="Asep IT" name="author" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
+        <!-- Google Font - Plus Jakarta Sans -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
         <!-- App favicon -->
         <link rel="shortcut icon" class="img-fluid logo-img" href="{{ $logo.'/logo.png' }}">
         <!-- CSRF Token -->
@@ -22,12 +27,12 @@
         <link href="{{ asset('css/style.css') }}" rel="stylesheet" type="text/css" />
         <style>
             :root {
-                --login-green: #426a50;
-                --login-green-dark: #284a36;
-                --login-green-soft: #edf4ef;
-                --login-ink: #344054;
-                --login-muted: #7d8798;
-                --login-border: #e5eaf0;
+                --login-green: #0f766e;
+                --login-green-dark: #115e59;
+                --login-green-soft: #f0fdfa;
+                --login-ink: #0f172a;
+                --login-muted: #64748b;
+                --login-border: #e2e8f0;
             }
 
             html,
@@ -40,10 +45,10 @@
                 margin: 0;
                 color: var(--login-ink);
                 background:
-                    radial-gradient(circle at 12% 14%, rgba(114, 151, 124, .12), transparent 30%),
-                    radial-gradient(circle at 88% 82%, rgba(198, 177, 139, .1), transparent 28%),
-                    #f4f6f5;
-                font-family: "Roboto", "Segoe UI", Arial, sans-serif;
+                    radial-gradient(circle at 12% 14%, rgba(15, 118, 110, .14), transparent 32%),
+                    radial-gradient(circle at 88% 82%, rgba(15, 23, 42, .08), transparent 30%),
+                    #f8fafc;
+                font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
                 -webkit-font-smoothing: antialiased;
             }
 
@@ -76,7 +81,7 @@
                 overflow: hidden;
                 padding: 42px 38px 34px;
                 color: #fff;
-                background: linear-gradient(145deg, #365e44 0%, #284a36 72%, #203f2d 100%);
+                background: linear-gradient(145deg, #0f766e 0%, #115e59 50%, #0f172a 100%);
             }
 
             .login-brand-panel:before,

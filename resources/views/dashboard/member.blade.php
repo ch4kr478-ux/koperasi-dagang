@@ -3,7 +3,7 @@
 <style>
     .member-dashboard {
         padding-bottom: 24px;
-        color: #465166;
+        color: var(--k-text-body);
     }
 
     .member-dashboard .member-welcome {
@@ -13,11 +13,12 @@
         justify-content: space-between;
         overflow: hidden;
         margin-bottom: 24px;
-        padding: 26px 30px;
-        border: 1px solid #e5eaf3;
-        border-radius: 14px;
-        background: linear-gradient(115deg, #fff 0%, #f5f7fc 68%, #edf2f8 100%);
-        box-shadow: 0 8px 24px rgba(35, 47, 74, .05);
+        padding: 26px 32px;
+        border: 1px solid var(--k-border);
+        border-left: 5px solid var(--k-primary);
+        border-radius: var(--k-radius-lg);
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 55%, #f0fdfa 100%);
+        box-shadow: var(--k-shadow-sm);
     }
 
     .member-dashboard .member-welcome:after {
@@ -26,9 +27,9 @@
         right: 12%;
         width: 230px;
         height: 230px;
-        border: 1px solid rgba(106, 127, 177, .1);
+        border: 1px solid rgba(15, 118, 110, 0.08);
         border-radius: 50%;
-        box-shadow: 0 0 0 24px rgba(106, 127, 177, .03), 0 0 0 50px rgba(106, 127, 177, .02);
+        box-shadow: 0 0 0 24px rgba(15, 118, 110, 0.02), 0 0 0 50px rgba(15, 118, 110, 0.015);
         content: "";
         pointer-events: none;
     }
@@ -40,35 +41,38 @@
     }
 
     .member-dashboard .welcome-eyebrow {
-        margin-bottom: 7px;
-        color: #7f8ba0;
-        font-size: 10px;
-        font-weight: 700;
-        letter-spacing: .12em;
+        margin-bottom: 6px;
+        color: var(--k-primary);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: .1em;
         text-transform: uppercase;
     }
 
     .member-dashboard .member-welcome h4 {
-        margin-bottom: 5px;
-        color: #344054;
+        margin-bottom: 4px;
+        color: var(--k-text-main);
         font-size: 22px;
-        font-weight: 700;
+        font-weight: 800;
+        letter-spacing: -0.02em;
     }
 
     .member-dashboard .welcome-description {
         margin: 0;
-        color: #7d8798;
+        color: var(--k-text-muted);
         font-size: 13px;
     }
 
     .member-dashboard .welcome-period {
-        padding: 8px 13px;
-        border: 1px solid #e5e9f1;
-        border-radius: 20px;
-        color: #68748a;
-        background: rgba(255, 255, 255, .78);
-        font-size: 11px;
+        padding: 8px 16px;
+        border: 1px solid var(--k-border);
+        border-radius: var(--k-radius-full);
+        color: var(--k-primary);
+        background: rgba(255, 255, 255, 0.85);
+        font-size: 11.5px;
+        font-weight: 600;
         white-space: nowrap;
+        box-shadow: var(--k-shadow-xs);
     }
 
     .member-dashboard .member-identity,
@@ -76,25 +80,26 @@
     .member-dashboard .member-activity-panel {
         height: calc(100% - 20px);
         margin-bottom: 20px;
-        border: 1px solid #e9edf3;
-        border-radius: 12px;
-        background: #fff;
-        box-shadow: 0 4px 16px rgba(35, 47, 74, .04);
-        transition: box-shadow .2s ease, transform .2s ease;
+        border: 1px solid var(--k-border);
+        border-radius: var(--k-radius-lg);
+        background: #ffffff;
+        box-shadow: var(--k-shadow-xs);
+        transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
     }
 
     .member-dashboard .member-identity:hover,
     .member-dashboard .member-stat-card:hover,
     .member-dashboard .member-activity-panel:hover {
         transform: translateY(-2px);
-        box-shadow: 0 9px 22px rgba(35, 47, 74, .07);
+        box-shadow: var(--k-shadow-md);
+        border-color: #cbd5e1;
     }
 
     .member-dashboard .member-identity {
         display: flex;
         align-items: center;
         min-height: 112px;
-        padding: 20px 22px;
+        padding: 20px 24px;
     }
 
     .member-dashboard .member-avatar {
@@ -105,51 +110,53 @@
         width: 54px;
         height: 54px;
         margin-right: 16px;
-        border: 1px solid #e5eaf3;
-        border-radius: 16px;
-        color: #687ba8;
-        background: #f0f3f9;
+        border: 1px solid var(--k-primary-border);
+        border-radius: var(--k-radius-md);
+        color: var(--k-primary);
+        background: var(--k-primary-subtle);
         font-size: 20px;
-        font-weight: 700;
+        font-weight: 800;
     }
 
     .member-dashboard .member-identity-name {
         margin: 0 0 4px;
-        color: #3c475b;
-        font-size: 15px;
-        font-weight: 700;
+        color: var(--k-text-main);
+        font-size: 15.5px;
+        font-weight: 750;
     }
 
     .member-dashboard .member-identity-meta {
         margin: 0;
-        color: #8992a1;
+        color: var(--k-text-muted);
         font-size: 12px;
     }
 
     .member-dashboard .member-status {
         margin-left: auto;
-        padding: 5px 10px;
-        border-radius: 16px;
-        font-size: 10px;
+        padding: 5px 12px;
+        border-radius: var(--k-radius-full);
+        font-size: 10.5px;
         font-weight: 700;
         white-space: nowrap;
     }
 
     .member-dashboard .member-status.active {
-        color: #54836a;
-        background: #edf5f0;
+        color: var(--k-success-text);
+        background: var(--k-success-bg);
+        border: 1px solid var(--k-success-border);
     }
 
     .member-dashboard .member-status.inactive {
-        color: #aa6c70;
-        background: #f9eff0;
+        color: var(--k-danger-text);
+        background: var(--k-danger-bg);
+        border: 1px solid var(--k-danger-border);
     }
 
     .member-dashboard .member-stat-card {
         position: relative;
         overflow: hidden;
-        min-height: 164px;
-        padding: 20px;
+        min-height: 160px;
+        padding: 22px;
     }
 
     .member-dashboard .member-stat-card:before {
@@ -157,57 +164,60 @@
         top: 0;
         right: 0;
         left: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #a7b5d4, #e5eaf4);
+        height: 3.5px;
+        background: var(--k-primary-gradient);
         content: "";
     }
 
     .member-dashboard .member-stat-card.credit:before {
-        background: linear-gradient(90deg, #d5b2b6, #f1e5e7);
+        background: linear-gradient(90deg, #ef4444 0%, #f43f5e 100%);
     }
 
     .member-dashboard .member-stat-icon {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 37px;
-        height: 37px;
+        width: 40px;
+        height: 40px;
         margin-bottom: 12px;
-        border-radius: 12px;
-        color: #54836a;
-        background: #edf5f0;
-        font-size: 17px;
+        border-radius: var(--k-radius-md);
+        color: var(--k-primary);
+        background: var(--k-primary-subtle);
+        border: 1px solid var(--k-primary-border);
+        font-size: 18px;
     }
 
     .member-dashboard .member-stat-card.credit .member-stat-icon {
-        color: #aa6c70;
-        background: #f9eff0;
+        color: var(--k-danger);
+        background: var(--k-danger-bg);
+        border: 1px solid var(--k-danger-border);
     }
 
     .member-dashboard .member-stat-label {
         margin-bottom: 6px;
-        color: #7b8494;
-        font-size: 10px;
+        color: var(--k-text-muted);
+        font-size: 11px;
         font-weight: 700;
-        letter-spacing: .06em;
+        letter-spacing: .05em;
         text-transform: uppercase;
     }
 
     .member-dashboard .member-stat-value {
         margin: 0;
-        color: #344054;
-        font-size: 18px;
-        font-weight: 700;
+        color: var(--k-text-main);
+        font-size: 19px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
         overflow-wrap: anywhere;
     }
 
     .member-dashboard .member-section-title {
         display: flex;
         align-items: center;
-        margin: 7px 0 15px;
-        color: #667085;
+        margin: 8px 0 16px;
+        color: var(--k-text-muted);
         font-size: 11px;
-        font-weight: 700;
+        font-weight: 800;
         letter-spacing: .08em;
         text-transform: uppercase;
     }
@@ -215,8 +225,8 @@
     .member-dashboard .member-section-title:after {
         flex: 1;
         height: 1px;
-        margin-left: 12px;
-        background: #e9edf3;
+        margin-left: 14px;
+        background: var(--k-border);
         content: "";
     }
 
@@ -228,21 +238,21 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 20px 22px 15px;
-        border-bottom: 1px solid #f0f2f6;
+        padding: 20px 24px 16px;
+        border-bottom: 1px solid var(--k-border-subtle);
     }
 
     .member-dashboard .activity-heading h5 {
         margin: 0 0 4px;
-        color: #394458;
+        color: var(--k-text-main);
         font-size: 15px;
         font-weight: 700;
     }
 
     .member-dashboard .activity-heading p {
         margin: 0;
-        color: #8a93a2;
-        font-size: 12px;
+        color: var(--k-text-muted);
+        font-size: 12.5px;
     }
 
     .member-dashboard .member-activity-table {
@@ -250,87 +260,90 @@
     }
 
     .member-dashboard .member-activity-table th {
-        padding: 12px 16px;
+        padding: 12px 18px;
         border-top: 0;
-        color: #858e9d;
-        background: #fafbfc;
-        font-size: 10px;
+        color: var(--k-text-muted);
+        background: var(--k-surface-alt);
+        font-size: 11px;
         font-weight: 700;
-        letter-spacing: .04em;
+        letter-spacing: .05em;
         text-transform: uppercase;
         white-space: nowrap;
     }
 
     .member-dashboard .member-activity-table td {
-        padding: 13px 16px;
+        padding: 13px 18px;
         vertical-align: middle;
-        color: #596477;
-        font-size: 12px;
+        color: var(--k-text-body);
+        font-size: 12.5px;
+        border-bottom: 1px solid var(--k-border-subtle);
     }
 
     .member-dashboard .member-activity-table tbody tr:hover {
-        background: #f8f9fc;
+        background: #f8fafc;
     }
 
     .member-dashboard .activity-category {
-        color: #465166;
+        color: var(--k-text-main);
         font-weight: 600;
     }
 
     .member-dashboard .activity-direction {
         display: inline-block;
-        min-width: 58px;
-        padding: 4px 8px;
-        border-radius: 14px;
+        min-width: 65px;
+        padding: 4px 10px;
+        border-radius: var(--k-radius-full);
         text-align: center;
-        font-size: 10px;
+        font-size: 10.5px;
         font-weight: 700;
     }
 
     .member-dashboard .activity-direction.debit {
-        color: #54836a;
-        background: #edf5f0;
+        color: var(--k-success-text);
+        background: var(--k-success-bg);
+        border: 1px solid var(--k-success-border);
     }
 
     .member-dashboard .activity-direction.credit {
-        color: #aa6c70;
-        background: #f9eff0;
+        color: var(--k-danger-text);
+        background: var(--k-danger-bg);
+        border: 1px solid var(--k-danger-border);
     }
 
     .member-dashboard .member-empty-state {
-        padding: 44px 20px;
+        padding: 48px 24px;
         text-align: center;
     }
 
     .member-dashboard .member-empty-state i {
         display: block;
-        margin-bottom: 10px;
-        color: #aab3c2;
-        font-size: 30px;
+        margin-bottom: 12px;
+        color: var(--k-text-subtle);
+        font-size: 32px;
     }
 
     .member-dashboard .member-empty-state h5 {
         margin-bottom: 6px;
-        color: #4b566b;
-        font-size: 14px;
+        color: var(--k-text-main);
+        font-size: 15px;
         font-weight: 700;
     }
 
     .member-dashboard .member-empty-state p {
         margin: 0;
-        color: #8992a1;
-        font-size: 12px;
+        color: var(--k-text-muted);
+        font-size: 12.5px;
     }
 
     @media (max-width: 767.98px) {
         .member-dashboard .member-welcome {
             align-items: flex-start;
             flex-direction: column;
-            padding: 21px;
+            padding: 20px;
         }
 
         .member-dashboard .welcome-period {
-            margin-top: 15px;
+            margin-top: 14px;
         }
 
         .member-dashboard .member-status {
@@ -339,8 +352,8 @@
 
         .member-dashboard .member-activity-table th,
         .member-dashboard .member-activity-table td {
-            padding-right: 10px;
-            padding-left: 10px;
+            padding-right: 12px;
+            padding-left: 12px;
         }
     }
 </style>

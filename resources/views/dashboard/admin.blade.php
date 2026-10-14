@@ -3,43 +3,40 @@
 <style>
     .admin-dashboard {
         padding-bottom: 24px;
-        color: #465166;
+        color: var(--k-text-body);
     }
 
     .admin-dashboard .dashboard-heading {
         position: relative;
         overflow: hidden;
-        padding: 26px 30px;
-        border: 1px solid #e5eaf3;
-        border-radius: 12px;
-        color: #344054;
-        background: linear-gradient(115deg, #fff 0%, #f5f7fc 66%, #eef2fa 100%);
-        box-shadow: 0 8px 24px rgba(35, 47, 74, .055);
+        padding: 26px 32px;
+        border: 1px solid var(--k-border);
+        border-left: 5px solid var(--k-primary);
+        border-radius: var(--k-radius-lg);
+        color: var(--k-text-main);
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 55%, #f0fdfa 100%);
+        box-shadow: var(--k-shadow-sm);
     }
 
     .admin-dashboard .dashboard-heading:after {
         position: absolute;
         top: -80px;
-        right: 16%;
-        width: 230px;
-        height: 230px;
-        border: 1px solid rgba(106, 127, 177, .11);
+        right: 12%;
+        width: 240px;
+        height: 240px;
+        border: 1px solid rgba(15, 118, 110, 0.08);
         border-radius: 50%;
-        box-shadow: 0 0 0 24px rgba(106, 127, 177, .035), 0 0 0 50px rgba(106, 127, 177, .025);
+        box-shadow: 0 0 0 24px rgba(15, 118, 110, 0.02), 0 0 0 54px rgba(15, 118, 110, 0.015);
         content: "";
         pointer-events: none;
     }
 
-    .admin-dashboard .dashboard-heading h4,
-    .admin-dashboard .dashboard-heading .breadcrumb-item,
-    .admin-dashboard .dashboard-heading .breadcrumb-item a {
-        color: #465166;
-    }
-
     .admin-dashboard .dashboard-heading h4 {
-        margin-bottom: 5px;
-        font-size: 21px;
-        font-weight: 700;
+        margin: 0 0 4px;
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--k-text-main);
+        letter-spacing: -0.02em;
     }
 
     .admin-dashboard .dashboard-heading .float-left,
@@ -50,46 +47,51 @@
 
     .admin-dashboard .dashboard-heading .breadcrumb {
         background: transparent;
-        margin-bottom: 7px;
+        margin-bottom: 6px;
         padding: 0;
+        justify-content: flex-end;
     }
 
     .admin-dashboard .period-caption {
         display: inline-flex;
         align-items: center;
-        padding: 6px 11px;
-        border: 1px solid #e5e9f1;
-        border-radius: 20px;
-        color: #68748a;
-        background: rgba(255, 255, 255, .72);
-        font-size: 11px;
+        padding: 6px 14px;
+        border: 1px solid var(--k-border);
+        border-radius: var(--k-radius-full);
+        color: var(--k-primary);
+        background: rgba(255, 255, 255, 0.85);
+        font-size: 11.5px;
+        font-weight: 600;
+        box-shadow: var(--k-shadow-xs);
     }
 
     .admin-dashboard .dashboard-subtitle {
-        color: #7d8798;
+        color: var(--k-text-muted);
+        font-size: 13px;
     }
 
     .admin-dashboard .dashboard-card,
     .admin-dashboard .dashboard-panel {
         height: calc(100% - 22px);
-        border: 1px solid #e9edf3;
-        border-radius: 11px;
-        box-shadow: 0 4px 14px rgba(35, 47, 74, .04);
-        transition: box-shadow .2s ease, transform .2s ease;
+        border: 1px solid var(--k-border);
+        border-radius: var(--k-radius-lg);
+        box-shadow: var(--k-shadow-xs);
+        transition: box-shadow .2s ease, transform .2s ease, border-color .2s ease;
     }
 
     .admin-dashboard .dashboard-card:hover,
     .admin-dashboard .dashboard-panel:hover {
         transform: translateY(-2px);
-        box-shadow: 0 9px 22px rgba(35, 47, 74, .075);
+        box-shadow: var(--k-shadow-md);
+        border-color: #cbd5e1;
     }
 
     .admin-dashboard .dashboard-card {
         position: relative;
         overflow: hidden;
-        min-height: 178px;
-        padding: 21px 22px;
-        background: #fff;
+        min-height: 165px;
+        padding: 22px;
+        background: #ffffff;
     }
 
     .admin-dashboard .dashboard-card:before {
@@ -97,31 +99,31 @@
         top: 0;
         right: 0;
         left: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #a7b5d4, #e5eaf4);
+        height: 3.5px;
+        background: var(--k-primary-gradient);
         content: "";
     }
 
     .admin-dashboard .dashboard-card.credit-card:before {
-        background: linear-gradient(90deg, #d5b2b6, #f1e5e7);
+        background: linear-gradient(90deg, #ef4444 0%, #f43f5e 100%);
     }
 
     .admin-dashboard .dashboard-section-title {
         display: flex;
         align-items: center;
-        margin: 2px 0 14px;
-        color: #667085;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: .06em;
+        margin: 6px 0 16px;
+        color: var(--k-text-muted);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: .08em;
         text-transform: uppercase;
     }
 
     .admin-dashboard .dashboard-section-title:after {
         flex: 1;
         height: 1px;
-        margin-left: 12px;
-        background: #e9edf3;
+        margin-left: 14px;
+        background: var(--k-border);
         content: "";
     }
 
@@ -129,51 +131,54 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 39px;
-        height: 39px;
-        margin-bottom: 13px;
-        border: 1px solid rgba(84, 131, 106, .06);
-        border-radius: 12px;
-        font-size: 17px;
+        width: 42px;
+        height: 42px;
+        margin-bottom: 14px;
+        border-radius: var(--k-radius-md);
+        font-size: 18px;
     }
 
     .admin-dashboard .dashboard-card-icon.debit {
-        color: #54836a;
-        background: #edf5f0;
+        color: var(--k-primary);
+        background: var(--k-primary-subtle);
+        border: 1px solid var(--k-primary-border);
     }
 
     .admin-dashboard .dashboard-card-icon.credit {
-        color: #aa6c70;
-        background: #f9eff0;
+        color: var(--k-danger);
+        background: var(--k-danger-bg);
+        border: 1px solid var(--k-danger-border);
     }
 
     .admin-dashboard .dashboard-card-label {
-        margin-bottom: 7px;
-        color: #7b8494;
+        margin-bottom: 6px;
+        color: var(--k-text-muted);
         font-size: 11px;
-        font-weight: 600;
-        letter-spacing: .055em;
+        font-weight: 700;
+        letter-spacing: .05em;
         text-transform: uppercase;
     }
 
     .admin-dashboard .dashboard-card-value {
         margin-bottom: 4px;
-        color: #344054;
-        font-size: 19px;
-        font-weight: 700;
+        color: var(--k-text-main);
+        font-size: 20px;
+        font-weight: 800;
+        letter-spacing: -0.02em;
         overflow-wrap: anywhere;
     }
 
     .admin-dashboard .dashboard-card-note {
         margin: 0;
-        color: #929aaa;
-        font-size: 12px;
+        color: var(--k-text-subtle);
+        font-size: 11.5px;
+        font-weight: 500;
     }
 
     .admin-dashboard .dashboard-panel {
-        margin-bottom: 20px;
-        padding: 23px 25px;
-        background: #fff;
+        margin-bottom: 22px;
+        padding: 24px;
+        background: #ffffff;
     }
 
     .admin-dashboard .dashboard-panel-heading {
@@ -181,61 +186,67 @@
         align-items: flex-start;
         justify-content: space-between;
         margin-bottom: 18px;
-        padding-bottom: 15px;
-        border-bottom: 1px solid #f0f2f6;
+        padding-bottom: 16px;
+        border-bottom: 1px solid var(--k-border-subtle);
     }
 
     .admin-dashboard .dashboard-panel-heading h5 {
         margin-bottom: 4px;
-        color: #394458;
+        color: var(--k-text-main);
         font-size: 15px;
-        font-weight: 650;
+        font-weight: 700;
     }
 
     .admin-dashboard .dashboard-panel-heading p {
         margin: 0;
-        color: #8a93a2;
-        font-size: 12px;
+        color: var(--k-text-muted);
+        font-size: 12.5px;
     }
 
     .admin-dashboard .activity-table th {
         border-top: 0;
-        color: #858e9d;
-        font-size: 10px;
-        font-weight: 600;
-        letter-spacing: .04em;
+        color: var(--k-text-muted);
+        background: var(--k-surface-alt);
+        font-size: 10.5px;
+        font-weight: 700;
+        letter-spacing: .05em;
         text-transform: uppercase;
         white-space: nowrap;
+        padding: 12px 14px;
     }
 
     .admin-dashboard .activity-table td {
         vertical-align: middle;
-        color: #596477;
-        font-size: 12px;
+        color: var(--k-text-body);
+        font-size: 12.5px;
+        padding: 12px 14px;
+        border-bottom: 1px solid var(--k-border-subtle);
     }
 
     .admin-dashboard .activity-table tbody tr:hover {
-        background-color: #f8f9fc;
+        background-color: #f8fafc;
     }
 
     .admin-dashboard .activity-badge {
         display: inline-block;
-        min-width: 62px;
-        padding: 4px 9px;
-        border-radius: 16px;
+        min-width: 68px;
+        padding: 4px 10px;
+        border-radius: var(--k-radius-full);
         text-align: center;
         font-size: 11px;
-        font-weight: 600;
+        font-weight: 700;
     }
 
     .admin-dashboard .activity-badge.debit {
-        color: #54836a;
-        background: #edf5f0;
+        color: var(--k-success-text);
+        background: var(--k-success-bg);
+        border: 1px solid var(--k-success-border);
     }
 
     .admin-dashboard .activity-badge.credit {
-        color: #aa6c70;
-        background: #f9eff0;
+        color: var(--k-danger-text);
+        background: var(--k-danger-bg);
+        border: 1px solid var(--k-danger-border);
     }
 
     .admin-dashboard .dashboard-chart {
@@ -259,15 +270,15 @@
         height: calc(100% - 20px);
         min-height: 470px;
         padding: 24px;
-        border-color: #e7ebf2;
-        border-radius: 14px;
-        background: linear-gradient(145deg, #fff 0%, #fdfdfe 100%);
-        box-shadow: 0 6px 20px rgba(35, 47, 74, .045);
+        border: 1px solid var(--k-border);
+        border-radius: var(--k-radius-lg);
+        background: #ffffff;
+        box-shadow: var(--k-shadow-xs);
     }
 
     .admin-dashboard .chart-panel:hover {
         transform: translateY(-2px);
-        box-shadow: 0 11px 26px rgba(35, 47, 74, .075);
+        box-shadow: var(--k-shadow-md);
     }
 
     .admin-dashboard .chart-panel .dashboard-panel-heading {
@@ -284,23 +295,23 @@
 
     .admin-dashboard .chart-heading-icon {
         display: inline-flex;
-        flex: 0 0 38px;
+        flex: 0 0 40px;
         align-items: center;
         justify-content: center;
-        width: 38px;
-        height: 38px;
-        margin-right: 12px;
-        border: 1px solid #e7eee9;
-        border-radius: 12px;
-        color: #64836f;
-        background: #f0f5f1;
-        font-size: 17px;
+        width: 40px;
+        height: 40px;
+        margin-right: 14px;
+        border: 1px solid var(--k-primary-border);
+        border-radius: var(--k-radius-md);
+        color: var(--k-primary);
+        background: var(--k-primary-subtle);
+        font-size: 18px;
     }
 
     .admin-dashboard .chart-heading-icon.members {
-        border-color: #e9eaf2;
-        color: #7882a0;
-        background: #f2f3f8;
+        border-color: #bae6fd;
+        color: var(--k-info);
+        background: var(--k-info-bg);
     }
 
     .admin-dashboard .chart-panel .dashboard-chart {
@@ -312,97 +323,76 @@
 
     .admin-dashboard .chart-total {
         height: 100%;
-        padding: 12px 14px;
-        border: 1px solid #eff1f5;
-        border-radius: 10px;
-        background: linear-gradient(135deg, #fbfcfd, #f8f9fb);
+        padding: 12px 16px;
+        border: 1px solid var(--k-border);
+        border-radius: var(--k-radius-md);
+        background: var(--k-surface-alt);
     }
 
     .admin-dashboard .chart-total-label {
         display: block;
         margin-bottom: 4px;
-        color: #8992a1;
-        font-size: 10px;
+        color: var(--k-text-muted);
+        font-size: 10.5px;
         font-weight: 700;
         letter-spacing: .05em;
         text-transform: uppercase;
     }
 
     .admin-dashboard .chart-total-value {
-        color: #455168;
-        font-size: 15px;
-        font-weight: 700;
+        color: var(--k-text-main);
+        font-size: 16px;
+        font-weight: 800;
     }
 
     .admin-dashboard .chart-total.debit .chart-total-value {
-        color: #54836a;
+        color: var(--k-primary);
     }
 
     .admin-dashboard .chart-total.credit .chart-total-value {
-        color: #aa6c70;
+        color: var(--k-danger);
     }
 
     .admin-dashboard .activity-table {
         margin-bottom: 0;
     }
 
-    .admin-dashboard .activity-table thead th {
-        padding-top: 12px;
-        padding-bottom: 12px;
-        background: #fafbfc;
-    }
-
-    .admin-dashboard .activity-table tbody td {
-        padding-top: 13px;
-        padding-bottom: 13px;
-    }
-
     .admin-dashboard .badge-light {
-        border: 1px solid #e8ebf1;
-        border-radius: 14px;
-        color: #7b8494;
-        background: #f7f8fb;
-        font-size: 10px;
+        background: var(--k-surface-alt);
+        color: var(--k-text-muted);
+        border: 1px solid var(--k-border);
         font-weight: 600;
+        padding: 4px 8px;
     }
 
     .admin-dashboard .text-success {
-        color: #54836a !important;
+        color: var(--k-primary) !important;
     }
 
     .admin-dashboard .text-danger {
-        color: #aa6c70 !important;
+        color: var(--k-danger) !important;
     }
 
     @media (max-width: 767.98px) {
-        .admin-dashboard .dashboard-heading,
-        .admin-dashboard .dashboard-panel,
-        .admin-dashboard .dashboard-card {
-            padding: 18px;
-        }
-
-        .admin-dashboard .dashboard-heading:after {
-            right: -120px;
-        }
-
-        .admin-dashboard .dashboard-heading .float-left,
-        .admin-dashboard .dashboard-heading .float-right {
-            float: none !important;
+        .admin-dashboard .dashboard-heading {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 20px;
         }
 
         .admin-dashboard .dashboard-heading .float-right {
             margin-top: 14px;
+            align-self: flex-start;
         }
 
-        .admin-dashboard .dashboard-chart {
-            height: 260px;
+        .admin-dashboard .dashboard-heading .breadcrumb {
+            justify-content: flex-start;
         }
 
         .admin-dashboard .chart-panel {
-            min-height: 430px;
-            padding: 18px;
+            min-height: 400px;
+            padding: 16px;
         }
-
     }
 </style>
 @endsection
