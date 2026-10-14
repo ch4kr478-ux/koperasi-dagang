@@ -14,7 +14,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
-use Money;
 use Tanggal;
 
 class PengajuanPinjamanKreditController extends Controller
@@ -74,7 +73,7 @@ class PengajuanPinjamanKreditController extends Controller
         abort_unless($user->hasMemberRole() && $user->can('create-pengajuan-pinjaman-kredit'), 403);
 
         $validated = $request->validate([
-            'nominal' => 'required|numeric|min:1|max:9999999999',
+            'nominal' => 'required|integer|min:1|max:9999999999',
             'lama_cicilan' => 'required|integer|min:1',
             'keterangan' => 'nullable|string|max:2000',
         ]);
@@ -183,7 +182,7 @@ class PengajuanPinjamanKreditController extends Controller
             $transaksiBiaya = new TransaksiHarianBiaya();
             $transaksiBiaya->transaksi_harian_id = $transaksiHarian->id;
             $transaksiBiaya->biaya_id = '8';
-            $transaksiBiaya->nominal = Money::rupiahToString((string) $application->nominal);
+            $transaksiBiaya->nominal = $application->nominal;
             $transaksiBiaya->save();
 
             $transaksiPinjaman = new TransaksiPinjaman();
