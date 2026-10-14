@@ -33,11 +33,15 @@ class HomeController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $roleNames = $user->roles->pluck('name')
+            ->map(function ($roleName) {
+                return strtolower(trim($roleName));
+            });
         $periode = Periode::select()->where('status', 1)->first();
         $anggota_aktif = Anggota::select()->where('status', 1)->count();
         $anggota_disable = Anggota::select()->where('status', 0)->count();
         $status_anggota = [$anggota_aktif, $anggota_disable];
-        if($user->roles->pluck( 'name' )->contains( 'admin' ) || $user->roles->pluck( 'name' )->contains( 'ketua') || $user->roles->pluck( 'name' )->contains( 'operator' ))
+        if ($roleNames->intersect(['admin', 'ketua', 'ketua koperasi', 'operator'])->isNotEmpty())
         {
             if (!$periode) {
                 return redirect()->route('periode.index')->with('flash_notification', [
@@ -201,7 +205,7 @@ class HomeController extends Controller
                     'debet_pinjaman', 'bunga_pinjaman', 'kredit_pinjaman', 'transaksi_harian', 'activity_log', 'saldo_kredit', 'saldo_debit', 'status_anggota',
                 'months', 'debitAll', 'kreditAll', 'total_debet_semua', 'total_kredit_semua', 'jumlah_debet_semua', 'jumlah_kredit_semua', 'arus_transaksi'));
         }
-        elseif($user->roles->pluck( 'name' )->contains( 'member' ))
+        elseif ($user->hasMemberRole())
         {
             return view('dashboard.member');
         }else {
