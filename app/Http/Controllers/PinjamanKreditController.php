@@ -29,7 +29,7 @@ class PinjamanKreditController extends Controller
     {
         //
         $user = \Auth::user();
-        $isMember = $user->roles->pluck('name')->contains('member');
+        $isMember = $user->hasMemberRole();
         if ($user->can('manage-kredit-pinjaman') || $isMember) {
             # code...
             if ($request->ajax()) {

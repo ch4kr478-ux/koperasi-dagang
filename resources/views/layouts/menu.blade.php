@@ -35,7 +35,7 @@
                     </a>
                 </li>
                 @endpermission
-                @if(Auth::user()->can('manage-debet-simpanan') || Auth::user()->can('manage-kredit-simpanan') || Auth::user()->can('manage-debet-pinjaman') || Auth::user()->can('manage-kredit-pinjaman') || Auth::user()->can('manage-debet-divisi') || Auth::user()->can('manage-kredit-divisi') || Auth::user()->can('manage-copy-saldo') || Auth::user()->hasRole('member'))
+                @if(Auth::user()->can('manage-debet-simpanan') || Auth::user()->can('manage-kredit-simpanan') || Auth::user()->can('manage-debet-pinjaman') || Auth::user()->can('manage-kredit-pinjaman') || Auth::user()->can('manage-debet-divisi') || Auth::user()->can('manage-kredit-divisi') || Auth::user()->can('manage-copy-saldo') || Auth::user()->hasMemberRole())
                 <li class="menu-title">Transaksi</li>
                 @endif
                 @permission('manage-copy-saldo')
@@ -68,7 +68,7 @@
                     </ul>
                 </li>
                 @endpermission
-                @if(Auth::user()->can('manage-debet-pinjaman') || Auth::user()->can('manage-kredit-pinjaman') || Auth::user()->can('pinjaman-debet-create') || Auth::user()->hasRole('member'))
+                @if(Auth::user()->can('manage-debet-pinjaman') || Auth::user()->can('manage-kredit-pinjaman') || Auth::user()->can('pinjaman-debet-create') || Auth::user()->hasMemberRole())
                 <li class="{{ set_active(['pinjaman-debet.index', 'pinjaman-debet.create', 'pinjaman-debet.edit', 'pinjaman-debet.upload',
                 'pinjaman-kredit.index', 'pinjaman-kredit.create', 'pinjaman-kredit.edit', 'pinjaman-kredit.upload'])}}">
                     <a href="javascript: void(0);" class="{{ set_active(['pinjaman-debet.index', 'pinjaman-debet.create', 'pinjaman-debet.edit', 'pinjaman-debet.upload',
@@ -90,14 +90,14 @@
                             </a>
                         </li>
                         @endpermission
-                        @if(Auth::user()->hasRole('member') && !Auth::user()->can('manage-debet-pinjaman'))
+                        @if(Auth::user()->hasMemberRole() && !Auth::user()->can('manage-debet-pinjaman'))
                         <li class="{{ set_active(['pinjaman-debet.index'])}}">
                             <a href="{{ route('pinjaman-debet.index') }}" class="{{ set_active(['pinjaman-debet.index'])}}">
                                 Debet
                             </a>
                         </li>
                         @endif
-                        @if(Auth::user()->hasRole('member') && !Auth::user()->can('manage-kredit-pinjaman'))
+                        @if(Auth::user()->hasMemberRole() && !Auth::user()->can('manage-kredit-pinjaman'))
                         <li class="{{ set_active(['pinjaman-kredit.index'])}}">
                             <a href="{{ route('pinjaman-kredit.index') }}" class="{{ set_active(['pinjaman-kredit.index'])}}">
                                 Kredit
