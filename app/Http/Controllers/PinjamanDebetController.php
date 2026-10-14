@@ -28,7 +28,9 @@ class PinjamanDebetController extends Controller
     public function index(Request $request)
     {
         //
-        if (\Auth::user()->can('manage-debet-pinjaman')) {
+        $user = \Auth::user();
+        $isMember = $user->hasMemberRole();
+        if ($user->can('manage-debet-pinjaman') || $isMember) {
             # code...
             if ($request->ajax()) {
                 $transaksiHarian = TransaksiHarian::with([
@@ -38,6 +40,9 @@ class PinjamanDebetController extends Controller
                 ])
                     ->where('divisi_id', '2')
                     ->where('jenis_transaksi', '1');
+                if ($isMember) {
+                    $transaksiHarian->forMember($user);
+                }
                 return DataTables::of($transaksiHarian)
                     ->editColumn('tgl', function ($transaksiHarian) {
                         return Tanggal::tanggal_id($transaksiHarian->tgl);
@@ -78,7 +83,7 @@ class PinjamanDebetController extends Controller
                     ->rawColumns(['jenis_pembayaran', 'jenis_transaksi', 'action', 'is_close'])
                     ->make(true);
             }
-            return view('pinjaman-debet.index');
+            return view('pinjaman-debet.index', compact('isMember'));
         } else {
             # code...
             return redirect()->back()->with('error', __('Permission denied.'));

@@ -27,7 +27,9 @@ class SimpananKreditController extends Controller
     public function index(Request $request)
     {
         //
-        if (\Auth::user()->can('manage-kredit-simpanan')) {
+        $user = \Auth::user();
+        $isMember = $user->hasMemberRole();
+        if ($user->can('manage-kredit-simpanan') || $isMember) {
             # code...
             if ($request->ajax()) {
                 $transaksiHarian = TransaksiHarian::with([
@@ -37,6 +39,9 @@ class SimpananKreditController extends Controller
                 ])
                     ->where('divisi_id', '1')
                     ->where('jenis_transaksi', '2');
+                if ($isMember) {
+                    $transaksiHarian->forMember($user);
+                }
                 return DataTables::of($transaksiHarian)
                     ->editColumn('tgl', function ($transaksiHarian) {
                         return Tanggal::tanggal_id($transaksiHarian->tgl);
@@ -74,7 +79,7 @@ class SimpananKreditController extends Controller
                     ->rawColumns(['jenis_pembayaran', 'jenis_transaksi', 'action', 'is_close'])
                     ->make(true);
             }
-            return view('simpanan-kredit.index');
+            return view('simpanan-kredit.index', compact('isMember'));
         } else {
             # code...
             return redirect()->back()->with('error', __('Permission denied.'));

@@ -17,6 +17,19 @@ class TransaksiHarian extends Model
         'is_close'
     ];
 
+    public function scopeForMember($query, $user)
+    {
+        return $query->whereIn('transaksi_harians.id', function ($query) use ($user) {
+            $query->select('transaksi_harian_id')
+                ->from('transaksi_harian_anggotas')
+                ->whereIn('anggota_id', function ($query) use ($user) {
+                    $query->select('anggota_id')
+                        ->from('user_anggotas')
+                        ->where('user_id', $user->id);
+                });
+        });
+    }
+
     public function divisi()
     {
         return $this->belongsTo('App\Divisi');
