@@ -1015,6 +1015,284 @@ label {
 }
 
 /* ==========================================================================
+   CORPORATE FORM WIZARD (JQUERY.STEPS) & SELECT2 / DATEPICKER OVERRIDES
+   ========================================================================== */
+
+/* Wizard Container */
+.wizard {
+    width: 100%;
+}
+
+.wizard > .steps {
+    margin-bottom: 24px;
+}
+
+.wizard > .steps > ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.wizard > .steps > ul > li {
+    flex: 1 1 200px;
+    float: none !important;
+    width: auto !important;
+    margin: 0;
+}
+
+.wizard > .steps a,
+.wizard > .steps a:hover,
+.wizard > .steps a:active {
+    display: flex !important;
+    align-items: center;
+    gap: 12px;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 14px 18px !important;
+    background: #ffffff !important;
+    border: 1.5px solid var(--k-border) !important;
+    border-radius: var(--k-radius-lg) !important;
+    color: var(--k-text-muted) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: all 0.2s ease !important;
+    box-shadow: var(--k-shadow-xs);
+}
+
+.wizard > .steps a .number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--k-surface-alt);
+    color: var(--k-text-muted);
+    font-size: 12px;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+/* Wizard Active Step */
+.wizard > .steps .current a,
+.wizard > .steps .current a:hover,
+.wizard > .steps .current a:active {
+    background: var(--k-primary-gradient) !important;
+    border-color: transparent !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(15, 118, 110, 0.28) !important;
+}
+
+.wizard > .steps .current a .number {
+    background: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+}
+
+/* Wizard Done Step */
+.wizard > .steps .done a,
+.wizard > .steps .done a:hover {
+    background: var(--k-success-bg) !important;
+    border-color: var(--k-success-border) !important;
+    color: var(--k-success-text) !important;
+}
+
+.wizard > .steps .done a .number {
+    background: var(--k-success);
+    color: #ffffff;
+}
+
+/* Wizard Content */
+.wizard > .content {
+    background: #ffffff;
+    border: 1px solid var(--k-border);
+    border-radius: var(--k-radius-lg);
+    padding: 26px 30px;
+    margin: 0 0 24px 0 !important;
+    min-height: 380px;
+    box-shadow: var(--k-shadow-xs);
+    position: relative;
+    overflow: hidden;
+}
+
+.wizard > .content > .body {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    padding: 0 !important;
+}
+
+/* Wizard Actions / Buttons */
+.wizard > .actions {
+    margin-top: 14px;
+    padding: 0;
+}
+
+.wizard > .actions ul {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.wizard > .actions ul > li {
+    float: none !important;
+    margin: 0;
+}
+
+.wizard > .actions a,
+.wizard > .actions a:hover,
+.wizard > .actions a:active {
+    display: inline-flex !important;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 9px 22px !important;
+    border-radius: var(--k-radius-md) !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    text-decoration: none !important;
+    transition: all 0.18s ease;
+}
+
+.wizard > .actions a[href="#previous"] {
+    background: #ffffff !important;
+    color: var(--k-text-body) !important;
+    border: 1.5px solid var(--k-border-strong) !important;
+    box-shadow: var(--k-shadow-xs);
+}
+
+.wizard > .actions a[href="#previous"]:hover {
+    background: var(--k-surface-alt) !important;
+    border-color: var(--k-text-subtle) !important;
+    transform: translateY(-1px);
+}
+
+.wizard > .actions a[href="#next"] {
+    background: var(--k-primary-gradient) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 3px 10px rgba(15, 118, 110, 0.25) !important;
+}
+
+.wizard > .actions a[href="#next"]:hover {
+    background: linear-gradient(135deg, #0d635c 0%, #094742 100%) !important;
+    box-shadow: 0 5px 14px rgba(15, 118, 110, 0.35) !important;
+    transform: translateY(-1px);
+}
+
+.wizard > .actions a[href="#finish"] {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 3px 10px rgba(16, 185, 129, 0.28) !important;
+}
+
+.wizard > .actions a[href="#finish"]:hover {
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+    box-shadow: 0 5px 14px rgba(16, 185, 129, 0.38) !important;
+    transform: translateY(-1px);
+}
+
+.wizard > .actions .disabled a,
+.wizard > .actions .disabled a:hover {
+    background: var(--k-surface-alt) !important;
+    color: var(--k-text-subtle) !important;
+    border: 1px solid var(--k-border) !important;
+    box-shadow: none !important;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Select2 Corporate Theme Overrides */
+.select2-container .select2-selection--single {
+    height: 42px !important;
+    border: 1.5px solid var(--k-border) !important;
+    border-radius: var(--k-radius-md) !important;
+    background-color: #ffffff !important;
+    transition: all 0.15s ease;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 40px !important;
+    padding-left: 14px !important;
+    color: var(--k-text-main) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 40px !important;
+    right: 10px !important;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--single,
+.select2-container--default.select2-container--open .select2-selection--single {
+    border-color: var(--k-primary) !important;
+    box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15) !important;
+    outline: none !important;
+}
+
+.select2-dropdown {
+    border: 1px solid var(--k-border) !important;
+    border-radius: var(--k-radius-md) !important;
+    box-shadow: var(--k-shadow-lg) !important;
+    font-size: 13px !important;
+    overflow: hidden;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    border: 1.5px solid var(--k-border) !important;
+    border-radius: var(--k-radius-sm) !important;
+    padding: 6px 12px !important;
+    font-size: 12.5px !important;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background: var(--k-primary-gradient) !important;
+    color: #ffffff !important;
+}
+
+/* Bootstrap Datepicker Corporate Theme Overrides */
+.datepicker {
+    border: 1px solid var(--k-border) !important;
+    border-radius: var(--k-radius-lg) !important;
+    box-shadow: var(--k-shadow-lg) !important;
+    padding: 12px !important;
+    font-family: inherit !important;
+    font-size: 12.5px !important;
+}
+
+.datepicker table tr td.active,
+.datepicker table tr td.active:hover,
+.datepicker table tr td.active.disabled,
+.datepicker table tr td.active.disabled:hover {
+    background: var(--k-primary-gradient) !important;
+    border-color: transparent !important;
+    color: #ffffff !important;
+    border-radius: 6px !important;
+}
+
+.datepicker table tr td.today,
+.datepicker table tr td.today:hover {
+    background: var(--k-primary-subtle) !important;
+    color: var(--k-primary) !important;
+    border-radius: 6px !important;
+}
+
+.datepicker th.datepicker-switch {
+    font-weight: 700 !important;
+    color: var(--k-text-main) !important;
+}
+
+/* ==========================================================================
    RESPONSIVENESS
    ========================================================================== */
 
@@ -1041,5 +1319,9 @@ label {
         padding: 12px;
         text-align: center;
         gap: 6px;
+    }
+
+    .wizard > .steps > ul {
+        flex-direction: column;
     }
 }
