@@ -3,6 +3,41 @@
 @php
     $logo=asset(Storage::url('logo/'));
 @endphp
+@section('style')
+@include('shared.index-page-style')
+<style>
+    .content-page .content .container-fluid .card.m-b-30 {
+        overflow: hidden;
+        border: 1px solid #e8ecf2;
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 5px 18px rgba(35, 47, 74, .04);
+    }
+
+    .content-page .content .container-fluid .card.m-b-30 .header-title {
+        color: #394458;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+    .content-page .content .container-fluid .card.m-b-30 .sub-title {
+        color: #8a93a2;
+        font-size: 12px;
+    }
+
+    .content-page .content .container-fluid .nav-pills .nav-link {
+        border-radius: 7px;
+        color: #68748a;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .content-page .content .container-fluid .nav-pills .nav-link.active {
+        color: #fff;
+        background: #718c7a;
+    }
+</style>
+@endsection
 @section('content')
 <div class="content">
     <div class="content">
