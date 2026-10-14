@@ -87,7 +87,7 @@
                         serverSide: true,
                         ajax: "{{ route('pinjaman-kredit.index') }}",
                         columns: [
-                            { data: 'nomor_urut', name: 'id' },
+                            { data: 'nomor_urut', name: 'id', orderable: false, searchable: false },
                             { data: 'nama_anggota.anggota.nama', name: 'nama_anggota.anggota.nama', orderable: false, searchable: false },
                             { data: 'tgl', name: 'tgl' },
                             { data: 'jenis_pembayaran', name: 'jenis_pembayaran' },
@@ -101,7 +101,7 @@
                             @endunless
                         ],
                         dom: '<"toolbar">frtip',
-                        order: [[ 0, "asc" ]],
+                        order: [],
                         scrollX: true
                     });
                     $("div.toolbar").html(`@unless($isMember)@permission('create-kredit-pinjaman')<a href="{{ route('pinjaman-kredit.create') }}" class="btn btn-gradient waves-light waves-effect w-md"><i class="fa fa-plus"></i> Tambah</a>@endpermission

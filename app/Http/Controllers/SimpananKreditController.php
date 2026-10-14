@@ -39,7 +39,8 @@ class SimpananKreditController extends Controller
                 ])
                     ->withDisplayNumber()
                     ->where('divisi_id', '1')
-                    ->where('jenis_transaksi', '2');
+                    ->where('jenis_transaksi', '2')
+                    ->orderBy('transaksi_harians.id', 'asc');
                 if ($isMember) {
                     $transaksiHarian->forMember($user);
                 }

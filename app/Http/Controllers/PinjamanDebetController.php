@@ -40,7 +40,8 @@ class PinjamanDebetController extends Controller
                 ])
                     ->withDisplayNumber()
                     ->where('divisi_id', '2')
-                    ->where('jenis_transaksi', '1');
+                    ->where('jenis_transaksi', '1')
+                    ->orderBy('transaksi_harians.id', 'asc');
                 if ($isMember) {
                     $transaksiHarian->forMember($user);
                 }
