@@ -100,6 +100,7 @@ class SimpananDebetController extends Controller
      */
     public function create()
     {
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         //
         if (\Auth::user()->can('create-debet-simpanan')) {
             # code...
@@ -118,6 +119,7 @@ class SimpananDebetController extends Controller
      */
     public function store(Request $request)
     {
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         //
         if (\Auth::user()->can('create-debet-simpanan')) {
             # code...
@@ -198,6 +200,7 @@ class SimpananDebetController extends Controller
      */
     public function edit($id)
     {
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         //
         if (\Auth::user()->can('edit-debet-simpanan')) {
             # code...
@@ -240,6 +243,7 @@ class SimpananDebetController extends Controller
      */
     public function update(Request $request, $id)
     {
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         //
         if (\Auth::user()->can('edit-debet-simpanan')) {
             # code...
@@ -295,6 +299,7 @@ class SimpananDebetController extends Controller
      */
     public function destroy($id)
     {
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         //
         if(\Auth::user()->can('delete-debet-simpanan'))
         {
@@ -314,6 +319,7 @@ class SimpananDebetController extends Controller
 
     public function upload()
     {
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         if (\Auth::user()->can('upload-debet-simpanan')) {
             # code...
             return view('simpanan-debet.upload');
@@ -325,6 +331,7 @@ class SimpananDebetController extends Controller
 
     public function doUpload(Request $request)
     {
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         $this->validate($request, [
             'file' => 'required'
         ]);
@@ -351,6 +358,7 @@ class SimpananDebetController extends Controller
 
     public function closeBook()
     {
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         $periode = Periode::where('status', '1')->first();
         $want_close = Periode::where('status', 2)->first();
         $anggota = Anggota::select()->where('status', 1)->get();

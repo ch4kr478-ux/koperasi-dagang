@@ -97,6 +97,7 @@ class PinjamanDebetController extends Controller
      */
     public function create()
     {
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         //
         if (\Auth::user()->can('create-debet-pinjaman')) {
             # code...
@@ -115,6 +116,7 @@ class PinjamanDebetController extends Controller
      */
     public function store(Request $request)
     {
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         //
         if (\Auth::user()->can('create-debet-pinjaman')) {
             # code...
@@ -184,6 +186,7 @@ class PinjamanDebetController extends Controller
      */
     public function edit($id)
     {
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         //
         if (\Auth::user()->can('edit-debet-pinjaman')) {
             # code...
@@ -220,6 +223,7 @@ class PinjamanDebetController extends Controller
      */
     public function update(Request $request, $id)
     {
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         //
         if (\Auth::user()->can('edit-debet-pinjaman')) {
             # code...
@@ -270,6 +274,7 @@ class PinjamanDebetController extends Controller
      */
     public function destroy($id)
     {
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         //
         TransaksiHarianAnggota::where('transaksi_harian_id', $id)->delete();
         TransaksiHarianBiaya::where('transaksi_harian_id', $id)->delete();
@@ -285,6 +290,7 @@ class PinjamanDebetController extends Controller
 
     public function upload()
     {
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         if (\Auth::user()->can('upload-debet-pinjaman')) {
             # code...
             return view('pinjaman-debet.upload');
@@ -296,6 +302,7 @@ class PinjamanDebetController extends Controller
 
     public function doUpload(Request $request)
     {
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         $this->validate($request, [
 			'file' => 'required'
 		]);
@@ -322,6 +329,7 @@ class PinjamanDebetController extends Controller
 
     public function closeBook()
     {
+        abort_unless(!\Auth::user()->hasMemberRole(), 403);
         $periode = Periode::where('status', '1')->first();
         $want_close = Periode::where('status', 2)->first();
         $anggota = Anggota::select()->where('status', 1)->get();
