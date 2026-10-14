@@ -1,81 +1,169 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
+@section('style')
+<style>
+    .welcome-portal {
+        width: 100%;
+        max-width: 940px;
+        margin: auto;
+    }
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    .welcome-portal-card {
+        display: grid;
+        grid-template-columns: minmax(280px, .9fr) minmax(340px, 1.1fr);
+        overflow: hidden;
+        border: 1px solid var(--k-border);
+        border-radius: var(--k-radius-xl);
+        background: var(--k-surface);
+        box-shadow: var(--k-shadow-xl);
+    }
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+    .welcome-portal-brand {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 390px;
+        padding: 38px;
+        color: #ffffff;
+        background: var(--k-navy-gradient);
+    }
 
-            .full-height {
-                height: 100vh;
-            }
+    .welcome-portal-brand img {
+        width: 58px;
+        height: 58px;
+        margin-bottom: 28px;
+        padding: 8px;
+        border: 1px solid rgba(255, 255, 255, .24);
+        border-radius: var(--k-radius-md);
+        background: rgba(255, 255, 255, .12);
+        object-fit: contain;
+    }
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+    .welcome-portal-brand small {
+        color: rgba(255, 255, 255, .7);
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+    }
 
-            .position-ref {
-                position: relative;
-            }
+    .welcome-portal-brand h1 {
+        margin: 10px 0;
+        color: #ffffff;
+        font-size: 26px;
+        font-weight: 800;
+        line-height: 1.3;
+    }
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+    .welcome-portal-brand p {
+        margin: 0;
+        color: rgba(255, 255, 255, .76);
+        font-size: 13px;
+        line-height: 1.7;
+    }
 
-            .content {
-                text-align: center;
-            }
+    .welcome-portal-copy {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 48px;
+    }
 
-            .title {
-                font-size: 84px;
-            }
+    .welcome-portal-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 16px;
+        padding: 5px 11px;
+        border: 1px solid var(--k-primary-border);
+        border-radius: var(--k-radius-full);
+        color: var(--k-primary);
+        background: var(--k-primary-light);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: .07em;
+        text-transform: uppercase;
+    }
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+    .welcome-portal-copy h2 {
+        margin: 0 0 10px;
+        color: var(--k-text-main);
+        font-size: 23px;
+        font-weight: 800;
+    }
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
+    .welcome-portal-copy p {
+        margin: 0 0 24px;
+        color: var(--k-text-muted);
+        font-size: 13px;
+        line-height: 1.7;
+    }
 
-            <div class="content">
-                <div class="title m-b-md">
-                    KOPKAR PRASETIAMULYA
-                </div>
+    .welcome-portal-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
 
-                <div class="links">
-                    <a href="{{ route('login') }}">ADMIN</a>
-                    <a href="">ANGGOTA</a>
-                </div>
+    @media (max-width: 767.98px) {
+        .welcome-portal-card {
+            grid-template-columns: 1fr;
+        }
+
+        .welcome-portal-brand {
+            min-height: 0;
+            padding: 28px;
+        }
+
+        .welcome-portal-brand img {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 20px;
+        }
+
+        .welcome-portal-brand h1 {
+            font-size: 22px;
+        }
+
+        .welcome-portal-copy {
+            padding: 30px 28px;
+        }
+    }
+</style>
+@endsection
+
+@section('content')
+<main class="welcome-portal">
+    <div class="welcome-portal-card">
+        <section class="welcome-portal-brand">
+            <div>
+                <img src="{{ asset('images/logo-kopkar.png') }}" alt="Logo Koperasi">
+                <small>Sistem Informasi Koperasi</small>
+                <h1>Koperasi Karyawan Prasetiya Mulya</h1>
+                <p>Portal terpadu untuk layanan dan pengelolaan koperasi yang aman, transparan, dan mudah diakses.</p>
             </div>
-        </div>
-    </body>
-</html>
+            <small>&copy; {{ date('Y') }} Koperasi Karyawan</small>
+        </section>
+
+        <section class="welcome-portal-copy">
+            <span class="welcome-portal-badge">
+                <i class="mdi mdi-shield-check" aria-hidden="true"></i>
+                Portal Koperasi Terpadu
+            </span>
+            <h2>Selamat datang</h2>
+            <p>Masuk ke portal untuk mengakses informasi anggota, transaksi simpan pinjam, dan layanan koperasi.</p>
+            <div class="welcome-portal-actions">
+                <a href="{{ route('login') }}" class="btn btn-primary">
+                    <i class="mdi mdi-login" aria-hidden="true"></i> Masuk ke Portal
+                </a>
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}" class="btn btn-outline-secondary">
+                        <i class="mdi mdi-account-plus-outline" aria-hidden="true"></i> Daftar Anggota
+                    </a>
+                @endif
+            </div>
+        </section>
+    </div>
+</main>
+@endsection
