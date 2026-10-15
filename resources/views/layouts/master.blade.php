@@ -175,6 +175,7 @@
         <script>
             if ($.fn.dataTable) {
                 $.extend(true, $.fn.dataTable.defaults, {
+                    order: [[0, 'asc']],
                     language: {
                         search: '',
                         searchPlaceholder: 'Cari...'

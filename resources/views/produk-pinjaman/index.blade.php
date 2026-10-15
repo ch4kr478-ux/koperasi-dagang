@@ -91,6 +91,7 @@
         $('#produk-pinjaman-table').DataTable({
             responsive: true,
             pageLength: 15,
+            order: [[0, 'asc']],
             dom: '<"toolbar">frtip',
             language: {
                 emptyTable: 'Belum ada produk pinjaman.',
