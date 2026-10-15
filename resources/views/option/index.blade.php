@@ -84,9 +84,7 @@
         <div class="col-12">
             <div class="page-title-box">
                 <div class="float-left">
-                    <h4 class="page-title">
-                        <i class="mdi mdi-cog-outline text-teal mr-1" aria-hidden="true"></i> Pengaturan Sistem
-                    </h4>
+                    <h4 class="page-title">Pengaturan Sistem</h4>
                     <small>Kelola logo, profil perusahaan, email, dan tautan media sosial.</small>
                 </div>
                 <div class="float-right">
@@ -94,6 +92,7 @@
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
                         <li class="breadcrumb-item active">Pengaturan</li>
                     </ol>
+                    <small class="text-danger">Tahun Buku : {{ periode()->open_date }} - {{ periode()->close_date }}</small>
                 </div>
             </div>
         </div>
