@@ -22,13 +22,7 @@
                     <li class="breadcrumb-item"><a href="#">Master Data</a></li>
                     <li class="breadcrumb-item active">Anggota</li>
                 </ol>
-                <span class="badge badge-soft-primary">
-                    <i class="mdi mdi-calendar-range mr-1" aria-hidden="true"></i>
-                    {{ $periodeAktif ? $periodeAktif->name : 'Belum ada periode aktif' }}
-                    @if($periodeAktif)
-                        ({{ \Carbon\Carbon::parse($periodeAktif->open_date)->format('d-m-Y') }} s/d {{ \Carbon\Carbon::parse($periodeAktif->close_date)->format('d-m-Y') }})
-                    @endif
-                </span>
+                <small class="text-danger">Tahun Buku : {{ periode()->open_date }} - {{ periode()->close_date }}</small>
             </div>
         </div>
     </div>
