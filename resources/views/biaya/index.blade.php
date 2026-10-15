@@ -15,14 +15,13 @@
                 <h4 class="page-title">Biaya </h4>
                 <small class="text-danger">Periode : {{ periode()->name }}</small>
             </div>
-            <div class="float-right">
+            <div class="float-right text-md-right">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Master Data</a></li>
-                <li class="breadcrumb-item active">Biaya</li>
+                    <li class="breadcrumb-item active">Biaya</li>
                 </ol>
                 <small class="text-danger">Tahun Buku : {{ periode()->open_date }} - {{ periode()->close_date }}</small>
             </div>
-            <div class="clearfix"></div>
         </div>
     </div>
 </div>
