@@ -15,14 +15,14 @@
                 <h4 class="page-title">Role </h4>
                 <small class="text-danger">Periode : {{ periode()->name }}</small>
             </div>
-            <div class="float-right">
+            <div class="clearfix"></div>
+            <div class="float-right text-md-right">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="#">Management</a></li>
-                <li class="breadcrumb-item active"><a href="{{route('permission.index')}}">Role</a></li>
+                    <li class="breadcrumb-item active"><a href="{{route('permission.index')}}">Role</a></li>
                 </ol>
                 <small class="text-danger">Tahun Buku : {{ periode()->open_date }} - {{ periode()->close_date }}</small>
             </div>
-            <div class="clearfix"></div>
         </div>
     </div>
 </div>

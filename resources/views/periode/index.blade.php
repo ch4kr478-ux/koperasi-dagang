@@ -11,7 +11,7 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
-            <div class="float-left">
+            <div class="float-left text-md-right">
                 <h4 class="page-title">Periode </h4>
             </div>
             <div class="float-right">
@@ -20,7 +20,6 @@
                     <li class="breadcrumb-item active">Periode</li>
                 </ol>
             </div>
-            <div class="clearfix"></div>
         </div>
     </div>
 </div>

@@ -1,102 +1,143 @@
 @extends('layouts.master')
 
 @php
-    $logo=asset(Storage::url('logo/'));
+    $logo = asset(Storage::url('logo/'));
 @endphp
 @section('style')
 @include('shared.index-page-style')
 <style>
-    .content-page .content .container-fluid .card.m-b-30 {
-        overflow: hidden;
-        border: 1px solid #e8ecf2;
-        border-radius: 12px;
-        background: #fff;
-        box-shadow: 0 5px 18px rgba(35, 47, 74, .04);
+    .option-settings .option-tabs {
+        gap: 8px;
     }
 
-    .content-page .content .container-fluid .card.m-b-30 .header-title {
-        color: #394458;
-        font-size: 15px;
+    .option-settings .option-tabs .nav-link {
+        min-height: 42px;
+        padding: 10px 16px;
+        border: 1px solid transparent;
+        border-radius: var(--k-radius-md);
+        color: var(--k-text-muted);
+        font-size: 12.5px;
+        font-weight: 700;
+        transition: color .18s ease, background-color .18s ease, border-color .18s ease;
+    }
+
+    .option-settings .option-tabs .nav-link:hover {
+        color: var(--k-primary);
+        background: var(--k-primary-light);
+    }
+
+    .option-settings .option-tabs .nav-link.active {
+        color: var(--k-primary);
+        background: var(--k-primary-subtle);
+        border-color: var(--k-primary-border);
+    }
+
+    .option-settings .option-tab-content {
+        padding: 20px 4px 4px;
+        border-top: 1px solid var(--k-border);
+    }
+
+    .option-settings .option-tab-content .card-body {
+        padding: 0;
+    }
+
+    .option-settings .option-tab-content .fileinput .thumbnail {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        max-width: 100%;
+        padding: 12px;
+        border: 1px dashed var(--k-border-strong);
+        border-radius: var(--k-radius-md);
+        background: var(--k-bg);
+    }
+
+    .option-settings .option-tab-content .fileinput .thumbnail img {
+        max-width: 100%;
+        max-height: 130px;
+        object-fit: contain;
+    }
+
+    .option-settings .option-tab-content h5 {
+        margin-bottom: 12px;
+        color: var(--k-text-main);
+        font-size: 13px;
         font-weight: 700;
     }
 
-    .content-page .content .container-fluid .card.m-b-30 .sub-title {
-        color: #8a93a2;
-        font-size: 12px;
-    }
+    @media (max-width: 575.98px) {
+        .option-settings .option-tabs {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
 
-    .content-page .content .container-fluid .nav-pills .nav-link {
-        border-radius: 7px;
-        color: #68748a;
-        font-size: 12px;
-        font-weight: 600;
-    }
-
-    .content-page .content .container-fluid .nav-pills .nav-link.active {
-        color: #fff;
-        background: #718c7a;
+        .option-settings .option-tabs .nav-link {
+            padding: 9px 8px;
+        }
     }
 </style>
 @endsection
 @section('content')
-<div class="content">
-    <div class="content">
-        <div class="container-fluid">
+
+<div class="option-settings">
+    <div class="row">
+        <div class="col-12">
             <div class="page-title-box">
-                <div class="row align-items-center">
-                    <div class="col-sm-6">
-                        <h4 class="page-title">Options</h4>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-right">
-                            <li class="breadcrumb-item"><a href="javascript:void(0);">Management</a></li>
-                            <li class="breadcrumb-item active">Options</li>
-                        </ol>
-                    </div>
-                </div> <!-- end row -->
+                <div class="float-left">
+                    <h4 class="page-title">
+                        <i class="mdi mdi-cog-outline text-teal mr-1" aria-hidden="true"></i> Pengaturan Sistem
+                    </h4>
+                    <small>Kelola logo, profil perusahaan, email, dan tautan media sosial.</small>
+                </div>
+                <div class="float-right">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
+                        <li class="breadcrumb-item active">Pengaturan</li>
+                    </ol>
+                </div>
             </div>
-            <!-- end page-title -->
+        </div>
+    </div>
 
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="card m-b-30">
-                        <div class="card-body">
+    <div class="row">
+        <div class="col-12">
+            <div class="card-box option-card">
+                <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
+                    <div>
+                        <h5 class="header-title mb-1">Konfigurasi Perusahaan</h5>
+                        <p class="text-muted mb-0">Sesuaikan informasi yang digunakan di dalam sistem.</p>
+                    </div>
+                </div>
 
-                            <h4 class="mt-0 header-title">Options</h4>
-                            <p class="sub-title">Silahkan Atur Sesuaikan Dengan Perusahaan Anda</p>
+                <ul class="nav nav-pills nav-justified option-tabs mb-3" role="tablist" aria-label="Kategori pengaturan">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="company-tab" data-toggle="tab" href="#company" role="tab" aria-controls="company" aria-selected="true">
+                            <span class="d-none d-md-block">Logo & Identitas</span><span class="d-block d-md-none"><i class="mdi mdi-image-multiple h5" aria-hidden="true"></i></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile-1" role="tab" aria-controls="profile-1" aria-selected="false">
+                            <span class="d-none d-md-block">Profil Perusahaan</span><span class="d-block d-md-none"><i class="mdi mdi-domain h5" aria-hidden="true"></i></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="email-tab" data-toggle="tab" href="#email-option" role="tab" aria-controls="email-option" aria-selected="false">
+                            <span class="d-none d-md-block">Konfigurasi Email</span><span class="d-block d-md-none"><i class="mdi mdi-email-outline h5" aria-hidden="true"></i></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="social-media-tab" data-toggle="tab" href="#social-media" role="tab" aria-controls="social-media" aria-selected="false">
+                            <span class="d-none d-md-block">Media Sosial</span><span class="d-block d-md-none"><i class="mdi mdi-share-variant h5" aria-hidden="true"></i></span>
+                        </a>
+                    </li>
+                </ul>
 
-                            <!-- Nav tabs -->
-                            <ul class="nav nav-pills nav-justified" role="tablist">
-                                <li class="nav-item waves-effect waves-light">
-                                    <a class="nav-link active" data-toggle="tab" href="#company" role="tab">
-                                        <span class="d-none d-md-block">Logo</span><span class="d-block d-md-none"><i class="mdi mdi-home-variant h5"></i></span>
-                                    </a>
-                                </li>
-                                <li class="nav-item waves-effect waves-light">
-                                    <a class="nav-link" data-toggle="tab" href="#profile-1" role="tab">
-                                        <span class="d-none d-md-block">Profil Perusahaan</span><span class="d-block d-md-none"><i class="mdi mdi-account h5"></i></span>
-                                    </a>
-                                </li>
-                                <li class="nav-item waves-effect waves-light">
-                                    <a class="nav-link" data-toggle="tab" href="#email-option" role="tab">
-                                        <span class="d-none d-md-block">Email Perusahaan</span><span class="d-block d-md-none"><i class="mdi mdi-account h5"></i></span>
-                                    </a>
-                                </li>
-                                <li class="nav-item waves-effect waves-light">
-                                    <a class="nav-link" data-toggle="tab" href="#social-media" role="tab">
-                                        <span class="d-none d-md-block">Sosial Media</span><span class="d-block d-md-none"><i class="mdi mdi-email h5"></i></span>
-                                    </a>
-                                </li>
-                            </ul>
+                <div class="tab-content option-tab-content">
+                    <div class="tab-pane active p-3" id="company" role="tabpanel" aria-labelledby="company-tab">
+                        @php($formModel = $option)
+                        <form method="post" action="{{ url('option') }}" enctype="multipart/form-data">
+                            @csrf
 
-                            <!-- Tab panes -->
-                            <div class="tab-content">
-                                <div class="tab-pane active p-3" id="company" role="tabpanel">
-                                    @php($formModel = $option)
-<form method="post" action="{{ url('option') }}" enctype="multipart/form-data">
-@csrf
-
-                                    <div class="card-body">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-lg-4">
@@ -182,17 +223,15 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
                                     <div class="text-right">
                                         <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save" aria-hidden="true"></i> {{ __('Simpan') }}</button>
                                     </div>
-                                    </form>
-                                </div>
-                                <div class="tab-pane p-3" id="profile-1" role="tabpanel">
-                                    <div class="row">
-                                        @php($formModel = $option)
-<form method="post" action="{{ route('company.option') }}">
-@csrf
+                        </form>
+                    </div>
+                    <div class="tab-pane p-3" id="profile-1" role="tabpanel" aria-labelledby="profile-tab">
+                        @php($formModel = $option)
+                        <form method="post" action="{{ route('company.option') }}">
+                            @csrf
 
                                         <div class="card-body">
                                             <div class="row">
@@ -264,14 +303,13 @@
                                         <div class="text-right">
                                             <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save" aria-hidden="true"></i> {{ __('Simpan') }}</button>
                                         </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="tab-pane p-3" id="email-option" role="tabpanel" aria-labelledby="contact-tab4">
-                                    <div class="email-option-wrap">
-                                        @php($formModel = null)
-<form method="post" action="{{ route('email.option') }}">
-@csrf
+                        </form>
+                    </div>
+                    <div class="tab-pane p-3" id="email-option" role="tabpanel" aria-labelledby="email-tab">
+                        <div class="email-option-wrap">
+                            @php($formModel = null)
+                            <form method="post" action="{{ route('email.option') }}">
+                                @csrf
 
                                         <div class="row">
                                             <div class="form-group col-md-4">
@@ -352,14 +390,13 @@
                                             <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save" aria-hidden="true"></i> {{ __('Simpan') }}</button>
                                         </div>
                                         @endpermission
-                                        </form>
-                                    </div>
-                                </div>
-                                <div class="tab-pane p-3" id="social-media" role="tabpanel">
-                                    <div class="row">
-                                        @php($formModel = $option)
-<form method="post" action="{{ route('social-media') }}">
-@csrf
+                            </form>
+                        </div>
+                    </div>
+                    <div class="tab-pane p-3" id="social-media" role="tabpanel" aria-labelledby="social-media-tab">
+                        @php($formModel = $option)
+                        <form method="post" action="{{ route('social-media') }}">
+                            @csrf
 
                                         <div class="card-body">
                                             <div class="row">
@@ -404,11 +441,7 @@
                                         <div class="text-right">
                                             <button type="submit" class="btn btn-primary"><i class="mdi mdi-content-save" aria-hidden="true"></i> {{ __('Simpan') }}</button>
                                         </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>

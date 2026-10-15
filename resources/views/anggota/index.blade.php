@@ -11,9 +11,7 @@
     <div class="col-12">
         <div class="page-title-box">
             <div class="float-left">
-                <h4 class="page-title">
-                    <i class="mdi mdi-account-multiple text-teal mr-1" aria-hidden="true"></i> Data Anggota
-                </h4>
+                <h4 class="page-title">Data Anggota</h4>
                 <small>Kelola informasi anggota dan status keanggotaan koperasi.</small>
             </div>
             <div class="float-right text-md-right">

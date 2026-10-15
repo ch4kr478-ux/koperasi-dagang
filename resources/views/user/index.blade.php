@@ -11,7 +11,7 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
-            <div class="float-left">
+            <div class="float-left text-md-right">
                 <h4 class="page-title">Pengguna</h4>
                 <small class="text-danger">Periode : {{ periode()->name }}</small>
             </div>
@@ -22,7 +22,6 @@
                 </ol>
                 <small class="text-danger">Tahun Buku : {{ periode()->open_date }} - {{ periode()->close_date }}</small>
             </div>
-            <div class="clearfix"></div>
         </div>
     </div>
 </div>
