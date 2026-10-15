@@ -44,7 +44,7 @@
             <table id="datatable-buttons" class="table table-striped table-bordered display nowrap" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th>ID</th>
+                        <th>{{ $isMember ? 'No' : 'ID' }}</th>
                         <th>Anggota</th>
                         <th>Tanggal</th>
                         <th>Jenis</th>
@@ -87,7 +87,7 @@
                         serverSide: true,
                         ajax: "{{ route('simpanan-kredit.index') }}",
                         columns: [
-                            { data: 'nomor_urut', name: 'id', searchable: false },
+                            { data: @json($isMember ? 'DT_RowIndex' : 'nomor_urut'), name: 'id', searchable: false, @if($isMember) orderable: false, @endif },
                             { data: 'nama_anggota.anggota.nama', name: 'nama_anggota.anggota.nama', orderable: false, searchable: false },
                             { data: 'tgl', name: 'tgl' },
                             { data: 'jenis_pembayaran', name: 'jenis_pembayaran' },

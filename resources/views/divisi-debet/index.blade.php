@@ -44,7 +44,7 @@
             <table id="datatable-buttons" class="table table-striped table-bordered display nowrap" cellspacing="0" width="100%">
                 <thead>
                     <tr>
-                        <th>#ID</th>
+                        <th>No</th>
                         <th>Tanggal</th>
                         <th>Jenis</th>
                         <th>Divisi</th>
@@ -84,7 +84,7 @@
                         serverSide: true,
                         ajax: "{{ route('divisi-debet.index') }}",
                         columns: [
-                            { data: 'id', name: 'id' },
+                            { data: 'DT_RowIndex', name: 'id', orderable: false, searchable: false },
                             { data: 'tgl', name: 'tgl' },
                             { data: 'jenis_pembayaran', name: 'jenis_pembayaran' },
                             { data: 'divisi.name', name: 'divisi.name' },
@@ -95,7 +95,7 @@
                             { data: 'action', name: 'action', orderable: false, searchable: false },
                         ],
                         dom: '<"toolbar">frtip',
-                        order: [[ 0, "asc" ]],
+                        order: [],
                         pageLength: 25
                     });
                     @permission('create-debet-divisi')

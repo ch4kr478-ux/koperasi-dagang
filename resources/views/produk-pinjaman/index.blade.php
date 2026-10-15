@@ -39,6 +39,7 @@
             <table id="produk-pinjaman-table" class="table table-striped table-bordered">
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Nama Produk</th>
                         <th>Jumlah Pinjaman</th>
                         <th>Keterangan</th>
@@ -50,6 +51,7 @@
                 <tbody>
                     @foreach($produkPinjaman as $produk)
                         <tr>
+                            <td>{{ $produk->id }}</td>
                             <td>{{ $produk->name }}</td>
                             <td>{{ $produk->nominal ? 'Rp. ' . number_format($produk->nominal, 0, ',', '.') : 'Belum diatur' }}</td>
                             <td>{{ $produk->description ?: '-' }}</td>
@@ -91,6 +93,9 @@
         $('#produk-pinjaman-table').DataTable({
             responsive: true,
             pageLength: 15,
+            columnDefs: [
+                { targets: 0, visible: false, searchable: false }
+            ],
             order: [[0, 'asc']],
             dom: '<"toolbar">frtip',
             language: {

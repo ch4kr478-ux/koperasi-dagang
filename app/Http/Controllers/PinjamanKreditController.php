@@ -51,6 +51,7 @@ class PinjamanKreditController extends Controller
                     $transaksiHarian->forMember($user);
                 }
                 return DataTables::of($transaksiHarian)
+                    ->addIndexColumn()
                     ->editColumn('tgl', function ($transaksiHarian) {
                         return Tanggal::tanggal_id($transaksiHarian->tgl);
                     })

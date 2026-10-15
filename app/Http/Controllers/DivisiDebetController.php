@@ -29,8 +29,10 @@ class DivisiDebetController extends Controller
             if ($request->ajax()) {
                 $transaksiHarian = TransaksiHarian::with(['divisi', 'sumDebitAll'])
                     ->whereNotIn('divisi_id', ['1', '2'])
-                    ->where('jenis_transaksi', '1');
+                    ->where('jenis_transaksi', '1')
+                    ->orderBy('transaksi_harians.id', 'asc');
                 return DataTables::of($transaksiHarian)
+                    ->addIndexColumn()
                     ->editColumn('tgl', function ($transaksiHarian) {
                         return Tanggal::tanggal_id($transaksiHarian->tgl);
                     })
