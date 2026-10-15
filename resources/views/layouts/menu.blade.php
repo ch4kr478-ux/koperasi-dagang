@@ -236,7 +236,7 @@
                 @permission('manage-permissions')
                 <li class="{{ set_active(['permission.index', 'permission.create', 'permission.edit'])}}">
                     <a href="{{ route('permission.index') }}" class="{{ set_active(['permission.index', 'permission.create', 'permission.edit'])}}">
-                        <i class="fi-lock"></i> <span>Hak Akses (Permission)</span>
+                        <i class="fi-lock"></i> <span>Hak Akses</span>
                     </a>
                 </li>
                 @endpermission
@@ -252,7 +252,7 @@
                 @permission('manage-user')
                 <li class="{{ set_active(['user.index', 'user.create', 'user.edit'])}}">
                     <a href="{{ route('user.index') }}" class="{{ set_active(['user.index', 'user.create', 'user.edit'])}}">
-                        <i class="fi-head"></i> <span>Manajemen Pengguna</span>
+                        <i class="fi-head"></i> <span>Pengguna</span>
                     </a>
                 </li>
                 @endpermission
