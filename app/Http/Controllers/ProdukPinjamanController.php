@@ -57,36 +57,15 @@ class ProdukPinjamanController extends Controller
             ->with('success', 'Produk pinjaman berhasil diimpor.');
     }
 
-    public function index(Request $request)
+    public function index()
     {
         abort_unless(Auth::user()->can('manage-produk-pinjaman'), 403);
 
-        $search = trim((string) $request->query('search', ''));
-        $query = ProdukPinjaman::with('tenors');
-
-        if ($search !== '') {
-            $query->where(function ($query) use ($search) {
-                $query->where('name', 'like', '%' . $search . '%')
-                    ->orWhere('description', 'like', '%' . $search . '%')
-                    ->orWhere('nominal', 'like', '%' . $search . '%')
-                    ->orWhereHas('tenors', function ($query) use ($search) {
-                        $query->where('lama_cicilan', 'like', '%' . $search . '%');
-                    });
-
-                if (stripos($search, 'nonaktif') !== false) {
-                    $query->orWhere('is_active', false);
-                } elseif (stripos($search, 'aktif') !== false) {
-                    $query->orWhere('is_active', true);
-                }
-            });
-        }
-
-        $produkPinjaman = $query
+        $produkPinjaman = ProdukPinjaman::with('tenors')
             ->orderBy('id', 'asc')
-            ->paginate(15)
-            ->appends(['search' => $search]);
+            ->get();
 
-        return view('produk-pinjaman.index', compact('produkPinjaman', 'search'));
+        return view('produk-pinjaman.index', compact('produkPinjaman'));
     }
 
     public function create()

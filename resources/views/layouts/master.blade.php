@@ -172,6 +172,16 @@
         <script src="{{ asset('assets/js/bootstrap-fileinput.js') }}" type="text/javascript"></script>
 
         @yield('script')
+        <script>
+            if ($.fn.dataTable) {
+                $.extend(true, $.fn.dataTable.defaults, {
+                    language: {
+                        search: '',
+                        searchPlaceholder: 'Cari...'
+                    }
+                });
+            }
+        </script>
         @if ($message = Session::get('error'))
             <script>
                 $.toast({
