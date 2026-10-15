@@ -413,15 +413,12 @@
                 <h4 class="page-title">Dashboard Administrator</h4>
                 <small class="dashboard-subtitle">Ringkasan koperasi dan aktivitas transaksi</small>
             </div>
-            <div class="float-right">
+            <div class="float-right text-md-right">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Kopkar</a></li>
                     <li class="breadcrumb-item active">Dashboard</li>
                 </ol>
-                <span class="period-caption">
-                    <i class="mdi mdi-calendar-blank mr-1"></i>
-                    {{ $periode->name }} &middot; {{ date('d-m-Y', strtotime($periode->open_date)) }} - {{ date('d-m-Y', strtotime($periode->close_date)) }}
-                </span>
+                <small class="text-danger">Tahun Buku : {{ periode()->open_date }} - {{ periode()->close_date }}</small>
             </div>
         </div>
     </div>
