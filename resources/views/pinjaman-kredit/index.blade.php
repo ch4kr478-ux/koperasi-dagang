@@ -17,19 +17,13 @@
                 </h4>
                 <small>Daftar transaksi pencairan pinjaman dan jadwal angsuran anggota</small>
             </div>
-            <div class="float-right">
+            <div class="float-right text-md-right">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
-                    <li class="breadcrumb-item"><a href="#">Transaksi</a></li>
                     <li class="breadcrumb-item active">Pinjaman Kredit</li>
                 </ol>
-                <span class="badge badge-soft-primary">
-                    <i class="mdi mdi-calendar mr-1"></i>
-                    Periode: {{ periode()->name }}
-                    ({{ date('d-m-Y', strtotime(periode()->open_date)) }} s/d {{ date('d-m-Y', strtotime(periode()->close_date)) }})
-                </span>
+                <small class="text-danger">Tahun Buku : {{ periode()->open_date }} - {{ periode()->close_date }}</small>
             </div>
-            <div class="clearfix"></div>
         </div>
     </div>
 </div>

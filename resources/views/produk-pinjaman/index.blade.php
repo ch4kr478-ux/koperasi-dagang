@@ -6,7 +6,18 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box">
-            <h4 class="page-title">Produk Pinjaman</h4>
+            <div class="float-left">
+                <h4 class="page-title">Produk Pinjaman</h4>
+                <small>Impor produk dan pilihan tenor dari file Excel</small>
+            </div>
+            <div class="float-right text-md-right">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('home') }}">Beranda</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('produk-pinjaman.index') }}">Produk Pinjaman</a></li>
+                    <li class="breadcrumb-item active">Upload</li>
+                </ol>
+                <small class="text-danger">Tahun Buku : {{ periode()->open_date }} - {{ periode()->close_date }}</small>
+            </div>
         </div>
     </div>
 </div>
