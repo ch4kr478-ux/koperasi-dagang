@@ -99,10 +99,12 @@
     /* Toolbar Actions */
     .content-page .content .container-fluid .dataTables_wrapper .toolbar {
         display: flex;
+        float: left;
         flex-wrap: wrap;
         align-items: center;
         gap: 10px;
-        margin-bottom: 18px;
+        width: auto;
+        margin: 0 12px 18px 0;
     }
 
     .content-page .content .container-fluid .dataTables_wrapper .toolbar .btn {
@@ -178,11 +180,16 @@
 
     /* Search Box */
     .content-page .content .container-fluid .dataTables_filter {
-        margin-bottom: 16px;
-        text-align: right;
+        float: left;
+        margin: 0 0 18px;
+        text-align: left;
     }
 
     .content-page .content .container-fluid .dataTables_filter label {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin: 0;
         color: #475569;
         font-weight: 600;
         font-size: 12.5px;
@@ -190,7 +197,7 @@
 
     .content-page .content .container-fluid .dataTables_filter input {
         height: 38px;
-        margin-left: 8px;
+        margin-left: 0;
         padding: 6px 14px;
         border: 1.5px solid #cbd5e1;
         border-radius: 8px;
@@ -209,6 +216,7 @@
 
     /* Enterprise Table Styling */
     .content-page .content .container-fluid table.dataTable {
+        clear: both;
         width: 100% !important;
         margin: 0 !important;
         border-collapse: separate !important;
