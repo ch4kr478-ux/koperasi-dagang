@@ -142,7 +142,8 @@ textarea {
 .topbar .topbar-left {
     background: var(--k-dark);
     height: 70px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    box-sizing: border-box;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.09);
     border-right: 1px solid rgba(255, 255, 255, 0.07);
     display: flex;
     align-items: center;
@@ -189,6 +190,8 @@ textarea {
 
 .navbar-custom {
     background: var(--k-navy-gradient);
+    box-sizing: border-box;
+    height: 70px;
     min-height: 70px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.09);
     box-shadow: 0 4px 20px rgba(15, 23, 42, 0.12);
