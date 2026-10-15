@@ -126,6 +126,7 @@
                         ],
                         dom: '<"toolbar">frtip',
                         order: [[ 0, 'asc' ]],
+                        pageLength: 25,
                         scrollX: true
                     });
                     $("div.toolbar").html(`@unless($isMember)@permission('create-kredit-pinjaman')<a href="{{ route('pinjaman-kredit.create') }}" class="btn btn-gradient waves-light waves-effect w-md"><i class="fa fa-plus"></i> Tambah</a>@endpermission

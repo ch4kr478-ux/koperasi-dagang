@@ -90,6 +90,7 @@
                         ],
                         order: [[ 0, "asc" ]],
                         dom: '<"toolbar">frtip',
+                        pageLength: 25
                     });
 
         @permission('create-user')

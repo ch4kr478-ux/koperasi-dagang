@@ -8,6 +8,9 @@
 
     .admin-dashboard .dashboard-heading {
         position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         overflow: hidden;
         padding: 26px 32px;
         border: 1px solid var(--k-border);
@@ -43,6 +46,11 @@
     .admin-dashboard .dashboard-heading .float-right {
         position: relative;
         z-index: 1;
+    }
+
+    .admin-dashboard .dashboard-heading .float-right {
+        margin-left: auto;
+        text-align: right;
     }
 
     .admin-dashboard .dashboard-heading .breadcrumb {
@@ -382,11 +390,11 @@
 
         .admin-dashboard .dashboard-heading .float-right {
             margin-top: 14px;
-            align-self: flex-start;
+            align-self: flex-end;
         }
 
         .admin-dashboard .dashboard-heading .breadcrumb {
-            justify-content: flex-start;
+            justify-content: flex-end;
         }
 
         .admin-dashboard .chart-panel {
@@ -415,7 +423,6 @@
                     {{ $periode->name }} &middot; {{ date('d-m-Y', strtotime($periode->open_date)) }} - {{ date('d-m-Y', strtotime($periode->close_date)) }}
                 </span>
             </div>
-            <div class="clearfix"></div>
         </div>
     </div>
 </div>

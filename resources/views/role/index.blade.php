@@ -91,6 +91,7 @@
                         ],
                         order: [[ 0, "asc" ]],
                         dom: '<"toolbar">frtip',
+                        pageLength: 25
                     });
         @permission('create-role')
         $("div.toolbar").html(`<a href="{{ route('role.create') }}" class="btn btn-gradient btn-rounded waves-light waves-effect w-md"><i class="mdi mdi-plus" aria-hidden="true"></i> Tambah</a>`);

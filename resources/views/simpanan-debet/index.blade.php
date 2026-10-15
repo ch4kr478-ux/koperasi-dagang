@@ -119,6 +119,7 @@
                         ],
                         dom: '<"toolbar">frtip',
                         order: [[ 0, 'asc' ]],
+                        pageLength: 25,
                         scrollX: true
                     });
 

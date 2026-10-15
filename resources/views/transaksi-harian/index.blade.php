@@ -74,7 +74,8 @@
                             {data: 'keterangan', name: 'keterangan'},
                         ],
                         dom: '<"toolbar">frtip',
-                        order: [[ 0, "asc" ]]
+                        order: [[ 0, "asc" ]],
+                        pageLength: 25
                     });
                     $("div.toolbar").html('<a href="{{ route('transaksi-harian.create') }}" class="btn btn-gradient btn-rounded waves-light waves-effect w-md"><i class="mdi mdi-plus" aria-hidden="true"></i> Tambah</a>');
 

@@ -102,7 +102,7 @@
             ],
             dom: '<"toolbar">frtip',
             order: [[0, 'asc']],
-            pageLength: 10,
+            pageLength: 25,
             language: {
                 processing: 'Memuat data anggota...',
                 search: '',

@@ -96,7 +96,8 @@
                             { data: 'action', name: 'action', orderable: false, searchable: false },
                         ],
                         dom: '<"toolbar">frtip',
-                        order: [[ 0, "asc" ]]
+                        order: [[ 0, "asc" ]],
+                        pageLength: 25
                     });
                     @permission('create-debet-divisi')
                     $("div.toolbar").html(`<a href="{{ route('divisi-debet.create') }}" class="btn btn-gradient waves-light waves-effect w-md"><i class="fa fa-plus"></i> Tambah</a>

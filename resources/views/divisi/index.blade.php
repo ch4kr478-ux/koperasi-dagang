@@ -75,6 +75,7 @@
                         ],
                         order: [[ 0, "asc" ]],
                         dom: '<"toolbar">frtip',
+                        pageLength: 25
                     });
         @permission('create-divisi')
         $("div.toolbar").html('<a href="{{ route('divisi.create') }}" class="btn btn-gradient btn-rounded waves-light waves-effect w-md"><i class="mdi mdi-plus" aria-hidden="true"></i> Tambah</a>');
