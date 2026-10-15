@@ -26,7 +26,7 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu" id="side-menu">
-                <li class="menu-title">NAVIGASI UTAMA</li>
+                <li class="menu-title">Master Data</li>
                 <li class="{{ set_active(['home']) }}">
                     <a href="{{ route('home') }}" class="{{ set_active(['home']) }}">
                         <i class="fi-air-play"></i> <span>Dashboard Utama</span>
@@ -184,7 +184,7 @@
                 @permission('manage-laporan-simpanan-all')
                 <li class="{{ set_active(['laporan.simpanan-all']) }}">
                     <a href="{{ route('laporan.simpanan-all') }}" class="{{ set_active(['laporan.simpanan-all']) }}">
-                        <i class="mdi mdi-chart-pie" aria-hidden="true"></i> <span>Rekap Simpanan (Semua)</span>
+                        <i class="mdi mdi-chart-pie" aria-hidden="true"></i> <span>Rekap Simpanan</span>
                     </a>
                 </li>
                 @endpermission
@@ -192,7 +192,7 @@
                 @permission('manage-laporan-pinjaman-all')
                 <li class="{{ set_active(['laporan.pinjaman-all']) }}">
                     <a href="{{ route('laporan.pinjaman-all') }}" class="{{ set_active(['laporan.pinjaman-all']) }}">
-                        <i class="mdi mdi-chart-bar" aria-hidden="true"></i> <span>Rekap Pinjaman (Semua)</span>
+                        <i class="mdi mdi-chart-bar" aria-hidden="true"></i> <span>Rekap Pinjaman</span>
                     </a>
                 </li>
                 @endpermission
