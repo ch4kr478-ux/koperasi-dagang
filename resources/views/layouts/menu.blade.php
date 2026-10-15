@@ -26,7 +26,7 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu" id="side-menu">
-                <li class="menu-title">Master Data</li>
+                <li class="menu-title">Dashboard Utama</li>
                 <li class="{{ set_active(['home']) }}">
                     <a href="{{ route('home') }}" class="{{ set_active(['home']) }}">
                         <i class="fi-air-play"></i> <span>Dashboard Utama</span>
