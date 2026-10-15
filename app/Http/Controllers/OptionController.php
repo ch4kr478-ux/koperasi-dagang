@@ -91,7 +91,7 @@ class OptionController extends Controller
                     \DB::insert(
                         'insert into options (`option_value`, `option_name`) values (?, ?) ON DUPLICATE KEY UPDATE `option_value` = VALUES(`option_value`) ',
                         [
-                            $data,
+                            $data ?? '',
                             $key,
                         ]
                     );
@@ -129,7 +129,7 @@ class OptionController extends Controller
                 \DB::insert(
                     'insert into options (`option_value`, `option_name`) values (?, ?) ON DUPLICATE KEY UPDATE `option_value` = VALUES(`option_value`) ',
                     [
-                        $data,
+                        $data ?? '',
                         $key,
                     ]
                 );
@@ -206,7 +206,7 @@ class OptionController extends Controller
                 \DB::insert(
                     'insert into options (`option_value`, `option_name`) values (?, ?) ON DUPLICATE KEY UPDATE `option_value` = VALUES(`option_value`) ',
                     [
-                        $data,
+                        $data ?? '',
                         $key,
                     ]
                 );
