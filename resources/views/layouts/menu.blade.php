@@ -4,7 +4,11 @@
         <!-- Sidebar User Mini-Card -->
         <div class="sidebar-user-card">
             <div class="sidebar-user-avatar">
-                <img src="{{ asset('images/users/avatar-1.jpg') }}" alt="{{ Auth::user()->name }}">
+                @if($userPhotoUrl)
+                <img src="{{ $userPhotoUrl }}" alt="Foto {{ $users->name }}">
+                @else
+                <span class="user-avatar-fallback" aria-label="Inisial {{ $users->name }}">{{ $userInitial }}</span>
+                @endif
                 <span class="user-status-indicator" title="Status: Online & Terverifikasi"></span>
             </div>
             <div class="sidebar-user-info">

@@ -43,6 +43,13 @@
             $logo = asset(Storage::url('logo/'));
             $profile = asset(Storage::url('avatar/'));
             $users = \Auth::user();
+            $userPhoto = $users
+                ? \App\Anggota::join('user_anggotas', 'anggotas.id', '=', 'user_anggotas.anggota_id')
+                    ->where('user_anggotas.user_id', $users->id)
+                    ->value('anggotas.pas_foto')
+                : null;
+            $userPhotoUrl = $userPhoto ? url('storage/' . $userPhoto) : null;
+            $userInitial = strtoupper(substr($users && $users->name ? $users->name : 'U', 0, 1));
         @endphp
         
         <!-- Begin page -->
@@ -82,7 +89,11 @@
                     <ul class="list-unstyled topbar-right-menu float-right mb-0">
                         <li class="dropdown notification-list">
                             <a class="nav-link dropdown-toggle waves-effect waves-light nav-user" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
-                                <img src="{{ asset('images/users/avatar-1.jpg') }}" alt="{{ Auth::user()->name }}" class="rounded-circle">
+                                @if($userPhotoUrl)
+                                <img src="{{ $userPhotoUrl }}" alt="Foto {{ $users->name }}" class="rounded-circle">
+                                @else
+                                <span class="user-avatar-fallback" aria-label="Inisial {{ $users->name }}">{{ $userInitial }}</span>
+                                @endif
                                 <div class="d-none d-md-flex flex-column text-left mr-1" style="line-height: 1.2;">
                                     <span class="font-weight-bold">{{ Auth::user()->name }}</span>
                                     <small class="text-white-50" style="font-size: 10px;">{{ Auth::user()->roles->first()->display_name ?? 'Member' }}</small>

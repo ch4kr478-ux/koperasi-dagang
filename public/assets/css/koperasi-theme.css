@@ -282,6 +282,21 @@ textarea {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
+.navbar-custom .nav-user .user-avatar-fallback {
+    display: inline-flex;
+    flex: 0 0 34px;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 2px solid #5eead4;
+    border-radius: 50%;
+    color: #ffffff;
+    background: var(--k-dark-elevated);
+    font-size: 13px;
+    font-weight: 800;
+}
+
 .navbar-custom .nav-user .user-role-badge {
     padding: 2px 8px;
     font-size: 10px;
@@ -411,6 +426,21 @@ textarea {
     object-fit: cover;
     border: 2px solid #ffffff;
     box-shadow: var(--k-shadow-xs);
+}
+
+.sidebar-user-avatar .user-avatar-fallback {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #ffffff;
+    border-radius: 50%;
+    color: #ffffff;
+    background: var(--k-primary-gradient);
+    box-shadow: var(--k-shadow-xs);
+    font-size: 15px;
+    font-weight: 800;
 }
 
 .sidebar-user-avatar .user-status-indicator {

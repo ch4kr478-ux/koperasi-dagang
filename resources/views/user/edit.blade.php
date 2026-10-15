@@ -50,7 +50,7 @@
                         <label class="col-4 col-form-label" for="example-input-normal">Hak Akses</label>
                         <div class="col-8">
                                 <select name="role_id" class="form-control select2">
-@foreach(([''=>'Hak Akses']+App\Role::whereNotIn('name', ['member'])->pluck('name','id')->all()) as $optionValue => $optionLabel)
+@foreach(([''=>'Hak Akses']+App\Role::whereNotIn('name', [])->pluck('name','id')->all()) as $optionValue => $optionLabel)
 <option value="{{ $optionValue }}" @selected((string) old('role_id', data_get($formModel ?? null, 'role_id', null)) === (string) $optionValue)>{{ $optionLabel }}</option>
 @endforeach
 </select>

@@ -117,17 +117,49 @@
                 z-index: 1;
             }
 
+            .login-brand-identity {
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                margin-bottom: 24px;
+            }
+
             .login-brand-logo {
                 display: inline-flex;
                 align-items: center;
                 justify-content: center;
+                flex: 0 0 60px;
                 width: 60px;
                 height: 60px;
-                margin-bottom: 24px;
                 border: 1px solid rgba(255, 255, 255, .25);
                 border-radius: 17px;
                 background: rgba(255, 255, 255, .12);
                 box-shadow: 0 8px 22px rgba(13, 35, 21, .12);
+            }
+
+            .login-brand-copy {
+                min-width: 0;
+            }
+
+            .login-brand-name {
+                display: block;
+                color: #fff;
+                font-size: 21px;
+                font-weight: 800;
+                line-height: 1.15;
+                letter-spacing: .025em;
+                white-space: nowrap;
+            }
+
+            .login-brand-subtitle {
+                display: block;
+                margin-top: 4px;
+                color: rgba(255, 255, 255, .78);
+                font-size: 12px;
+                font-weight: 600;
+                letter-spacing: .08em;
+                line-height: 1.3;
+                text-transform: uppercase;
             }
 
             .login-brand-logo img {
@@ -325,10 +357,23 @@
                 }
 
                 .login-brand-logo {
+                    flex-basis: 46px;
                     width: 46px;
                     height: 46px;
-                    margin-bottom: 15px;
                     border-radius: 13px;
+                }
+
+                .login-brand-identity {
+                    gap: 11px;
+                    margin-bottom: 15px;
+                }
+
+                .login-brand-name {
+                    font-size: 17px;
+                }
+
+                .login-brand-subtitle {
+                    font-size: 10px;
                 }
 
                 .login-brand-logo img {
@@ -371,9 +416,15 @@
             <section class="login-card" aria-label="Masuk ke aplikasi koperasi">
                 <div class="login-brand-panel">
                     <div class="login-brand-top">
-                        <a href="{{ url('/') }}" class="login-brand-logo" aria-label="Beranda">
-                            <img src="{{ $logo.'/small_logo.png' }}" alt="Logo Koperasi">
-                        </a>
+                        <div class="login-brand-identity">
+                            <a href="{{ url('/') }}" class="login-brand-logo" aria-label="Beranda">
+                                <img src="{{ $logo.'/small_logo.png' }}" alt="Logo Koperasi">
+                            </a>
+                            <div class="login-brand-copy">
+                                <span class="login-brand-name">PRIMKOPPOL</span>
+                                <span class="login-brand-subtitle">MITRA MAJU JAYA</span>
+                            </div>
+                        </div>
                         <p class="login-brand-kicker">Layanan Primer Koperasi Polisi Mitra Maju Jaya</p>
                     </div>
                     <div class="login-brand-message">
