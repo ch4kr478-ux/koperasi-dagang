@@ -88,7 +88,7 @@
                             { data: 'roles.0.display_name', name: 'roles.0.display_name', searchable: false, orderable: false },
                             { data: 'action', name: 'action', searchable: false, orderable: false}
                         ],
-                        order: [[ 0, "desc" ]],
+                        order: [[ 0, "asc" ]],
                         dom: '<"toolbar">frtip',
                     });
 

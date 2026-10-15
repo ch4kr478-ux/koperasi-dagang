@@ -66,7 +66,7 @@
                         <th>Cicilan</th>
                         <th>Bunga</th>
                         <th>Angsuran Kredit</th>
-                        <th>Simpanan Wajib Cicilan</th>
+                        <th>Simpanan Pokok / Wajib / Sukarela</th>
                         <th>Keterangan</th>
                         <th>Status Buku</th>
                         @unless($isMember)
@@ -103,7 +103,7 @@
                         serverSide: true,
                         ajax: "{{ route('pinjaman-debet.index') }}",
                         columns: [
-                            { data: 'nomor_urut', name: 'id', orderable: false, searchable: false },
+                            { data: 'nomor_urut', name: 'id', searchable: false },
                             { data: 'nama_anggota.anggota.nama', name: 'nama_anggota.anggota.nama', orderable: false, searchable: false },
                             { data: 'tgl', name: 'tgl' },
                             { data: 'jenis_pembayaran', name: 'jenis_pembayaran' },
@@ -120,7 +120,7 @@
                             @endunless
                         ],
                         dom: '<"toolbar">frtip',
-                        order: [],
+                        order: [[ 0, 'asc' ]],
                         scrollX: true
                     });
                     $("div.toolbar").html(`@unless($isMember)@permission('create-debet-pinjaman')<a href="{{ route('pinjaman-debet.create') }}" class="btn btn-gradient waves-light waves-effect w-md"><i class="fa fa-plus"></i> Tambah</a>@endpermission

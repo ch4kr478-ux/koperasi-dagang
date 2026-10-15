@@ -17,6 +17,8 @@ class TransaksiPinjamanCicilan extends Model
         'pokok',
         'bunga',
         'tabungan',
+        'simpanan_pokok',
+        'simpanan_sukarela',
     ];
 
     protected $casts = [
@@ -24,6 +26,8 @@ class TransaksiPinjamanCicilan extends Model
         'pokok' => 'integer',
         'bunga' => 'integer',
         'tabungan' => 'integer',
+        'simpanan_pokok' => 'integer',
+        'simpanan_sukarela' => 'integer',
     ];
 
     public function pinjaman()

@@ -49,4 +49,17 @@ class PinjamanCalculator
 
         return $schedule;
     }
+
+    public static function nextUnpaidInstallment(array $schedule, array $paidNumbers)
+    {
+        $paidNumbers = array_map('intval', $paidNumbers);
+
+        foreach ($schedule as $installment) {
+            if (!in_array((int) $installment['bulan'], $paidNumbers, true)) {
+                return $installment;
+            }
+        }
+
+        return null;
+    }
 }

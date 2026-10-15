@@ -14,6 +14,8 @@ class Anggota extends Model
         'jabatan',
         'tgl_daftar',
         'status',
-        'homebase'
+        'homebase',
+        'no_telepon',
+        'pas_foto'
     ];
 }

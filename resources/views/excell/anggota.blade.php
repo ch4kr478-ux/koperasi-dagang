@@ -4,6 +4,7 @@
             <th>#</th>
             <th>NIK</th>
             <th>Nama</th>
+            <th>Nomor Telepon</th>
             <th>Jabatan</th>
             <th>Tanggal Daftar</th>
             <th>Home Base</th>
@@ -20,6 +21,7 @@
                     <th scope="row">{{ $no }}</th>
                     <td>{{ $row->nik }}</td>
                     <td>{{ $row->nama }}</td>
+                    <td>{{ $row->no_telepon }}</td>
                     <td>{{ $row->jabatan }}</td>
                     <td>{{ date('d-m-Y', strtotime($row->tgl_daftar)) }}</td>
                     <td>{{ $row->homebase }}</td>

@@ -62,6 +62,7 @@
                         <th>ID</th>
                         <th>NIK</th>
                         <th>Nama Anggota</th>
+                        <th>Nomor Telepon</th>
                         <th>Jabatan</th>
                         <th>Tanggal Daftar</th>
                         <th>Home Base</th>
@@ -92,6 +93,7 @@
                 { data: 'id', name: 'id' },
                 { data: 'nik', name: 'nik' },
                 { data: 'nama', name: 'nama' },
+                { data: 'no_telepon', name: 'no_telepon' },
                 { data: 'jabatan', name: 'jabatan' },
                 { data: 'tgl_daftar', name: 'tgl_daftar' },
                 { data: 'homebase', name: 'homebase' },
@@ -99,7 +101,7 @@
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ],
             dom: '<"toolbar">frtip',
-            order: [[0, 'desc']],
+            order: [[0, 'asc']],
             pageLength: 10,
             language: {
                 processing: 'Memuat data anggota...',

@@ -30,6 +30,7 @@
     .member-profile-heading {
         display: flex;
         align-items: center;
+        gap: 22px;
         padding: 24px 26px;
         color: #ffffff;
         background: var(--k-navy-gradient);
@@ -37,17 +38,28 @@
 
     .member-profile-avatar {
         display: flex;
-        flex: 0 0 58px;
+        flex: 0 0 108px;
         align-items: center;
         justify-content: center;
-        width: 58px;
-        height: 58px;
-        margin-right: 16px;
+        width: 108px;
+        height: 144px;
+        overflow: hidden;
         border: 1px solid rgba(255, 255, 255, .3);
-        border-radius: var(--k-radius-lg);
+        border-radius: 12px;
         background: rgba(255, 255, 255, .12);
-        font-size: 23px;
+        font-size: 32px;
         font-weight: 800;
+    }
+
+    .member-profile-avatar img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .member-profile-heading-copy {
+        min-width: 0;
     }
 
     .member-profile-heading h4 {
@@ -180,14 +192,20 @@
             padding: 18px;
         }
 
-        .member-profile-details {
-            grid-template-columns: 1fr;
+        .member-profile-heading {
+            align-items: center;
+            gap: 14px;
         }
 
         .member-profile-avatar {
-            flex-basis: 48px;
-            width: 48px;
-            height: 48px;
+            flex-basis: 80px;
+            width: 80px;
+            height: 107px;
+            font-size: 26px;
+        }
+
+        .member-profile-details {
+            grid-template-columns: 1fr;
         }
     }
 </style>
@@ -236,8 +254,14 @@
             @if($isMember && $anggota)
             <div class="card-box member-profile-card p-0">
                 <div class="member-profile-heading">
-                    <div class="member-profile-avatar" aria-hidden="true">{{ strtoupper(substr($anggota->nama ?: 'M', 0, 1)) }}</div>
-                    <div>
+                    <div class="member-profile-avatar">
+                        @if($anggota->pas_foto)
+                        <img src="{{ url('storage/' . $anggota->pas_foto) }}" alt="Pas foto {{ $anggota->nama }}">
+                        @else
+                        <span aria-hidden="true">{{ strtoupper(substr($anggota->nama ?: 'M', 0, 1)) }}</span>
+                        @endif
+                    </div>
+                    <div class="member-profile-heading-copy">
                         <h4>{{ $anggota->nama }}</h4>
                         <p>Profil anggota koperasi</p>
                     </div>
@@ -252,6 +276,10 @@
                         <div class="member-profile-detail">
                             <span class="member-profile-detail-label">Nama</span>
                             <span class="member-profile-detail-value">{{ $anggota->nama }}</span>
+                        </div>
+                        <div class="member-profile-detail">
+                            <span class="member-profile-detail-label">Nomor Telepon</span>
+                            <span class="member-profile-detail-value">{{ $anggota->no_telepon ?: '-' }}</span>
                         </div>
                         <div class="member-profile-detail">
                             <span class="member-profile-detail-label">Tanggal Daftar</span>

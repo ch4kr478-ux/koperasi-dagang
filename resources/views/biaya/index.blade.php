@@ -78,7 +78,7 @@
                 { data: 'divisi.name', name: 'divisi.name' },
                 { data: 'action', name: 'action', searchable: false, orderable: false }
             ],
-            order: [[0, 'desc']],
+            order: [[0, 'asc']],
             pageLength: 10,
             dom: '<"toolbar">frtip',
             language: {

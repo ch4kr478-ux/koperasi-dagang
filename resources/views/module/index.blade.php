@@ -73,7 +73,7 @@
                             {data: 'name', name: 'name'},
                             { data: 'action', name: 'action', searchable: false, orderable: false}
                         ],
-                        order: [[ 0, "desc" ]],
+                        order: [[ 0, "asc" ]],
                         dom: '<"toolbar">frtip',
                     });
 

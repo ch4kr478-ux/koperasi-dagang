@@ -104,36 +104,34 @@
         <div id="pinjam-debet">
             @if(isset($cicilanTersedia))
                 <div class="form-group">
-                    <label for="transaksi_pinjaman_id">Tautkan ke Cicilan Pinjaman (opsional)</label>
+                    <label for="transaksi_pinjaman_id">Angsuran Pinjaman (opsional)</label>
                     <select id="transaksi_pinjaman_id" name="transaksi_pinjaman_id" class="form-control">
                         <option value="">Pembayaran biasa / tanpa tautan cicilan</option>
                         @foreach($cicilanTersedia as $installment)
                             <option value="{{ $installment['transaksi_pinjaman_id'] }}"
                                 data-anggota="{{ $installment['anggota_id'] }}"
                                 data-angsuran="{{ $installment['bulan'] }}"
+                                data-total-angsuran="{{ $installment['total_angsuran'] }}"
                                 data-jatuh-tempo="{{ $installment['jatuh_tempo']->format('d-m-Y') }}"
                                 data-pokok="{{ $installment['pokok'] }}"
                                 data-bunga="{{ $installment['bunga'] }}"
-                                data-tabungan="{{ $installment['tabungan'] }}"
-                                data-total="{{ $installment['total'] }}"
                                 @selected((string) old('transaksi_pinjaman_id') === (string) $installment['transaksi_pinjaman_id'])>
                                 {{ $installment['anggota_nama'] }} - {{ $installment['produk'] }}
                                 Rp. {{ number_format($installment['nominal_pinjaman'], 0, ',', '.') }} (pinjaman {{ $installment['tgl_pinjaman'] }})
-                                - Angsuran ke-{{ $installment['bulan'] }} (jatuh tempo {{ $installment['jatuh_tempo']->format('d-m-Y') }})
+                                - Angsuran ke-{{ $installment['bulan'] }} dari {{ $installment['total_angsuran'] }} (jatuh tempo {{ $installment['jatuh_tempo']->format('d-m-Y') }})
                             </option>
                         @endforeach
                     </select>
                     @error('transaksi_pinjaman_id') <small class="text-danger">{{ $message }}</small> @enderror
                     @error('angsuran_ke') <small class="text-danger">{{ $message }}</small> @enderror
                     <input type="hidden" name="angsuran_ke" id="angsuran_ke" value="{{ old('angsuran_ke') }}">
-                    <small class="form-text text-muted">Jika dipilih, cicilan harus dibayar penuh. Simpanan wajib 0,5% dicatat otomatis.</small>
+                    <small class="form-text text-muted">Pilih pinjaman untuk mencatat pelunasan angsuran. Nominal pokok dan bunga harus sesuai jadwal; nominal simpanan diisi manual.</small>
                 </div>
                 <div id="cicilan-kredit-summary" class="alert alert-info" style="display: none;"></div>
             @elseif(!empty($installmentPayment))
                 <div class="alert alert-info">
-                    Pembayaran angsuran ke-{{ $installmentPayment->angsuran_ke }},
+                    <strong>Angsuran ke-{{ $installmentPayment->angsuran_ke }} dari {{ $installmentPayment->pinjaman->lama_cicilan }} - Lunas</strong>,
                     jatuh tempo {{ $installmentPayment->jatuh_tempo->format('d-m-Y') }}.
-                    Tabungan wajib yang tercatat: Rp. {{ number_format($installmentPayment->tabungan, 0, ',', '.') }}.
                 </div>
                 <input type="hidden" name="transaksi_pinjaman_id" value="{{ $installmentPayment->transaksi_pinjaman_id }}">
                 <input type="hidden" name="angsuran_ke" value="{{ $installmentPayment->angsuran_ke }}">
@@ -148,8 +146,9 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Rp</span>
                             </div>
-                            <input id="nominal_pinjaman" type="text" class="form-control biaya" name="nominal_pinjaman" value="{{ old('nominal_pinjaman', !empty($installmentPayment) ? 'Rp. ' . number_format($installmentPayment->pokok, 0, ',', '.') : ($nominal_pinjaman ?? null)) }}" @readonly(!empty($installmentPayment))>
+                            <input id="nominal_pinjaman" type="text" class="form-control biaya" name="nominal_pinjaman" value="{{ old('nominal_pinjaman', !empty($installmentPayment) ? 'Rp. ' . number_format($installmentPayment->pokok, 0, ',', '.') : ($nominal_pinjaman ?? null)) }}" @required(!empty($installmentPayment))>
                         </div>
+                        @error('nominal_pinjaman') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -160,9 +159,44 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text">Rp</span>
                             </div>
-                            <input id="nominal_bunga" type="text" class="form-control biaya" name="nominal_bunga" value="{{ old('nominal_bunga', !empty($installmentPayment) ? 'Rp. ' . number_format($installmentPayment->bunga, 0, ',', '.') : ($nominal_bunga ?? null)) }}" @readonly(!empty($installmentPayment))>
+                            <input id="nominal_bunga" type="text" class="form-control biaya" name="nominal_bunga" value="{{ old('nominal_bunga', !empty($installmentPayment) ? 'Rp. ' . number_format($installmentPayment->bunga, 0, ',', '.') : ($nominal_bunga ?? null)) }}" @required(!empty($installmentPayment))>
                         </div>
+                        @error('nominal_bunga') <small class="text-danger">{{ $message }}</small> @enderror
                     </div>
+                </div>
+            </div>
+            <div id="simpanan-angsuran" class="card-box mt-2 mb-0" @if(empty($installmentPayment)) style="display: none;" @endif>
+                <h5 class="header-title">Simpanan Bersamaan dengan Angsuran</h5>
+                <p class="text-muted">Isi nominal setoran untuk masing-masing jenis simpanan. Masukkan 0 jika tidak ada setoran.</p>
+                <div class="row">
+                    @foreach([
+                        'pokok' => ['Simpanan Pokok', 1],
+                        'wajib' => ['Simpanan Wajib', 2],
+                        'sukarela' => ['Simpanan Sukarela', 3],
+                    ] as $jenisSimpanan => $simpanan)
+                        @php
+                            $fieldName = 'nominal_simpanan_' . $jenisSimpanan;
+                            $savedAmount = data_get($savingAmounts ?? [], (string) $simpanan[1], 0);
+                        @endphp
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="{{ $fieldName }}">{{ $simpanan[0] }}</label>
+                                <div class="input-group">
+                                    <div class="input-group-prepend"><span class="input-group-text">Rp</span></div>
+                                    <input
+                                        id="{{ $fieldName }}"
+                                        type="text"
+                                        name="{{ $fieldName }}"
+                                        class="form-control biaya simpanan-angsuran-input"
+                                        value="{{ old($fieldName, !empty($installmentPayment) ? 'Rp. ' . number_format($savedAmount, 0, ',', '.') : null) }}"
+                                        @required(!empty($installmentPayment))
+                                        @disabled(empty($installmentPayment))
+                                    >
+                                </div>
+                                @error($fieldName) <small class="text-danger">{{ $message }}</small> @enderror
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -177,7 +211,7 @@
         </div>
         <div class="transaction-note">
             <strong><i class="mdi mdi-information-outline mr-1" aria-hidden="true"></i> Konfirmasi Transaksi</strong>
-            <p class="mb-0 mt-1">Pastikan anggota, nominal pokok, bunga, dan informasi cicilan sudah sesuai sebelum menyimpan transaksi.</p>
+            <p class="mb-0 mt-1">Pastikan anggota, nominal pokok, bunga, dan setoran simpanan sudah benar. Pembayaran angsuran harus sesuai jadwal agar tercatat Lunas.</p>
         </div>
     </section>
 </div>

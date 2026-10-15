@@ -96,7 +96,7 @@
                             { data: 'action', name: 'action', orderable: false, searchable: false},
                         ],
                         dom: '<"toolbar">frtip',
-                        order: [[ 0, "desc" ]],
+                        order: [[ 0, "asc" ]],
                         scrollX: true
                     });
                     @permission('create-kredit-divisi')

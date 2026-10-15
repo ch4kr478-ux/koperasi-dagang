@@ -24,12 +24,12 @@
 </div>
 <!-- end row -->
 <div class="row">
-    <div class="col-6">
+    <div class="col-12">
         <div class="card-box">
             <h4 class="m-t-0 header-title">FORM TAMBAH ANGGOTA</h4>
             <div class="p-20">
                 @php($formModel = null)
-<form method="post" action="{{ route('anggota.store') }}" class="form-horizontal">
+<form method="post" action="{{ route('anggota.store') }}" class="form-horizontal" enctype="multipart/form-data">
 @csrf
 
                     @include('anggota._form')

@@ -102,7 +102,7 @@
                         serverSide: true,
                         ajax: "{{ route('simpanan-debet.index') }}",
                         columns: [
-                            { data: 'nomor_urut', name: 'id', orderable: false, searchable: false },
+                            { data: 'nomor_urut', name: 'id', searchable: false },
                             { data: 'nama_anggota.anggota.nama', name: 'nama_anggota.anggota.nama', orderable: false, searchable: false },
                             { data: 'tgl', name: 'tgl' },
                             { data: 'jenis_pembayaran', name: 'jenis_pembayaran' },
@@ -118,7 +118,7 @@
                             @endunless
                         ],
                         dom: '<"toolbar">frtip',
-                        order: [],
+                        order: [[ 0, 'asc' ]],
                         scrollX: true
                     });
 

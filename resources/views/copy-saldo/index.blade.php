@@ -91,7 +91,7 @@
                             { data: 'action', name: 'action', searchable: false, orderable: false }
                         ],
                         dom: '<"toolbar">frtip',
-                        order: [[ 0, "desc" ]]
+                        order: [[ 0, "asc" ]]
                     });
         @permission('create-copy-saldo')
         $("div.toolbar").html(`<a href="{{ route('copy-saldo.create') }}" class="btn btn-gradient btn-rounded waves-light waves-effect w-md"><i class="mdi mdi-content-copy" aria-hidden="true"></i> Tambah</a>`);

@@ -62,7 +62,7 @@ class ProdukPinjamanController extends Controller
         abort_unless(Auth::user()->can('manage-produk-pinjaman'), 403);
 
         $produkPinjaman = ProdukPinjaman::with('tenors')
-            ->orderBy('name')
+            ->orderBy('id', 'asc')
             ->paginate(15);
 
         return view('produk-pinjaman.index', compact('produkPinjaman'));

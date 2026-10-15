@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Anggota;
+use App\Services\MemberPhotoProcessor;
 use Illuminate\Http\Request;
 use DataTables;
 use Tanggal;
@@ -14,6 +15,7 @@ use App\Exports\AnggotaExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 
 class AnggotaController extends Controller
@@ -46,6 +48,9 @@ class AnggotaController extends Controller
                     })
                     ->editColumn('tgl_daftar', function ($anggota) {
                         return Tanggal::tanggal_id($anggota->tgl_daftar);
+                    })
+                    ->editColumn('no_telepon', function ($anggota) {
+                        return $anggota->no_telepon ?: '-';
                     })
                     ->addColumn('action', function ($anggota) {
                         return view('datatable._action-anggota', [
@@ -101,7 +106,9 @@ class AnggotaController extends Controller
                 'jabatan' => 'required',
                 'status' => 'required',
                 'tgl_daftar' => 'required',
-                'homebase' => 'required'
+                'homebase' => 'required',
+                'no_telepon' => 'nullable|string|max:25',
+                'pas_foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
             ]);
             $anggota = new Anggota();
             $anggota->nik = $request->nik;
@@ -110,6 +117,10 @@ class AnggotaController extends Controller
             $anggota->tgl_daftar = Tanggal::convert_tanggal($request->tgl_daftar);
             $anggota->status = $request->status;
             $anggota->homebase = $request->homebase;
+            $anggota->no_telepon = $request->no_telepon;
+            if ($request->hasFile('pas_foto')) {
+                $anggota->pas_foto = app(MemberPhotoProcessor::class)->store($request->file('pas_foto'));
+            }
             $anggota->save();
 
             $user = new User();
@@ -182,16 +193,26 @@ class AnggotaController extends Controller
                 'jabatan' => 'required',
                 'status' => 'required',
                 'tgl_daftar' => 'required',
-                'homebase' => 'required'
+                'homebase' => 'required',
+                'no_telepon' => 'nullable|string|max:25',
+                'pas_foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048'
             ]);
             $anggota = Anggota::find($id);
+            $oldPhotoPath = $anggota->pas_foto;
             $anggota->nik = $request->nik;
             $anggota->nama = $request->nama;
             $anggota->jabatan = $request->jabatan;
             $anggota->status = $request->status;
             $anggota->tgl_daftar = Tanggal::convert_tanggal($request->tgl_daftar);
             $anggota->homebase = $request->homebase;
+            $anggota->no_telepon = $request->no_telepon;
+            if ($request->hasFile('pas_foto')) {
+                $anggota->pas_foto = app(MemberPhotoProcessor::class)->store($request->file('pas_foto'));
+            }
             $anggota->update();
+            if ($request->hasFile('pas_foto') && $oldPhotoPath) {
+                Storage::disk('public')->delete($oldPhotoPath);
+            }
 
             $userAnggota = UserAnggota::where('anggota_id', $id)->first();
 
@@ -254,6 +275,10 @@ class AnggotaController extends Controller
 
             return true;
         });
+
+        if ($deleted && $anggota->pas_foto) {
+            Storage::disk('public')->delete($anggota->pas_foto);
+        }
 
         if (!$deleted) {
             Session::flash('flash_notification', [

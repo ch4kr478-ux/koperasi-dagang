@@ -32,4 +32,14 @@ class PinjamanCalculatorTest extends TestCase
         $this->assertSame([], PinjamanCalculator::schedule(0, 3, '2026-01-15'));
         $this->assertSame([], PinjamanCalculator::schedule(1000, 0, '2026-01-15'));
     }
+
+    public function test_it_only_offers_the_next_installment_and_stops_at_the_loan_term()
+    {
+        $schedule = PinjamanCalculator::schedule(1000, 3, '2026-01-15');
+
+        $this->assertSame(1, PinjamanCalculator::nextUnpaidInstallment($schedule, [])['bulan']);
+        $this->assertSame(2, PinjamanCalculator::nextUnpaidInstallment($schedule, [1])['bulan']);
+        $this->assertSame(3, PinjamanCalculator::nextUnpaidInstallment($schedule, [1, 2])['bulan']);
+        $this->assertNull(PinjamanCalculator::nextUnpaidInstallment($schedule, [1, 2, 3]));
+    }
 }
