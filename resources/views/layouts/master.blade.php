@@ -131,7 +131,7 @@
 
                 <footer class="footer">
                     <div class="footer-left">
-                        <strong>&copy; {{ date('Y') }} Koperasi Karyawan Prasetiya Mulya</strong>
+                        <strong>&copy; {{ date('Y') }} KOPERASI PRIMKOPPOL MITRA MAJU JAYA</strong>
                         <span class="footer-separator">·</span> Portal Manajemen Koperasi
                     </div>
                     <div class="footer-right d-none d-sm-flex">

@@ -140,7 +140,7 @@
             <div>
                 <img src="{{ asset('images/logo-kopkar.png') }}" alt="Logo Koperasi">
                 <small>Sistem Informasi Koperasi</small>
-                <h1>Koperasi Karyawan Prasetiya Mulya</h1>
+                <h1>KOPERASI PRIMKOPPOL MITRA MAJU JAYA</h1>
                 <p>Portal terpadu untuk layanan dan pengelolaan koperasi yang aman, transparan, dan mudah diakses.</p>
             </div>
             <small>&copy; {{ date('Y') }} Koperasi Karyawan</small>

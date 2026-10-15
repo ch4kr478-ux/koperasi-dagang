@@ -266,7 +266,7 @@
         </div>
         <h3>Sistem Informasi Manajemen Koperasi Karyawan</h3>
         <p>
-            Selamat datang di portal operasional Koperasi Karyawan Prasetiya Mulya. Sistem terintegrasi untuk pengelolaan data anggota, transaksi simpan pinjam, pembukuan divisi, serta laporan keuangan akurat dan transparan.
+            Selamat datang di portal operasional KOPERASI PRIMKOPPOL MITRA MAJU JAYA. Sistem terintegrasi untuk pengelolaan data anggota, transaksi simpan pinjam, pembukuan divisi, serta laporan keuangan akurat dan transparan.
         </p>
         <div class="home-banner-actions">
             @permission('manage-anggota')
