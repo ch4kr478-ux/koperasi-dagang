@@ -5,7 +5,7 @@
             $logo = asset(Storage::url('logo/'));
         @endphp
         <meta charset="utf-8" />
-        <title>Sistem Informasi Koperasi Karyawan — Enterprise Portal</title>
+        <title>Sistem Informasi KOPERASI PRIMKOPPOL MITRA MAJU JAYA — KOPMITMAJUJAYA</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta content="Sistem Informasi Manajemen Koperasi Karyawan Tingkat Korporasi" name="description" />
         <meta content="Enterprise IT Solutions" name="author" />
@@ -52,10 +52,10 @@
                 <!-- LOGO -->
                 <div class="topbar-left">
                     <a href="{{ url('/') }}" class="logo">
-                        <img class="img-fluid" src="{{ $logo.'/logo.png' }}" alt="Logo Koperasi" width="40" height="40" style="object-fit: contain;">
+                        <img class="img-fluid" src="{{ $logo.'/logo.png' }}" alt="Logo Koperasi" width="48" height="48" style="object-fit: contain;">
                         <div class="logo-brand d-none d-sm-flex">
-                            <span class="logo-title">KOPKAR</span>
-                            <span class="logo-subtitle">ENTERPRISE</span>
+                            <span class="logo-title">PRIMKOPPOL</span>
+                            <span class="logo-subtitle">MITRA MAJU JAYA</span>
                         </div>
                     </a>
                 </div>

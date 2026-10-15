@@ -166,10 +166,11 @@ textarea {
 
 .topbar .topbar-left .logo-title {
     color: #ffffff;
-    font-size: 15px;
+    font-size: 11.5px;
     font-weight: 800;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.035em;
     text-transform: uppercase;
+    white-space: nowrap;
 }
 
 .topbar .topbar-left .logo-subtitle {
