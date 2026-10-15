@@ -12,7 +12,7 @@
                 <span class="user-status-indicator" title="Status: Online & Terverifikasi"></span>
             </div>
             <div class="sidebar-user-info">
-                <div class="sidebar-user-greeting">PRIMKOPPOL</div>
+                <div class="sidebar-user-greeting">LAYANAN KOPERASI</div>
                 <div class="sidebar-user-name" title="{{ Auth::user()->name }}">{{ Auth::user()->name }}</div>
                 <div class="sidebar-user-role mt-1">
                     <span class="badge badge-soft-primary" style="font-size: 9.5px; padding: 2px 7px;">
